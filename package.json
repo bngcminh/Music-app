@@ -11,7 +11,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@fastify/multipart": "^9.4.0",
+    "@fastify/static": "^9.0.0",
+    "@fastify/view": "^11.1.1",
     "fastify": "^5.7.2",
+    "mongoose": "^9.1.5",
     "pug": "^3.0.3"
   }
 }
