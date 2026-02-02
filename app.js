@@ -4,7 +4,8 @@ const fastify = require('fastify')({ logger: true });
 const fastifyStatic = require('@fastify/static')
 const fastifyViews = require('@fastify/view');
 const path = require('node:path');
-const connectDB = require('@fastify/mongodb');
+// const connectDB = require('@fastify/mongodb');
+const connectDB = require('./config/db')
 
 const authRoute = require('./routes/authRoute');
 
@@ -60,10 +61,7 @@ fastify.get('/register', (req, rep) => {
 
 async function start() {
     try {
-        await fastify.register(connectDB, {
-            forceClose: false,
-            url: process.env.DATABASE
-        })
+        await fastify.register(connectDB);
         console.log('ket noi mongodb thanh cong')
         fastify.listen({ port: 3000 })
     }catch(err){
