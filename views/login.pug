@@ -1,0 +1,24 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="/public/css/home.css")
+    title Đăng nhập — MusicApp
+  body
+    .auth-page
+      .auth-card
+        h2 Đăng nhập
+        form(action="/login", method="post")
+          .field
+            label(for="email") Email hoặc tên đăng nhập
+            input#email(type="text" name="email" placeholder="Nhập email hoặc tên đăng nhập" required)
+          .field
+            label(for="password") Mật khẩu
+            input#password(type="password" name="password" placeholder="Nhập mật khẩu" required)
+          .field.remember
+            label
+              input(type="checkbox" name="remember")
+              |  Ghi nhớ đăng nhập
+          button.btn.btn-register(type="submit") Đăng nhập
+        p.note Chưa có tài khoản? #[a(href="/register") Đăng ký]

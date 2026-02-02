@@ -1,10 +1,92 @@
 doctype html
-html(lang="en")
+html(lang="vi")
     head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
         link(rel="stylesheet", href="/public/css/home.css")
-        img(src="https://i.pinimg.com/1200x/d5/ef/04/d5ef040ed586fbb5d6842828cd5f8598.jpg", alt="", srcset="")
-        title Document
-    body
-        //- h1 Hello World!
+        title MusicApp - Trang chủ
+        body
+            .app
+                aside.sidebar
+                    .logo-area
+                        a.logo(href="/")
+                            span.logo-mark NCT
+                            span.logo-text Mạng Xã Hội Âm Nhạc
+                    nav.side-nav
+                        ul
+                            li.active: a(href="#")
+                                span.icon ▸
+                                span.text Khám Phá
+                            li: a(href="#")
+                                span.icon ○
+                                span.text Dành Cho Bạn
+                            li: a(href="#")
+                                span.icon ○
+                                span.text Của Tui
+                    .library
+                        h5 THƯ VIỆN
+                        ul
+                            li: a(href="#") ♥ Bài hát Yêu thích
+                            li: a(href="#") ⟳ Nghe gần đây
+                    .login-cta
+                        a.btn.btn-register(href="/login") Đăng nhập
+
+                main.main
+                    header.topbar
+                        .top-left
+                            button.nav-btn(type="button") ‹
+                            button.nav-btn(type="button") ›
+                        form.search(action="#", method="get")
+                            input(type="text", placeholder="Tìm bài hát, nghệ sĩ hoặc playlist")
+                        .top-right
+                            a.vip(href="#") FREEVIP
+                            a.btn.btn-login(href="/login") Đăng nhập
+                            a.btn.btn-register(href="/register") Đăng ký
+
+                    .content.container
+                        h2.greeting Chào buổi tối
+
+                        .banner
+                            .banner-item(style="background-image: url('https://picsum.photos/seed/banner1/1200/300')")
+                            .banner-item(style="background-image: url('https://picsum.photos/seed/banner2/1200/300')")
+
+                        section.section
+                            h3.section-title Chủ Đề
+                            .grid
+                                each item in [1,2,3,4,5,6,7,8]
+                                    .topic-card
+                                        .thumb(style="background-image: url('https://picsum.photos/seed/topic#{item}/400/240')")
+                                        .tmeta
+                                            span.title Chủ đề #{item}
+
+                        section.section
+                            h3.section-title Bài Hát Phổ Biến
+                            .grid
+                                each item in [1,2,3,4,5,6]
+                                    .card
+                                        .thumb(style="background-image: url('https://picsum.photos/seed/#{item}/320/320')")
+                                        .meta
+                                            h4 Bài hát #{item}
+                                            p Nghệ sĩ mẫu
+
+                //- Player bar (fixed bottom)
+                .player-bar
+                    .player-inner.container
+                        .player-left
+                            .pthumb(style="background-image:url('https://picsum.photos/seed/track/56/56')")
+                            .pinfo
+                                .ptitle PHÓNG ZÌN ZÌN
+                                .partist flinh, Low G
+                        .player-controls
+                            .time 00:00
+                            .controls
+                                button.control.prev ◂◂
+                                button.control.play ▶
+                                button.control.next ▸▸
+                            .time 03:22
+                        .player-right
+                            .icons ▸ ♫ ☆
+
+            footer.footer
+                .container
+                    p © 2026 MusicApp — Giao diện mẫu
