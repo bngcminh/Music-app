@@ -33,22 +33,41 @@ html(lang="vi")
 
                 main.main
                     header.topbar
-                        .top-left
-                            button.nav-btn(type="button") ‹
-                            button.nav-btn(type="button") ›
                         form.search(action="#", method="get")
                             input(type="text", placeholder="Tìm bài hát, nghệ sĩ hoặc playlist")
                         .top-right
-                            a.vip(href="#") FREEVIP
                             a.btn.btn-login(href="/login") Đăng nhập
                             a.btn.btn-register(href="/register") Đăng ký
 
                     .content.container
                         h2.greeting Chào buổi tối
 
+                        //- Hero lớn (ảnh nền, tìm kiếm, CTA)
+                        .hero
+                            .hero-inner
+                                h1 Hàng triệu bài hát, mọi tâm trạng
+                                p Khám phá, lưu và chia sẻ playlist yêu thích của bạn.
+                                form.hero-search(action="#", method="get")
+                                    input(type="text" placeholder="Bạn muốn nghe gì hôm nay?")
+                                    button.btn-ghost(type="submit") Tìm kiếm
+                                .hero-cta
+                                    a.btn.btn-register(href="/register") Bắt đầu
+                                    a.btn.btn-login(href="/login") Đăng nhập
+
                         .banner
                             .banner-item(style="background-image: url('https://picsum.photos/seed/banner1/1200/300')")
                             .banner-item(style="background-image: url('https://picsum.photos/seed/banner2/1200/300')")
+
+                        //- Featured Playlists
+                        section.section.featured
+                            h3.section-title Bộ sưu tập nổi bật
+                            .grid.grid-featured
+                                each i in [1,2,3,4]
+                                    .playlist-card
+                                        .playlist-thumb(style=`background-image: url('https://picsum.photos/seed/playlist${i}/400/240')`)
+                                        .pmeta
+                                            h4 Playlist mẫu #{i}
+                                            p Tập hợp các bản hit
 
                         section.section
                             h3.section-title Chủ Đề

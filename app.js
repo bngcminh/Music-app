@@ -35,6 +35,16 @@ fastify.get('/', (req, rep) => {
     rep.view("home.pug");
 })
 
+fastify.get('/login', (req, rep) => {
+    // rep.send('hello world');
+    rep.view("login.pug");
+})
+
+fastify.get('/register', (req, rep) => {
+    // rep.send('hello world');
+    rep.view("register.pug");
+})
+
 fastify.listen({ port: 3000 }, (err) => {
     if(err){
         fastify.log.error(err);

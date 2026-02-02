@@ -6,19 +6,28 @@ html(lang="vi")
     link(rel="stylesheet", href="/public/css/home.css")
     title Đăng nhập — MusicApp
   body
-    .auth-page
-      .auth-card
-        h2 Đăng nhập
-        form(action="/login", method="post")
-          .field
-            label(for="email") Email hoặc tên đăng nhập
-            input#email(type="text" name="email" placeholder="Nhập email hoặc tên đăng nhập" required)
-          .field
-            label(for="password") Mật khẩu
-            input#password(type="password" name="password" placeholder="Nhập mật khẩu" required)
-          .field.remember
-            label
-              input(type="checkbox" name="remember")
-              |  Ghi nhớ đăng nhập
-          button.btn.btn-register(type="submit") Đăng nhập
-        p.note Chưa có tài khoản? #[a(href="/register") Đăng ký]
+    .modal-overlay
+      .modal(role="dialog" aria-modal="true")
+        .modal-close
+          a(href="/") ✕
+        .modal-inner
+          .modal-heading
+            h3 Đăng nhập
+          form.login-form(action="/login", method="post")
+            .input-wrap
+              input#email(type="text" name="email" placeholder="Nhập email/username của bạn" required)
+            .input-wrap.has-eye
+              input#password(type="password" name="password" placeholder="Nhập mật khẩu của bạn" required)
+              button.eye-toggle(type="button", aria-label="Hiện/ẩn mật khẩu") 👁️
+            .row-between
+              label.checkbox-label
+                input(type="checkbox" name="remember")
+                span Nhớ cho lần đăng nhập tới
+              a.forgot(href="#") Quên mật khẩu?
+            .consent
+              label
+                input(type="checkbox" name="agree")
+                span Tôi đã đọc, hiểu rõ và tự nguyện đồng ý các điều khoản
+            button.modal-btn(type="submit") Đăng nhập
+          .switch-auth
+            p Chưa có tài khoản? #[a(href="/register") Đăng ký]

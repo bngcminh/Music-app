@@ -6,21 +6,28 @@ html(lang="vi")
     link(rel="stylesheet", href="/public/css/home.css")
     title Đăng ký — MusicApp
   body
-    .auth-page
-      .auth-card
-        h2 Đăng ký
-        form(action="/register", method="post")
-          .field
-            label(for="username") Tên người dùng
-            input#username(type="text" name="username" placeholder="Tên hiển thị" required)
-          .field
-            label(for="email") Email
-            input#email(type="email" name="email" placeholder="Email của bạn" required)
-          .field
-            label(for="password") Mật khẩu
-            input#password(type="password" name="password" placeholder="Tạo mật khẩu" required)
-          .field
-            label(for="confirm") Xác nhận mật khẩu
-            input#confirm(type="password" name="confirm" placeholder="Nhập lại mật khẩu" required)
-          button.btn.btn-register(type="submit") Tạo tài khoản
-        p.note Đã có tài khoản? #[a(href="/login") Đăng nhập]
+    .modal-overlay
+      .modal(role="dialog" aria-modal="true")
+        .modal-close
+          a(href="/") ✕
+        .modal-inner
+          .modal-heading
+            h3 Đăng ký
+          form.register-form(action="/register", method="post")
+            .input-wrap
+              input#username(type="text" name="username" placeholder="Tên hiển thị" required)
+            .input-wrap
+              input#email(type="email" name="email" placeholder="Email của bạn" required)
+            .input-wrap.has-eye
+              input#password(type="password" name="password" placeholder="Tạo mật khẩu" required)
+              button.eye-toggle(type="button", aria-label="Hiện/ẩn mật khẩu") 👁️
+            .input-wrap.has-eye
+              input#confirm(type="password" name="confirm" placeholder="Nhập lại mật khẩu" required)
+              button.eye-toggle(type="button", aria-label="Hiện/ẩn mật khẩu") 👁️
+            .consent
+              label
+                input(type="checkbox" name="agree")
+                span Tôi đã đọc và đồng ý các điều khoản
+            button.modal-btn(type="submit") Tạo tài khoản
+          .switch-auth
+            p Đã có tài khoản? #[a(href="/login") Đăng nhập]
