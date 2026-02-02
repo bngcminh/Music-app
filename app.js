@@ -13,10 +13,10 @@ const dns = require('node:dns/promises');
 dns.setServers(['1.1.1.1']);
 
 // Connect MongoDB
-fastify.register(connectDB, {
-    forceClose: false,
-    url: process.env.DATABASE
-})
+// fastify.register(connectDB, {
+//     forceClose: false,
+//     url: process.env.DATABASE
+// })
 
 // View file
 fastify.register(fastifyViews, {
@@ -49,11 +49,27 @@ fastify.get('/register', (req, rep) => {
     rep.view("register.pug");
 })
 
-fastify.listen({ port: 3000 }, (err) => {
-    if(err){
+// fastify.listen({ port: 3000 }, (err) => {
+//     if(err){
+//         fastify.log.error(err);
+//         process.exit(1);
+//     }else{
+
+//     }
+// })
+
+async function start() {
+    try {
+        await fastify.register(connectDB, {
+            forceClose: false,
+            url: process.env.DATABASE
+        })
+        console.log('ket noi mongodb thanh cong')
+        fastify.listen({ port: 3000 })
+    }catch(err){
         fastify.log.error(err);
         process.exit(1);
-    }else{
-
     }
-})
+}
+
+start();
