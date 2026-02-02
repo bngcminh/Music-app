@@ -3,6 +3,7 @@ require('dotenv').config()
 const fastify = require('fastify')({ logger: true });
 const fastifyStatic = require('@fastify/static')
 const fastifyViews = require('@fastify/view');
+const fastifyFormbody = require('@fastify/formbody');
 const path = require('node:path');
 // const connectDB = require('@fastify/mongodb');
 const connectDB = require('./config/db')
@@ -32,6 +33,8 @@ fastify.register(fastifyStatic, {
     root: path.join(__dirname, 'public'),
     prefix: '/public/'
 })
+
+fastify.register(fastifyFormbody);
 
 fastify.register(authRoute);
 

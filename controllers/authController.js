@@ -6,10 +6,11 @@ const register = async function(req, rep){
 
     if(!username || !email || !password){
         rep.send('Vui lòng nhập đầy đủ thông tin');
-        rep.code(500);
-    }else if(username < 6 || password < 6){
-        rep.send('Tên người dùng và mật khẩu phải trên 6 kí tự');
-        rep.statusCode = 500;
+        return rep.code(500);
+    }else if(username.length < 6 || password.length < 6){
+        // rep.send('Tên người dùng và mật khẩu phải trên 6 kí tự');
+        // rep.code(500);
+        return rep.code(500).send('Tên người dùng và mật khẩu phải trên 6 kí tự')
     }
 
     const existEmail = await User.findOne({ email });
@@ -25,19 +26,27 @@ const register = async function(req, rep){
         password,
     })
 
-    return rep.code(201).send('Đăng ký thành công').redirect('/login')
-
+    // return rep.code(201).send('Đăng ký thành công').redirect('/login')
+    return rep.redirect('/login')
 }
 
-// const login = async function(){
-//     const { username, password } = req.body;
-//     if(!username || !password){
-//         return
-//     }
-// }
+const login = async function(req, rep){
+    const { username, password } = req.body;
+    const existUsername = await User.findOne({ username });
+    const existPassword= await User.findOne({ password }) 
+    
+    if(!username || !password){
+        return rep.code(400).send('Vui lòng nhập đầy đủ thông tin');
+    }else if(username !== existUsername || password !== existPassword){
+        return rep.code(400).send('Tài khoản hoặc mật khẩu không đúng')
+    }else{
+        return rep.redirect('/')
+    }
+     
+}
 
 module.exports = {
     register,
-    // login,
+    login,
     // logout
 }
