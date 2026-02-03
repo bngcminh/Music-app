@@ -19,29 +19,41 @@ const register = async function(req, rep){
         rep.send('Email đã tồn tại');
         rep.code(500);
     }
-
-    const user = await User.create({
-        username,
-        email,
-        password,
-    })
-
+    
+    try{
+        const user = await User.create({
+            username,
+            email,
+            password,
+        })
+    }catch(err){
+        console.log(err);
+    }
     // return rep.code(201).send('Đăng ký thành công').redirect('/login')
     return rep.redirect('/login')
 }
 
 const login = async function(req, rep){
     const { username, password } = req.body;
-    const existUsername = await User.findOne({ username });
-    const existPassword= await User.findOne({ password }) 
     
-    if(!username || !password){
-        return rep.code(400).send('Vui lòng nhập đầy đủ thông tin');
-    }else if(username !== existUsername || password !== existPassword){
-        return rep.code(400).send('Tài khoản hoặc mật khẩu không đúng')
-    }else{
-        return rep.redirect('/')
-    }
+    const existUsername = await User.findOne({ username });
+    // console.log(existUsername);
+    // console.log("result:", existUsername.username);
+
+    // if(!username || !password){
+    //     return rep.code(400).send('Vui lòng nhập đầy đủ thông tin');
+    // }else if(username !== existUsername.username || password !== existUsername.password){
+    //     return rep.code(400).send('Tài khoản hoặc mật khẩu không đúng')
+    // }
+
+    // return rep.redirect('/')
+    // if(!username || !password){
+    //     return rep.code(400).send('Vui lòng nhập đầy đủ thông tin');
+    // }else if(username !== existUsername || password !== existPassword){
+    //     return rep.code(400).send('Tài khoản hoặc mật khẩu không đúng')
+    // }else{
+    //     return rep.redirect('/')
+    // }
      
 }
 
