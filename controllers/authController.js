@@ -35,26 +35,16 @@ const register = async function(req, rep){
 
 const login = async function(req, rep){
     const { username, password } = req.body;
+    const existAccount = await User.findOne({ username });
     
-    const existUsername = await User.findOne({ username });
-    // console.log(existUsername);
-    // console.log("result:", existUsername.username);
-
-    // if(!username || !password){
-    //     return rep.code(400).send('Vui lòng nhập đầy đủ thông tin');
-    // }else if(username !== existUsername.username || password !== existUsername.password){
-    //     return rep.code(400).send('Tài khoản hoặc mật khẩu không đúng')
-    // }
-
-    // return rep.redirect('/')
-    // if(!username || !password){
-    //     return rep.code(400).send('Vui lòng nhập đầy đủ thông tin');
-    // }else if(username !== existUsername || password !== existPassword){
-    //     return rep.code(400).send('Tài khoản hoặc mật khẩu không đúng')
-    // }else{
-    //     return rep.redirect('/')
-    // }
-     
+    console.log("result",existAccount.password)
+    if(!username || !password){
+        return rep.code(400).send('Vui long nhap day du thong tin');
+    }else if(!existAccount || existAccount.password !== password){
+        return rep.code(400).send('Tai khoan hoac mat khau khong dung');
+    }
+    //password !== existAccount.password
+    return rep.redirect('/')
 }
 
 module.exports = {
