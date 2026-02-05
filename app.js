@@ -65,7 +65,6 @@ fastify.get('/register', (req, rep) => {
 async function start() {
     try {
         await fastify.register(connectDB);
-        console.log('ket noi mongodb thanh cong')
         fastify.listen({ port: 3000 })
     }catch(err){
         fastify.log.error(err);

@@ -37,12 +37,12 @@ const login = async function(req, rep){
     const { username, password } = req.body;
     const existAccount = await User.findOne({ username });
     
-    console.log("result",existAccount.password)
-    if(!username || !password){
-        return rep.code(400).send('Vui long nhap day du thong tin');
-    }else if(!existAccount || existAccount.password !== password){
-        return rep.code(400).send('Tai khoan hoac mat khau khong dung');
-    }
+    console.log("result", null.password)
+    // if(!username || !password){
+    //     return rep.code(400).send('Vui long nhap day du thong tin');
+    // }else if(!existAccount || existAccount.password !== password){
+    //     return rep.code(400).send('Tai khoan hoac mat khau khong dung');
+    // }
     //password !== existAccount.password
     return rep.redirect('/')
 }
