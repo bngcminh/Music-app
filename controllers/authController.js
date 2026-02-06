@@ -1,4 +1,6 @@
 const fastify = require('fastify');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs')
 const User = require('../models/User')
 
 const register = async function(req, rep){
@@ -14,17 +16,19 @@ const register = async function(req, rep){
     }
 
     const existEmail = await User.findOne({ email });
-
     if(existEmail){
         rep.send('Email đã tồn tại');
         rep.code(500);
     }
     
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword =  await bcrypt.hash(password, salt)
+
     try{
         const user = await User.create({
             username,
             email,
-            password,
+            password: hashPassword,
         })
     }catch(err){
         console.log(err);
@@ -35,15 +39,23 @@ const register = async function(req, rep){
 
 const login = async function(req, rep){
     const { username, password } = req.body;
-    const existAccount = await User.findOne({ username });
     
-    console.log("result", null.password)
+    // console.log("result", null.password)
     // if(!username || !password){
     //     return rep.code(400).send('Vui long nhap day du thong tin');
     // }else if(!existAccount || existAccount.password !== password){
     //     return rep.code(400).send('Tai khoan hoac mat khau khong dung');
     // }
     //password !== existAccount.password
+
+    const existAccount = await User.findOne({ username });
+    const comparePassword = await bcrypt.compare(password, existAccount.password);
+    if(!username || !password){
+        return rep.code(400).send('Vui long nhap day du thong tin');
+    }else if(!existAccount || !comparePassword){
+        return rep.code(400).send('Tai khoan hoac mat khau khong dung');
+    }
+
     return rep.redirect('/')
 }
 
