@@ -48,13 +48,22 @@ const login = async function(req, rep){
     // }
     //password !== existAccount.password
 
-    const existAccount = await User.findOne({ username });
-    const comparePassword = await bcrypt.compare(password, existAccount.password);
     if(!username || !password){
         return rep.code(400).send('Vui long nhap day du thong tin');
-    }else if(!existAccount || !comparePassword){
+    }
+    const existAccount = await User.findOne({ username });
+    if(!existAccount){
         return rep.code(400).send('Tai khoan hoac mat khau khong dung');
     }
+    const comparePassword = await bcrypt.compare(password, existAccount.password);
+    console.log('result: ', comparePassword);
+    if(!comparePassword){
+        return rep.code(400).send('Tai khoan hoac mat khau khong dung');
+    }
+
+    // const token = {
+
+    // }
 
     return rep.redirect('/')
 }
