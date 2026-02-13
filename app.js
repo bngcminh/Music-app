@@ -9,9 +9,10 @@ const path = require('node:path');
 const connectDB = require('./config/db')
 
 const authRoute = require('./routes/authRoute');
-
+const adminRoute  = require('./routes/adminRoute');
 // Fix Error: querySrv ECONNREFUSED MongoDB
 const dns = require('node:dns/promises');
+
 dns.setServers(['1.1.1.1']);
 
 // Connect MongoDB
@@ -37,6 +38,7 @@ fastify.register(fastifyStatic, {
 fastify.register(fastifyFormbody);
 
 fastify.register(authRoute);
+fastify.register(adminRoute);
 
 fastify.get('/', (req, rep) => {
     // rep.send('hello world');
@@ -51,6 +53,10 @@ fastify.get('/login', (req, rep) => {
 fastify.get('/register', (req, rep) => {
     // rep.send('hello world');
     rep.view("register.pug");
+})
+
+fastify.get('/admin', (res, rep) => {
+    rep.view("admin/songs.pug")
 })
 
 // fastify.listen({ port: 3000 }, (err) => {

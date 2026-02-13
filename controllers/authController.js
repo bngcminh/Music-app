@@ -1,4 +1,3 @@
-const fastify = require('fastify');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs')
 const User = require('../models/User')
@@ -38,7 +37,7 @@ const register = async function(req, rep){
 }
 
 const login = async function(req, rep){
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     
     // console.log("result", null.password)
     // if(!username || !password){
@@ -48,10 +47,11 @@ const login = async function(req, rep){
     // }
     //password !== existAccount.password
 
-    if(!username || !password){
+    if(!email || !password){
         return rep.code(400).send('Vui long nhap day du thong tin');
     }
-    const existAccount = await User.findOne({ username });
+    const existAccount = await User.findOne({ email });
+    console.log(existAccount);
     if(!existAccount){
         return rep.code(400).send('Tai khoan hoac mat khau khong dung');
     }
