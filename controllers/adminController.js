@@ -7,25 +7,26 @@ const Song = require('../models/Song');
 // User
 const getAllUsers = async function(req, rep){
     try{
-        const users = await User.find().select('username email -password');
-        return users;
+        const users = await User.find().select('username email');
+        console.log
+        return rep.send(users);
     }catch(err){
-        rep.code(500).send('Khong the lay users');
         console.log(err);
+        rep.code(500).send('Khong the lay users');
     }
 }
 
 const getUser = async function(req, rep){
     try {
-        const idUser = req.params.id;
-        const user = await User.findById(idUser).select('username email -password');
+        const userId = req.params.userId;
+        const user = await User.findById(userId).select('-password');
         if(!user){
             return rep.code(500).send('Khong tim duoc nguoi dung')
         }
         return rep.send(user)
     }catch(err){
-        rep.code(500).send('Khong the lay user');
         console.log(err);
+        rep.code(500).send('Khong the lay user');
     }
 }
 
@@ -53,21 +54,21 @@ const updateUser = async function(req, rep){
 
 const deleteUser = async function(req, rep){
     try{
-        const userId = req.params;
-        const del = User.findByIdAndDelete(userId);
+        const userId = req.params.userId;
+        const del = await User.findByIdAndDelete(userId);
         
         // if(req.user.id === userId){
         //     return rep.code(500).send('Khong the xoa chinh minh');
         // }
 
         if(!del){
-            return rep.code(500).send('Khong tim thay thong tin nguoi dung nay')
+            return rep.code(404).send('Khong tim thay thong tin nguoi dung nay')
         }
 
         return rep.send('Xoa nguoi dung thanh cong'); 
     }catch(err) {
-        return rep.code(500).send('Co loi khi xoa nguoi dung');
         console.log(err);
+        return rep.code(500).send('Co loi khi xoa nguoi dung');
     }
 }
 
