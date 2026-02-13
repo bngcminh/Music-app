@@ -4,7 +4,7 @@ const Album = require('../models/Album');
 const Playlist = require('../models/Playlist');
 const Song = require('../models/Song');
 
-// User
+// Quản lý người dùng
 const getAllUsers = async function(req, rep){
     try{
         const users = await User.find().select('username email');
@@ -72,9 +72,74 @@ const deleteUser = async function(req, rep){
     }
 }
 
+// Quản lý Artist
+const getAllArtists = async function(req, rep){
+    try{
+        const artists = await Artist.find();
+        rep.send(artists)
+    }catch(err){
+        console.log(err);
+        return rep.code(500).send('Co loi khi lay artist');
+    }
+}
+
+const getArtist = async function(req, rep){
+    try{
+        const artistId = req.params.artistId;
+        const artist = await Artist.findById(artistId)
+        if(!artist){
+            return rep.code(404).send('Khong tim thay artist');
+        }
+        return rep.send(artist);
+    }catch(err){
+        console.log(err);
+        return rep.code(500).send('Co loi khi lay artist');
+    }
+}
+
+const updateArtist = async function(req, rep){
+    try{
+        const artistId = req.params.artistId;
+        const update = await Artist.findByIdAndUpdate(
+            artistId,
+            { name, avatar, bio },
+            { new: true, runValidators: true }
+        )
+
+        if(!update){
+            return rep.code(404).send('Khong tim thay artist');
+        }
+
+        rep.send('Cap nhat artist thanh cong');
+    }catch(err){
+        console.log(err);
+        return rep.code(500).send('Co loi khi cap nhat artist');
+    }
+}
+
+const deleteArtist = async function(req, rep){
+    try{
+        const artistId = req.params.artistId;
+        const del = await Artist.findByIdAndDelete(artistId);
+
+        if(!del){
+            return rep.code(404).send('Khong tim thay artist');
+        }
+
+        rep.send('Xoa artist thanh cong')
+    }catch(err){
+        console.log(err);
+        return rep.code(500).send('Co loi khi xoa artist');
+    }
+}
+
 module.exports = {
     getAllUsers,
     getUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getAllArtists,
+    getArtist,
+    updateArtist,
+    deleteArtist
 }
