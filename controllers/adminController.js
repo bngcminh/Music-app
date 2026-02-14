@@ -109,12 +109,9 @@ const createArtist = async function(req, rep){
                 data[part.fieldname] = part.value;
             }
             if(part.type === 'file'){
-                const fileName = Date.now() + ' - ' + part.filename;
-                const upload = path.join(__dirname, '../public/upload', fileName);
-
+                const upload = path.join(__dirname, '../public/upload', part.filename);
                 await fs.promises.writeFile(upload, await part.toBuffer());
-
-                data.avatar = `/upload/${fileName}`;
+                data.avatar = `/upload/${part.filename}`;
             }
         }
         const artist = await Artist.create(data);
