@@ -1,3 +1,5 @@
+const fs = require('node:fs');
+const path = require('node:path')
 const User = require('../models/User');
 const Artist = require('../models/Artist');
 const Album = require('../models/Album');
@@ -97,9 +99,36 @@ const getArtist = async function(req, rep){
     }
 }
 
+const createArtist = async function(req, rep){
+    try{
+        const parts = req.parts();
+        const data = {};
+
+        for await (const part of parts){
+            if(part.type === 'field'){
+                data[part.fieldname] = part.value;
+            }
+            if(part.type === 'file'){
+                const fileName = Date.now() + ' - ' + part.filename;
+                const upload = path.join(__dirname, '../public/upload', fileName);
+
+                await fs.promises.writeFile(upload, await part.toBuffer());
+
+                data.avatar = `/upload/${fileName}`;
+            }
+        }
+        const artist = await Artist.create(data);
+        rep.send('Tao artist thanh cong')
+    }catch(err){
+        console.log(err);
+        rep.code(500).send('Co loi khi tao artist');
+    }
+}
+
 const updateArtist = async function(req, rep){
     try{
         const artistId = req.params.artistId;
+        const { name, avatar, bio } = req.body;
         const update = await Artist.findByIdAndUpdate(
             artistId,
             { name, avatar, bio },
@@ -138,6 +167,7 @@ module.exports = {
     getUser,
     updateUser,
     deleteUser,
+    createArtist,
     getAllArtists,
     getArtist,
     updateArtist,
