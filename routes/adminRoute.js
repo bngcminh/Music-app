@@ -14,10 +14,15 @@ function adminRoute(fastify, options){
     fastify.patch('/artists/:artistId', adminController.updateArtist);
     fastify.delete('/artists/:artistId', adminController.deleteArtist); 
 
+    // Playlist API
+    
+
     // Song API
     fastify.get('/songs', adminController.getAllSongs);
     fastify.get('/songs/:songId', adminController.getSong);
-    fastify.post('/songs', adminController.createSong)
+    fastify.post('/songs', adminController.createSong);
+    fastify.patch('/songs/:songId', adminController.updateSong);
+    fastify.delete('/songs/:songId', adminController.deleteSong);
 }
 
 module.exports = adminRoute;

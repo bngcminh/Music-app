@@ -160,6 +160,32 @@ const deleteArtist = async function(req, rep){
 // Quản lý Album
 
 // Quản lý Playlist
+const getAllPlaylists = async function(req, rep){
+    try{
+       const playlists = await Album.find().select('playlistName');
+       rep.send(playlists);
+    } catch (err) {
+        console.log(err);
+        rep.code(500).send('Co loi khi lay danh sach playlist');
+    }
+}
+
+const getPlaylist = async function(req, rep){
+    try{
+        const playlistId = req.params.playlistId;
+        const playlist = await Playlist.findById(playlistId);
+
+        if(!playlist){
+            return rep.code(404).send('Playlist khong ton tai');
+        }
+
+        return rep.send('Lay playlist thanh cong');
+    }catch(err){
+        console.log(err);
+        rep.code(500).send('Co loi khi lay playlist');
+    }
+}
+
 
 // Quản lý bài hát
 const getAllSongs = async function(req, rep){
@@ -205,11 +231,52 @@ const createSong = async function(req, rep){
                 }
             }
         }
+        const song = await Song.create(data);
+        rep.code(200).send('Tao bai hat thanh cong')
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi lay tao bai hat');
     }
 }
+
+const updateSong = async function(req, rep){
+    try{
+        const songId = req.params.songId;
+        const { songName, artist } = req.body;
+
+        const update = await Song.findByIdAndUpdate(
+            songId,
+            { songName, artist },
+            { new: true, runValidators: true }
+        )
+
+        if(!update){
+            return rep.code(404).send('Cap nhat bai hat khong thanh cong');
+        }
+
+        return rep.send('Cap nhat bai hat thanh cong');
+    }catch(err){
+        console.log(err);
+        return rep.code(500).send('Co loi khi cap nhat bai hat');
+    }
+}
+
+const deleteSong = async function(req, rep){
+    try{
+        const songId = req.params.songId;
+        const del = await Song.findByIdAndDelete(songId);
+
+        if(!del){
+            return rep.code(404).send('Bai hat khong ton tai');
+        }
+
+        return rep.send('Xoa bai hat thanh cong')
+    }catch(err){
+        console.log(err);
+        return rep.code(500).send('Co loi khi xoa bai hat');
+    }
+}
+
 module.exports = {
     getAllUsers,
     getUser,
@@ -223,4 +290,6 @@ module.exports = {
     getAllSongs,
     getSong,
     createSong,
+    updateSong,
+    deleteSong
 }
