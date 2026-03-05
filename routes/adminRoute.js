@@ -13,6 +13,11 @@ function adminRoute(fastify, options){
     fastify.post('/artists', adminController.createArtist)
     fastify.patch('/artists/:artistId', adminController.updateArtist);
     fastify.delete('/artists/:artistId', adminController.deleteArtist); 
+
+    // Song API
+    fastify.get('/songs', adminController.getAllSongs);
+    fastify.get('/songs/:songId', adminController.getSong);
+    fastify.post('/songs', adminController.createSong)
 }
 
 module.exports = adminRoute;

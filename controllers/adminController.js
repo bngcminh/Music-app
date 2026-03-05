@@ -10,7 +10,6 @@ const Song = require('../models/Song');
 const getAllUsers = async function(req, rep){
     try{
         const users = await User.find().select('username email');
-        console.log
         return rep.send(users);
     }catch(err){
         console.log(err);
@@ -103,7 +102,6 @@ const createArtist = async function(req, rep){
     try{
         const parts = req.parts();
         const data = {};
-
         for await (const part of parts){
             if(part.type === 'field'){
                 data[part.fieldname] = part.value;
@@ -115,10 +113,10 @@ const createArtist = async function(req, rep){
             }
         }
         const artist = await Artist.create(data);
-        rep.send('Tao artist thanh cong')
+        rep.send(artist);
     }catch(err){
         console.log(err);
-        rep.code(500).send('Co loi khi tao artist');
+        return rep.code(500).send('Co loi khi tao artist');
     }
 }
 
@@ -159,6 +157,59 @@ const deleteArtist = async function(req, rep){
     }
 }
 
+// Quản lý Album
+
+// Quản lý Playlist
+
+// Quản lý bài hát
+const getAllSongs = async function(req, rep){
+    try{
+        const songs = await Song.find().select('songName');
+        rep.send(songs);
+    }catch(err){
+        console.log(err);
+        return rep.code(500).send('Co loi khi lay tat ca bai hat');
+    }
+}
+
+const getSong = async function(req, rep){
+    try{
+       const songId = req.params.songId;
+       const song = await Song.findById(songId);
+       if(!song){
+            return rep.code(404).send('Khong tim thay bai hat');       
+       }
+       return rep.send(song);
+    }catch(err){
+        console.log(err);
+        return rep.code(500).send('Co loi khi lay bai hat');
+    }
+}
+
+const createSong = async function(req, rep){
+    try{
+        const parts = req.parts();
+        const data = {};
+        for await(const part of parts){
+            if(part.type === 'field'){
+                data[part.fieldname] = part.value;
+            }
+            if(part.type === 'file'){
+                const upload  = path.join(__dirname, '../public/upload', part.filename);
+                await fs.promises.writeFile(upload, await part.toBuffer());
+                if(part.fieldname === 'audio'){
+                    data.audioURL = `/upload/${part.filename}`
+                }
+                if(part.fieldname === 'cover'){
+                    data.coverURL = `/upload/${part.filename}`
+                }
+            }
+        }
+    }catch(err){
+        console.log(err);
+        return rep.code(500).send('Co loi khi lay tao bai hat');
+    }
+}
 module.exports = {
     getAllUsers,
     getUser,
@@ -168,5 +219,8 @@ module.exports = {
     getAllArtists,
     getArtist,
     updateArtist,
-    deleteArtist
+    deleteArtist,
+    getAllSongs,
+    getSong,
+    createSong,
 }

@@ -36,8 +36,12 @@ fastify.register(fastifyStatic, {
     prefix: '/public/'
 })
 
-fastify.register(fastifyMutipart);
-fastify.register(fastifyFormbody);
+fastify.register(fastifyMutipart,{
+    limits: {
+        fileSize: 50 * 1024 * 1024
+    }
+});
+fastify.register(fastifyFormbody)
 
 fastify.register(authRoute);
 fastify.register(adminRoute);
