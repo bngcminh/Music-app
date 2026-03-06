@@ -1,0 +1,141 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Admin Dashboard - MusicApp
+    link(rel="stylesheet", href="/public/css/admin.css")
+  body
+    .admin-layout
+      aside.admin-sidebar
+        .brand
+          h1 Music Admin
+          p Quan tri he thong nhac
+        nav.menu
+          button.menu-item.active(type="button" data-tab="users") Nguoi dung
+          button.menu-item(type="button" data-tab="artists") Nghe si
+          button.menu-item(type="button" data-tab="playlists") Playlist
+          button.menu-item(type="button" data-tab="songs") Bai hat
+        a.back-home(href="/") Ve trang chu
+
+      main.admin-main
+        header.topbar
+          h2#tab-title Nguoi dung
+          p Quan ly du lieu nhanh tai mot noi
+
+        .notice#notice
+
+        section.panel.active(data-panel="users")
+          .section-head
+            h3 Danh sach nguoi dung
+            button.btn#refresh-users(type="button") Tai lai
+          .table-wrap
+            table
+              thead
+                tr
+                  th Username
+                  th Email
+                  th Role
+                  th Hanh dong
+              tbody#users-body
+                tr
+                  td(colspan="4") Dang tai du lieu...
+
+        section.panel(data-panel="artists")
+          .section-head
+            h3 Tao nghe si moi
+          form.form-grid#artist-create-form(enctype="multipart/form-data")
+            label
+              span Ten nghe si
+              input(type="text" name="name" required)
+            label
+              span Tieu su
+              textarea(name="bio" rows="3")
+            label
+              span Anh dai dien
+              input(type="file" name="avatar" accept="image/*")
+            button.btn(type="submit") Tao nghe si
+
+          .section-head.space-top
+            h3 Danh sach nghe si
+            button.btn#refresh-artists(type="button") Tai lai
+          .table-wrap
+            table
+              thead
+                tr
+                  th Ten
+                  th Tieu su
+                  th Avatar
+                  th Hanh dong
+              tbody#artists-body
+                tr
+                  td(colspan="4") Dang tai du lieu...
+
+        section.panel(data-panel="playlists")
+          .section-head
+            h3 Tao playlist moi
+          form.form-grid#playlist-create-form
+            label
+              span Ten playlist
+              input(type="text" name="playlistName" required)
+            label
+              span Danh sach Song ID (phan tach boi dau phay)
+              input(type="text" name="songs" placeholder="id1,id2,id3")
+            label
+              span Cover URL
+              input(type="text" name="coverUrl" placeholder="/upload/cover.jpg")
+            label
+              span Cong khai
+              select(name="isPublic")
+                option(value="true") true
+                option(value="false" selected) false
+            button.btn(type="submit") Tao playlist
+
+          .section-head.space-top
+            h3 Danh sach playlist
+            button.btn#refresh-playlists(type="button") Tai lai
+          .table-wrap
+            table
+              thead
+                tr
+                  th Ten playlist
+                  th So bai hat
+                  th Cong khai
+                  th Hanh dong
+              tbody#playlists-body
+                tr
+                  td(colspan="4") Dang tai du lieu...
+
+        section.panel(data-panel="songs")
+          .section-head
+            h3 Tao bai hat moi
+          form.form-grid#song-create-form(enctype="multipart/form-data")
+            label
+              span Ten bai hat
+              input(type="text" name="songName" required)
+            label
+              span Nghe si
+              input(type="text" name="artist" required)
+            label
+              span File audio
+              input(type="file" name="audio" accept="audio/*" required)
+            label
+              span Anh bia
+              input(type="file" name="cover" accept="image/*")
+            button.btn(type="submit") Tao bai hat
+
+          .section-head.space-top
+            h3 Danh sach bai hat
+            button.btn#refresh-songs(type="button") Tai lai
+          .table-wrap
+            table
+              thead
+                tr
+                  th Ten bai hat
+                  th Nghe si
+                  th Hanh dong
+              tbody#songs-body
+                tr
+                  td(colspan="3") Dang tai du lieu...
+
+    script(src="/public/js/admin.js")

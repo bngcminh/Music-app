@@ -1,4 +1,4 @@
-const fs = require('node:fs');
+﻿const fs = require('node:fs');
 const path = require('node:path')
 const User = require('../models/User');
 const Artist = require('../models/Artist');
@@ -340,6 +340,11 @@ module.exports = {
     getArtist,
     updateArtist,
     deleteArtist,
+    getAllPlaylists,
+    getPlaylist,
+    createPlaylist,
+    updatePlaylist,
+    deletePlaylist,
     getAllSongs,
     getSong,
     createSong,
