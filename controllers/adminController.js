@@ -109,7 +109,7 @@ const createArtist = async function(req, rep){
             if(part.type === 'file'){
                 const upload = path.join(__dirname, '../public/upload', part.filename);
                 await fs.promises.writeFile(upload, await part.toBuffer());
-                data.avatar = `/upload/${part.filename}`;
+                data.avatar = `/public/upload${part.filename}`;
             }
         }
         const artist = await Artist.create(data);
@@ -162,7 +162,7 @@ const deleteArtist = async function(req, rep){
 // Quản lý Playlist
 const getAllPlaylists = async function(req, rep){
     try{
-       const playlists = await Album.find().select('playlistName');
+       const playlists = await Playlist.find().select('playlistName');
        rep.send(playlists);
     } catch (err) {
         console.log(err);
@@ -277,10 +277,10 @@ const createSong = async function(req, rep){
                 const upload  = path.join(__dirname, '../public/upload', part.filename);
                 await fs.promises.writeFile(upload, await part.toBuffer());
                 if(part.fieldname === 'audio'){
-                    data.audioURL = `/upload/${part.filename}`
+                    data.audioURL = `/public/upload${part.filename}`
                 }
                 if(part.fieldname === 'cover'){
-                    data.coverURL = `/upload/${part.filename}`
+                    data.coverURL = `/public/upload${part.filename}`
                 }
             }
         }

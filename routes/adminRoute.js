@@ -17,10 +17,10 @@ function adminRoute(fastify, options){
     // Playlist API
     fastify.get('/playlists', adminController.getAllPlaylists);
     fastify.get('/playlists/:playlistId', adminController.getPlaylist);
-    fastify.post('platlists', adminController.createPlaylist);
+    fastify.post('/platlists', adminController.createPlaylist);
     fastify.patch('/playlists/:playlistId', adminController.updatePlaylist);
     fastify.delete('/playlists/:playlistId', adminController.deletePlaylist);
-    
+
     // Song API
     fastify.get('/songs', adminController.getAllSongs);
     fastify.get('/songs/:songId', adminController.getSong);

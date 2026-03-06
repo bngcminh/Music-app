@@ -36,6 +36,12 @@ fastify.register(fastifyStatic, {
     prefix: '/public/'
 })
 
+fastify.register(fastifyStatic, {
+    root: path.join(__dirname, 'public/upload'),
+    prefix: '/upload/',
+    decorateReply: false
+})
+
 fastify.register(fastifyMutipart,{
     limits: {
         fileSize: 50 * 1024 * 1024
