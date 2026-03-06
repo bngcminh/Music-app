@@ -186,6 +186,59 @@ const getPlaylist = async function(req, rep){
     }
 }
 
+const createPlaylist = async function(req, rep){
+    try{
+        const { playlistName, songs, coverURL } = req.body;
+        const playlist = await Playlist.create({
+            playlistName,
+            songs,
+            coverUrl,
+            totalSongs: songs ? songs.length : 0
+        });
+        rep.send('Tao playlist thanh cong');
+    }catch(err){
+        console.log(err);
+        rep.code(500).send('Co loi trong qua trinh tao playlist')
+    }
+}
+
+const updatePlaylist = async function(req, rep){
+    try{
+        const playlistId = req.params.playlistId;
+        const { playlistName, songs, coverUrl } = req.body;
+
+        const update = await Playlist.findByIdAndUpdate(
+            playlistId,
+            { playlistName, songs, coverUrl },
+            { new: true, runValidators: true }
+        )
+
+        if(!update){
+            return rep.code(404).send('Khong tim thay thong tin playlist');
+        }
+
+        return rep.send('Cap nhat playlist thanh cong');
+    }catch(err){
+        console.log(err);
+        return rep.code(500).send('Co loi khi cap nhat playlist')
+    }
+}
+
+const deletePlaylist = async function(req, rep){
+    try{
+        const playlistId = req.params.playlistId;
+        const del = await Playlist.findByIdAndDelete(playlistId);
+
+        if(!del){
+            return rep.code(404).send("Khong tim thay playlist can xoa")
+        }
+
+        rep.send('xoa playlist thanh cong')
+    }catch(err) {
+        console.log(err);
+        rep.code(500).send('Co loi trong qua trinh xoa playlist')
+    }
+}
 
 // Quản lý bài hát
 const getAllSongs = async function(req, rep){
