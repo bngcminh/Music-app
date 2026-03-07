@@ -1,5 +1,5 @@
 ﻿const fs = require('node:fs');
-const path = require('node:path')
+const path = require('node:path');
 const User = require('../models/User');
 const Artist = require('../models/Artist');
 const Album = require('../models/Album');
@@ -109,7 +109,7 @@ const createArtist = async function(req, rep){
             if(part.type === 'file'){
                 const upload = path.join(__dirname, '../public/upload', part.filename);
                 await fs.promises.writeFile(upload, await part.toBuffer());
-                data.avatar = `/public/upload${part.filename}`;
+                data.avatar = `/public/upload/${part.filename}`;
             }
         }
         const artist = await Artist.create(data);
@@ -277,12 +277,20 @@ const createSong = async function(req, rep){
                 const upload  = path.join(__dirname, '../public/upload', part.filename);
                 await fs.promises.writeFile(upload, await part.toBuffer());
                 if(part.fieldname === 'audio'){
-                    data.audioURL = `/public/upload${part.filename}`
+                    data.audioURL = `/upload/audio/${part.filename}`
                 }
                 if(part.fieldname === 'cover'){
-                    data.coverURL = `/public/upload${part.filename}`
+                    data.coverURL = `/upload/cover/${part.filename}`
                 }
             }
+        }
+
+        if(data.artist && typeof data.artist === 'string'){
+            const artist = await Artist.findOne({ name: data.artist });
+            if(!artist){
+                return rep.code(404).send('Khong tim thay artist');
+            }
+            data.artist = artist._id;
         }
         const song = await Song.create(data);
         rep.code(200).send('Tao bai hat thanh cong')
