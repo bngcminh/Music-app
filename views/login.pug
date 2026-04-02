@@ -3,31 +3,101 @@ html(lang="vi")
   head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    link(rel="stylesheet", href="/public/css/home.css")
-    title Đăng nhập — MusicApp
+    link(rel="stylesheet", href="/public/css/auth.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+    title Đăng Nhập - MusicApp
   body
-    .modal-overlay
-      .modal(role="dialog" aria-modal="true")
-        .modal-close
-          a(href="/") ✕
-        .modal-inner
-          .modal-heading
-            h3 Đăng nhập
-          form.login-form(action="/login", method="post")
-            .input-wrap
-              input#email(type="text" name="username" placeholder="Nhập email/username của bạn" required)
-            .input-wrap.has-eye
-              input#password(type="password" name="password" placeholder="Nhập mật khẩu của bạn" required)
-              button.eye-toggle(type="button", aria-label="Hiện/ẩn mật khẩu") 👁️
-            .row-between
-              label.checkbox-label
+    .auth-container
+      //- Left Side - Branding
+      .auth-left
+        .auth-brand
+          a.brand-logo(href="/")
+            i.fas.fa-music
+            span MusicApp
+          h1 Chào Mừng Trở Lại!
+          p Khám phá hàng triệu bài hát từ các nghệ sĩ yêu thích
+
+          .features
+            .feature-item
+              i.fas.fa-music
+              span Hàng triệu bài hát
+            .feature-item
+              i.fas.fa-headphones
+              span Nghe không giới hạn
+            .feature-item
+              i.fas.fa-heart
+              span Playlist cá nhân
+            .feature-item
+              i.fas.fa-download
+              span Tải về offline
+
+        .auth-decoration
+          .circle.circle-1
+          .circle.circle-2
+          .circle.circle-3
+
+      //- Right Side - Login Form
+      .auth-right
+        .auth-close
+          a(href="/")
+            i.fas.fa-times
+
+        .auth-form-container
+          .auth-header
+            h2 Đăng Nhập
+            p Đăng nhập để tiếp tục khám phá âm nhạc
+
+          //- Social Login
+          .social-login
+            button.social-btn.google(type="button")
+              i.fab.fa-google
+              span Đăng nhập với Google
+            button.social-btn.facebook(type="button")
+              i.fab.fa-facebook-f
+              span Đăng nhập với Facebook
+
+          .divider
+            span hoặc
+
+          //- Login Form
+          form.auth-form#login-form(action="/auth/login", method="post")
+            .form-group
+              label(for="username")
+                i.fas.fa-user
+                span Username hoặc Email
+              input.form-control#username(
+                type="text"
+                name="username"
+                placeholder="Nhập username hoặc email"
+                required
+              )
+
+            .form-group
+              label(for="password")
+                i.fas.fa-lock
+                span Mật khẩu
+              .password-wrapper
+                input.form-control#password(
+                  type="password"
+                  name="password"
+                  placeholder="Nhập mật khẩu"
+                  required
+                )
+                button.password-toggle(type="button")
+                  i.fas.fa-eye
+
+            .form-options
+              label.checkbox-wrapper
                 input(type="checkbox" name="remember")
-                span Nhớ cho lần đăng nhập tới
-              a.forgot(href="#") Quên mật khẩu?
-            .consent
-              label
-                input(type="checkbox" name="agree")
-                span Tôi đã đọc, hiểu rõ và tự nguyện đồng ý các điều khoản
-            button.modal-btn(type="submit") Đăng nhập
-          .switch-auth
-            p Chưa có tài khoản? #[a(href="/register") Đăng ký]
+                span Ghi nhớ đăng nhập
+              a.forgot-link(href="/forgot-password") Quên mật khẩu?
+
+            button.btn.btn-primary(type="submit")
+              span Đăng Nhập
+              i.fas.fa-arrow-right
+
+          .auth-footer
+            p Chưa có tài khoản?
+              a(href="/register") Đăng ký ngay
+
+    script(src="/public/js/auth.js")

@@ -1,111 +1,234 @@
 doctype html
 html(lang="vi")
-    head
-        meta(charset="utf-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1")
-        link(rel="stylesheet", href="/public/css/home.css")
-        title MusicApp - Trang chủ
-        body
-            .app
-                aside.sidebar
-                    .logo-area
-                        a.logo(href="/")
-                            span.logo-mark NCT
-                            span.logo-text Mạng Xã Hội Âm Nhạc
-                    nav.side-nav
-                        ul
-                            li.active: a(href="#")
-                                span.icon ▸
-                                span.text Khám Phá
-                            li: a(href="#")
-                                span.icon ○
-                                span.text Dành Cho Bạn
-                            li: a(href="#")
-                                span.icon ○
-                                span.text Của Tui
-                    .library
-                        h5 THƯ VIỆN
-                        ul
-                            li: a(href="#") ♥ Bài hát Yêu thích
-                            li: a(href="#") ⟳ Nghe gần đây
-                    .login-cta
-                        a.btn.btn-register(href="/login") Đăng nhập
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="/public/css/home.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+    title MusicApp - Khám phá âm nhạc
+  body
+    .app-wrapper
+      //- Sidebar Navigation
+      aside.sidebar
+        .sidebar-header
+          a.logo(href="/")
+            i.fas.fa-music.logo-icon
+            span.logo-text MusicApp
 
-                main.main
-                    header.topbar
-                        form.search(action="#", method="get")
-                            input(type="text", placeholder="Tìm bài hát, nghệ sĩ hoặc playlist")
-                        .top-right
-                            a.btn.btn-login(href="/login") Đăng nhập
-                            a.btn.btn-register(href="/register") Đăng ký
+        nav.nav-menu
+          a.nav-item.active(href="/")
+            i.fas.fa-home
+            span Khám Phá
+          a.nav-item(href="#")
+            i.fas.fa-chart-line
+            span BXH Nhạc Mới
+          a.nav-item(href="#")
+            i.fas.fa-fire
+            span Chủ Đề & Thể Loại
+          a.nav-item(href="#")
+            i.fas.fa-star
+            span Top 100
+          a.nav-item(href="#")
+            i.fas.fa-podcast
+            span Podcast
 
-                    .content.container
-                        h2.greeting Chào buổi tối
+        .divider
 
-                        //- Hero lớn (ảnh nền, tìm kiếm, CTA)
-                        .hero
-                            .hero-inner
-                                h1 Hàng triệu bài hát, mọi tâm trạng
-                                p Khám phá, lưu và chia sẻ playlist yêu thích của bạn.
-                                form.hero-search(action="#", method="get")
-                                    input(type="text" placeholder="Bạn muốn nghe gì hôm nay?")
-                                    button.btn-ghost(type="submit") Tìm kiếm
-                                .hero-cta
-                                    a.btn.btn-register(href="/register") Bắt đầu
-                                    a.btn.btn-login(href="/login") Đăng nhập
+        .library-section
+          h4.library-title Thư Viện
+          a.nav-item(href="#")
+            i.fas.fa-heart
+            span Yêu Thích
+          a.nav-item(href="#")
+            i.fas.fa-clock-rotate-left
+            span Nghe Gần Đây
+          a.nav-item(href="#")
+            i.fas.fa-folder
+            span Playlist Của Tôi
 
-                        .banner
-                            .banner-item(style="background-image: url('https://picsum.photos/seed/banner1/1200/300')")
-                            .banner-item(style="background-image: url('https://picsum.photos/seed/banner2/1200/300')")
+        .sidebar-footer
+          a.btn.btn-login-sidebar(href="/login")
+            i.fas.fa-sign-in-alt
+            span Đăng Nhập
 
-                        //- Featured Playlists
-                        section.section.featured
-                            h3.section-title Bộ sưu tập nổi bật
-                            .grid.grid-featured
-                                each i in [1,2,3,4]
-                                    .playlist-card
-                                        .playlist-thumb(style=`background-image: url('https://picsum.photos/seed/playlist${i}/400/240')`)
-                                        .pmeta
-                                            h4 Playlist mẫu #{i}
-                                            p Tập hợp các bản hit
+      //- Main Content
+      main.main-content
+        //- Top Header
+        header.header
+          .search-box
+            i.fas.fa-search
+            input(type="text" placeholder="Tìm bài hát, nghệ sĩ, MV...")
 
-                        section.section
-                            h3.section-title Chủ Đề
-                            .grid
-                                each item in [1,2,3,4,5,6,7,8]
-                                    .topic-card
-                                        .thumb(style="background-image: url('https://picsum.photos/seed/topic#{item}/400/240')")
-                                        .tmeta
-                                            span.title Chủ đề #{item}
+          .header-actions
+            a.btn.btn-premium(href="#")
+              i.fas.fa-crown
+              span Nâng Cấp VIP
+            a.btn.btn-login(href="/login") Đăng Nhập
+            a.btn.btn-register(href="/register") Đăng Ký
 
-                        section.section
-                            h3.section-title Bài Hát Phổ Biến
-                            .grid
-                                each item in [1,2,3,4,5,6]
-                                    .card
-                                        .thumb(style="background-image: url('https://picsum.photos/seed/#{item}/320/320')")
-                                        .meta
-                                            h4 Bài hát #{item}
-                                            p Nghệ sĩ mẫu
+        //- Hero Banner with Slider
+        .hero-banner
+          .banner-slider
+            .banner-slide.active
+              .banner-content
+                h1 Âm Nhạc Là Cả Một Thế Giới
+                p Khám phá hàng triệu bài hát từ các nghệ sĩ hàng đầu
+                .banner-actions
+                  button.btn.btn-play-large
+                    i.fas.fa-play
+                    span Phát Nhạc Ngay
+                  button.btn.btn-explore
+                    i.fas.fa-compass
+                    span Khám Phá
 
-                //- Player bar (fixed bottom)
-                .player-bar
-                    .player-inner.container
-                        .player-left
-                            .pthumb(style="background-image:url('https://picsum.photos/seed/track/56/56')")
-                            .pinfo
-                                .ptitle PHÓNG ZÌN ZÌN
-                                .partist flinh, Low G
-                        .player-controls
-                            .time 00:00
-                            .controls
-                                button.control.prev ◂◂
-                                button.control.play ▶
-                                button.control.next ▸▸
-                            .time 03:22
-                        .player-right
-                            .icons ▸ ♫ ☆
+        //- Quick Categories
+        .quick-categories
+          a.category-chip(href="#") Tất Cả
+          a.category-chip.active(href="#") V-Pop
+          a.category-chip(href="#") US-UK
+          a.category-chip(href="#") K-Pop
+          a.category-chip(href="#") Hòa Tấu
+          a.category-chip(href="#") Rap Việt
+          a.category-chip(href="#") EDM
 
-            footer.footer
-                .container
-                    p © 2026 MusicApp — Giao diện mẫu
+        //- Featured Section - Top Trending
+        section.content-section
+          .section-header
+            h2.section-title
+              i.fas.fa-fire-flame-curved
+              span Bảng Xếp Hạng
+            a.view-all(href="#") Xem tất cả
+              i.fas.fa-chevron-right
+
+          .trending-list
+            each item, index in [1,2,3,4,5]
+              .trending-item
+                .rank(class=index < 3 ? 'top-rank' : '')= index + 1
+                .song-info
+                  .song-thumbnail
+                    img(src=`https://picsum.photos/seed/trend${item}/80/80` alt="")
+                    .play-overlay
+                      i.fas.fa-play
+                  .song-details
+                    h4.song-name Bài hát thịnh hành #{item}
+                    p.artist-name Nghệ sĩ mẫu #{item}
+                .song-stats
+                  i.fas.fa-headphones
+                  span 1.2M
+                .song-duration 3:45
+                .song-actions
+                  button.btn-icon(title="Thêm vào yêu thích")
+                    i.far.fa-heart
+                  button.btn-icon(title="Thêm vào playlist")
+                    i.fas.fa-plus
+
+        //- Playlists Section
+        section.content-section
+          .section-header
+            h2.section-title
+              i.fas.fa-list-ul
+              span Playlist Nổi Bật
+            a.view-all(href="#") Xem tất cả
+              i.fas.fa-chevron-right
+
+          .grid-playlists
+            each i in [1,2,3,4,5,6]
+              .playlist-card
+                .playlist-cover
+                  img(src=`https://picsum.photos/seed/pl${i}/300/300` alt="")
+                  .play-button
+                    i.fas.fa-play
+                .playlist-info
+                  h4.playlist-name Playlist #{i}
+                  p.playlist-desc 50 bài hát • 2.5M lượt nghe
+
+        //- New Release Albums
+        section.content-section
+          .section-header
+            h2.section-title
+              i.fas.fa-compact-disc
+              span Album Mới Phát Hành
+            a.view-all(href="#") Xem tất cả
+              i.fas.fa-chevron-right
+
+          .grid-albums
+            each i in [1,2,3,4,5]
+              .album-card
+                .album-cover
+                  img(src=`https://picsum.photos/seed/album${i}/250/250` alt="")
+                  .album-overlay
+                    button.btn-play-album
+                      i.fas.fa-play
+                .album-info
+                  h4.album-name Album Mới #{i}
+                  p.album-artist Nghệ sĩ #{i}
+                  p.album-date 15/03/2026
+
+        //- Artists Section
+        section.content-section
+          .section-header
+            h2.section-title
+              i.fas.fa-microphone
+              span Nghệ Sĩ Nổi Bật
+            a.view-all(href="#") Xem tất cả
+              i.fas.fa-chevron-right
+
+          .grid-artists
+            each i in [1,2,3,4,5,6]
+              .artist-card
+                .artist-avatar
+                  img(src=`https://picsum.photos/seed/artist${i}/200/200` alt="")
+                  .follow-button
+                    i.fas.fa-user-plus
+                .artist-info
+                  h4.artist-name Nghệ Sĩ #{i}
+                  p.artist-followers 1.5M theo dõi
+
+      //- Music Player Bar (Fixed Bottom)
+      .player-bar
+        .player-content
+          .player-song-info
+            .player-thumbnail
+              img(src="https://picsum.photos/seed/playing/56/56" alt="")
+            .player-details
+              h4.player-song-name Tên Bài Hát
+              p.player-artist-name Tên Nghệ Sĩ
+            .player-actions-left
+              button.btn-icon(title="Yêu thích")
+                i.far.fa-heart
+              button.btn-icon(title="Thêm")
+                i.fas.fa-plus
+
+          .player-center
+            .player-controls
+              button.btn-control(title="Shuffle")
+                i.fas.fa-shuffle
+              button.btn-control(title="Previous")
+                i.fas.fa-backward-step
+              button.btn-control.btn-play-main(title="Play")
+                i.fas.fa-play
+              button.btn-control(title="Next")
+                i.fas.fa-forward-step
+              button.btn-control(title="Repeat")
+                i.fas.fa-repeat
+            .player-timeline
+              span.time-current 0:00
+              .progress-bar
+                .progress-track
+                  .progress-fill(style="width: 30%")
+                  .progress-thumb
+              span.time-total 3:45
+
+          .player-right
+            button.btn-control(title="Lyrics")
+              i.fas.fa-microphone-lines
+            button.btn-control(title="Playlist")
+              i.fas.fa-list-ul
+            .volume-control
+              button.btn-control(title="Volume")
+                i.fas.fa-volume-high
+              .volume-slider
+                .volume-track
+                  .volume-fill(style="width: 70%")
+
+    script(src="/public/js/home.js")

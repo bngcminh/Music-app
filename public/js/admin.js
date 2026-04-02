@@ -1,8 +1,10 @@
 const tabs = {
-  users: 'Nguoi dung',
-  artists: 'Nghe si',
-  playlists: 'Playlist',
-  songs: 'Bai hat'
+  dashboard: { title: 'Dashboard', desc: 'Tổng quan hệ thống' },
+  users: { title: 'Quản Lý Người Dùng', desc: 'Quản lý tài khoản người dùng' },
+  artists: { title: 'Quản Lý Nghệ Sĩ', desc: 'Quản lý thông tin nghệ sĩ' },
+  songs: { title: 'Quản Lý Bài Hát', desc: 'Quản lý kho bài hát' },
+  playlists: { title: 'Quản Lý Playlist', desc: 'Quản lý danh sách phát' },
+  albums: { title: 'Quản Lý Albums', desc: 'Quản lý album âm nhạc' }
 };
 
 const state = {
@@ -12,8 +14,9 @@ const state = {
   songs: []
 };
 
-const notice = document.getElementById('notice');
-const title = document.getElementById('tab-title');
+const notification = document.getElementById('notification');
+const pageTitle = document.getElementById('page-title');
+const pageDesc = document.getElementById('page-desc');
 
 function escapeHtml(value) {
   return String(value ?? '')
@@ -24,15 +27,12 @@ function escapeHtml(value) {
     .replace(/'/g, '&#39;');
 }
 
-function showNotice(message, type = 'ok') {
-  notice.textContent = message;
-  notice.className = `notice ${type}`;
+function showNotice(message, type = 'success') {
+  notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
+  notification.className = `notification ${type} show`;
   setTimeout(() => {
-    if (notice.textContent === message) {
-      notice.textContent = '';
-      notice.className = 'notice';
-    }
-  }, 2600);
+    notification.className = 'notification';
+  }, 3000);
 }
 
 async function callApi(url, options = {}) {
@@ -55,20 +55,22 @@ async function callApi(url, options = {}) {
 }
 
 function initTabs() {
-  const menuButtons = document.querySelectorAll('.menu-item');
+  const navTabs = document.querySelectorAll('.nav-tab');
   const panels = document.querySelectorAll('.panel');
 
-  menuButtons.forEach((button) => {
+  navTabs.forEach((button) => {
     button.addEventListener('click', () => {
       const tab = button.dataset.tab;
-      menuButtons.forEach((item) => item.classList.remove('active'));
+      navTabs.forEach((item) => item.classList.remove('active'));
       button.classList.add('active');
 
       panels.forEach((panel) => {
         panel.classList.toggle('active', panel.dataset.panel === tab);
       });
 
-      title.textContent = tabs[tab] || 'Dashboard';
+      const tabInfo = tabs[tab] || tabs.dashboard;
+      pageTitle.textContent = tabInfo.title;
+      pageDesc.textContent = tabInfo.desc;
     });
   });
 }
