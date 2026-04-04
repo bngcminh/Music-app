@@ -1,5 +1,6 @@
 ﻿const fs = require('node:fs');
 const path = require('node:path');
+const { pipeline } = require('node:stream/promises');
 const User = require('../models/User');
 const Artist = require('../models/Artist');
 const Album = require('../models/Album');
@@ -103,14 +104,15 @@ const createArtist = async function(req, rep){
         const parts = req.parts();
         const data = {};
         for await (const part of parts){
+            let upload
             if(part.type === 'field'){
                 data[part.fieldname] = part.value;
             }
             if(part.type === 'file'){
-                const upload = path.join(__dirname, '../public/upload', part.filename);
-                await fs.promises.writeFile(upload, await part.toBuffer());
-                data.avatar = `/public/upload/${part.filename}`;
+                const uploadCover = path.join(__dirname, '../public/upload/cover', part.filename);
+                data.avatar = `/upload/cover/${part.filename}`;
             }
+            await pipeline(part.file, fs.createWriteStream(upload))
         }
         const artist = await Artist.create(data);
         rep.send(artist);
@@ -192,7 +194,7 @@ const createPlaylist = async function(req, rep){
         const playlist = await Playlist.create({
             playlistName,
             songs,
-            coverUrl,
+            coverURL,
             totalSongs: songs ? songs.length : 0
         });
         rep.send('Tao playlist thanh cong');
@@ -274,15 +276,17 @@ const createSong = async function(req, rep){
                 data[part.fieldname] = part.value;
             }
             if(part.type === 'file'){
-                const upload  = path.join(__dirname, '../public/upload', part.filename);
-                await fs.promises.writeFile(upload, await part.toBuffer());
+                let upload
                 if(part.fieldname === 'audio'){
+                    const uploadAudio  = path.join(__dirname, '../public/upload/audio', part.filename);
                     data.audioURL = `/upload/audio/${part.filename}`
                 }
                 if(part.fieldname === 'cover'){
+                    const uploadCover  = path.join(__dirname, '../public/upload/audio', part.filename);
                     data.coverURL = `/upload/cover/${part.filename}`
                 }
             }
+            await pipeline(part.file, fs.createWriteStream(upload))
         }
 
         if(data.artist && typeof data.artist === 'string'){

@@ -16,8 +16,7 @@ const register = async function(req, rep){
 
     const existEmail = await User.findOne({ email });
     if(existEmail){
-        rep.send('Email đã tồn tại');
-        rep.code(500);
+        rep.code(500).send('Email đã tồn tại');
     }
     
     const salt = await bcrypt.genSalt(10);
