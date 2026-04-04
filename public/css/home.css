@@ -1061,3 +1061,117 @@ img {
   }
 }
 
+/* ========== User Menu Styles ========== */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: rgba(255, 71, 87, 0.1);
+  border-radius: 50px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.user-menu:hover {
+  background: rgba(255, 71, 87, 0.2);
+  transform: translateY(-2px);
+}
+
+.user-avatar i {
+  font-size: 28px;
+  color: var(--primary-color);
+}
+
+.user-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: var(--bg-card);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  min-width: 200px;
+  z-index: 1000;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.user-menu:hover .dropdown-menu {
+  display: block;
+  animation: fadeInDown 0.3s ease;
+}
+
+.dropdown-menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.dropdown-menu a:hover {
+  background: var(--primary-gradient);
+  color: #fff;
+}
+
+.dropdown-menu a i {
+  font-size: 16px;
+  width: 20px;
+}
+
+/* User Info Sidebar */
+.user-info-sidebar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--primary-gradient);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.user-info-sidebar .avatar i {
+  font-size: 36px;
+  color: #fff;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-details .username {
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+  font-size: 14px;
+}
+
+.user-details .user-role {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 4px 0 0;
+  text-transform: capitalize;
+}
+
+/* Animation */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

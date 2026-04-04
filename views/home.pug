@@ -47,9 +47,19 @@ html(lang="vi")
             span Playlist Của Tôi
 
         .sidebar-footer
-          a.btn.btn-login-sidebar(href="/login")
-            i.fas.fa-sign-in-alt
-            span Đăng Nhập
+          if user
+            //- Hiển thị thông tin user
+            .user-info-sidebar
+              .avatar
+                i.fas.fa-user-circle
+              .user-details
+                p.username= user.username
+                p.user-role= user.role || 'User'
+          else
+            //- Hiển thị nút đăng nhập
+            a.btn.btn-login-sidebar(href="/login")
+              i.fas.fa-sign-in-alt
+              span Đăng Nhập
 
       //- Main Content
       main.main-content
@@ -63,8 +73,24 @@ html(lang="vi")
             a.btn.btn-premium(href="#")
               i.fas.fa-crown
               span Nâng Cấp VIP
-            a.btn.btn-login(href="/login") Đăng Nhập
-            a.btn.btn-register(href="/register") Đăng Ký
+
+            if user
+              //- Hiển thị khi đã đăng nhập
+              .user-menu
+                .user-avatar
+                  i.fas.fa-user-circle
+                span.user-name= user.username
+                .dropdown-menu
+                  a(href="/profile")
+                    i.fas.fa-user
+                    span Trang cá nhân
+                  a(href="/logout")
+                    i.fas.fa-sign-out-alt
+                    span Đăng xuất
+            else
+              //- Hiển thị khi chưa đăng nhập
+              a.btn.btn-login(href="/login") Đăng Nhập
+              a.btn.btn-register(href="/register") Đăng Ký
 
         //- Hero Banner with Slider
         .hero-banner

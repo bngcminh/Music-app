@@ -9,7 +9,7 @@ const fastifyJWT = require('@fastify/jwt');
 const fastifyCookie = require('@fastify/cookie');
 const path = require('node:path');
 
-const connectDB = require('./config/db')
+const connectDB = require('./config/db');
 const authentication = require('./hook/authentication');
 const authRoute = require('./routes/authRoute');
 const adminRoute  = require('./routes/adminRoute');
@@ -26,9 +26,6 @@ dns.setServers(['1.1.1.1']);
 
 // MongoDB
 fastify.register(connectDB);
-
-// Authentication
-fastify.register(authentication);
 
 // Jwt
 fastify.register(fastifyJWT, {
@@ -70,9 +67,9 @@ fastify.register(fastifyFormbody)
 fastify.register(authRoute);
 fastify.register(adminRoute);
 
-fastify.get('/', (req, rep) => {
-    // rep.send('hello world');
-    return rep.view("home.pug", );
+fastify.get('/', { preHandler: authentication }, async (req, rep) => {
+    const user = req.user || null;
+    return rep.view("home.pug", { user });
 })
 
 fastify.get('/login', (req, rep) => {
