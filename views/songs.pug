@@ -1,0 +1,128 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Bài Hát - MusicApp
+    link(rel="stylesheet", href="/public/css/home.css")
+    link(rel="stylesheet", href="/public/css/songs.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+  body
+    .app-container
+      //- Sidebar
+      aside.sidebar
+        .sidebar-header
+          .logo
+            i.fas.fa-music
+            span MusicApp
+        
+        nav.sidebar-nav
+          a.nav-item(href="/")
+            i.fas.fa-home
+            span Trang Chủ
+          a.nav-item(href="/songs")
+            i.fas.fa-music
+            span Bài Hát
+          a.nav-item.active(href="/playlists")
+            i.fas.fa-list-ul
+            span Playlist
+          if user
+            a.nav-item(href="/my-playlists")
+              i.fas.fa-heart
+              span Playlist Của Tôi
+        
+        .sidebar-footer
+          if user
+            .user-info-sidebar
+              .avatar
+                i.fas.fa-user-circle
+              .user-details
+                p.username= user.username
+                p.user-role= user.role || 'User'
+          else
+            a.btn.btn-login-sidebar(href="/login")
+              i.fas.fa-sign-in-alt
+              span Đăng Nhập
+
+      //- Main Content
+      main.main-content
+        //- Header
+        header.main-header
+          .header-left
+            h1.page-title Bài Hát
+          
+          .header-actions
+            if user
+              .user-menu
+                .user-avatar
+                  i.fas.fa-user-circle
+                span.user-name= user.username
+                .dropdown-menu
+                  a(href="/profile")
+                    i.fas.fa-user
+                    span Trang cá nhân
+                  if user.role === 'admin'
+                    a(href="/admin")
+                      i.fas.fa-cog
+                      span Admin Dashboard
+                  a(href="/logout")
+                    i.fas.fa-sign-out-alt
+                    span Đăng xuất
+            else
+              a.btn.btn-login(href="/login") Đăng Nhập
+              a.btn.btn-register(href="/register") Đăng Ký
+
+        //- Songs Content
+        .content-wrapper
+          .songs-header
+            .search-box
+              i.fas.fa-search
+              input(type="text" placeholder="Tìm kiếm bài hát..." id="searchSongs")
+            
+            .filter-buttons
+              button.filter-btn.active(data-filter="all") Tất Cả
+              button.filter-btn(data-filter="vpop") V-Pop
+              button.filter-btn(data-filter="usuk") US-UK
+              button.filter-btn(data-filter="kpop") K-Pop
+          
+          .songs-grid#songsGrid
+            //- Song cards will be loaded here
+            p.loading-text Đang tải bài hát...
+
+      //- Music Player
+      .music-player
+        .player-content
+          .player-left
+            .song-thumbnail
+              i.fas.fa-music
+            .song-info
+              p.song-name Chọn một bài hát
+              p.song-artist ---
+          
+          .player-center
+            .player-controls
+              button.control-btn
+                i.fas.fa-random
+              button.control-btn
+                i.fas.fa-step-backward
+              button.control-btn.play-btn
+                i.fas.fa-play
+              button.control-btn
+                i.fas.fa-step-forward
+              button.control-btn
+                i.fas.fa-redo
+            
+            .player-progress
+              span.time-current 0:00
+              .progress-bar
+                .progress-fill
+              span.time-total 0:00
+          
+          .player-right
+            button.control-btn
+              i.fas.fa-list-ul
+            .volume-control
+              i.fas.fa-volume-up
+              input(type="range" min="0" max="100" value="70")
+
+    script(src="/public/js/songs.js")

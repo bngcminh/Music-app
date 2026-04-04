@@ -18,17 +18,17 @@ html(lang="vi")
             p Quản Trị Hệ Thống
 
         nav.admin-nav
-          a.nav-tab(href="/admin")
+          a.nav-tab.active(href="/admin")
             i.fas.fa-chart-line
             span Dashboard
-          button.nav-tab(type="button" data-tab="users")
+          a.nav-tab(href="/admin/users")
             i.fas.fa-users
             span Người Dùng
-          button.nav-tab.active(type="button" data-tab="artists")
+          a.nav-tab(href="/admin/artists")
             i.fas.fa-microphone
             span Nghệ Sĩ
           a.nav-tab(href="/admin/songs")
-            i.fas.fa-music
+            i.fas.fa-user
             span Bài Hát
           a.nav-tab(href="/admin/playlists")
             i.fas.fa-list-ul
@@ -51,8 +51,8 @@ html(lang="vi")
               .avatar
                 i.fas.fa-user-circle
               .user-detail
-                p.user-name Admin User
-                p.user-role Super Admin
+                if user
+                  p.user-name #{user.username}
 
         #notification.notification
 

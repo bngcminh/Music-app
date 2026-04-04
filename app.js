@@ -11,6 +11,7 @@ const path = require('node:path');
 
 const connectDB = require('./config/db');
 const authentication = require('./hook/authentication');
+const authorization = require('./hook/authorization');
 const authRoute = require('./routes/authRoute');
 const adminRoute  = require('./routes/adminRoute');
 
@@ -68,8 +69,36 @@ fastify.register(authRoute);
 fastify.register(adminRoute);
 
 fastify.get('/', { preHandler: authentication }, async (req, rep) => {
-    const user = req.user || null;
-    return rep.view("home.pug", { user });
+    return rep.view("home.pug", { user: req.user });
+})
+
+fastify.get('/profile', { preHandler: authentication }, async (req, rep) => {
+    if (!req.user) {
+        return rep.redirect('/login');
+    }
+    return rep.view('profile.pug', { user: req.user });
+})
+
+fastify.get('/song', { preHandler: authentication }, async (req, rep) => {
+    return rep.view("songs.pug", { user: req.user });
+})
+
+fastify.get('/playlist', { preHandler: authentication }, async (req, rep) => {
+    return rep.view("playlists.pug", { user: req.user });
+})
+
+fastify.get('/playlists/create', { preHandler: [authentication] }, async (req, rep) => {
+    if (!req.user) {
+        return rep.redirect('/login');
+    }
+    return rep.view("create-playlist.pug", { user: req.user });
+})
+
+fastify.get('/my-playlists', { preHandler: [authentication] }, async (req, rep) => {
+    if (!req.user) {
+        return rep.redirect('/login');
+    }
+    return rep.view("my-playlists.pug", { user: req.user });
 })
 
 fastify.get('/login', (req, rep) => {
@@ -82,35 +111,26 @@ fastify.get('/register', (req, rep) => {
     rep.view("register.pug");
 })
 
-fastify.get('/admin', (req, rep) => {
-    rep.view("admin/dashboard.pug")
+fastify.get('/admin', {preHandler: [authentication, authorization('admin')]}, (req, rep) => {
+    rep.view("admin/dashboard.pug", { user: req.user });
 })
 
-fastify.get('/admin/users', (req, rep) => {
-    rep.view("admin/users.pug")
+fastify.get('/admin/users', {preHandler: [authentication, authorization('admin')]}, (req, rep) => {
+    rep.view("admin/users.pug", { user: req.user });
 })
 
-fastify.get('/admin/artists', (req, rep) => {
-    rep.view("admin/artists.pug")
+fastify.get('/admin/artists', {preHandler: [authentication, authorization('admin')]}, (req, rep) => {
+    rep.view("admin/playlists.pug", { user: req.user });
 })
 
-fastify.get('/admin/songs', (req, rep) => {
-    rep.view("admin/songs.pug")
+fastify.get('/admin/songs', {preHandler: [authentication, authorization('admin')]}, (req, rep) => {
+    rep.view("admin/songs.pug", { user: req.user });
 })
 
-fastify.get('/admin/playlists', (req, rep) => {
-    rep.view("admin/playlists.pug")
+fastify.get('/admin/playlists', {preHandler: [authentication, authorization('admin')]}, (req, rep) => {
+    rep.view("admin/playlists.pug", { user: req.user });
 })
-
-// fastify.listen({ port: 3000 }, (err) => {
-//     if(err){
-//         fastify.log.error(err);
-//         process.exit(1);
-//     }else{
-
-//     }
-// })
 
 fastify.listen({ port:3000 }, (err) => {
-    console.log(err);
+    // console.log(err);
 })

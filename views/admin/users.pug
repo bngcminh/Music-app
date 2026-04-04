@@ -18,17 +18,17 @@ html(lang="vi")
             p Quản Trị Hệ Thống
 
         nav.admin-nav
-          a.nav-tab(href="/admin")
+          a.nav-tab.active(href="/admin")
             i.fas.fa-chart-line
             span Dashboard
-          a.nav-tab.active(href="/admin/users")
+          a.nav-tab(href="/admin/users")
             i.fas.fa-users
             span Người Dùng
           a.nav-tab(href="/admin/artists")
             i.fas.fa-microphone
             span Nghệ Sĩ
           a.nav-tab(href="/admin/songs")
-            i.fas.fa-music
+            i.fas.fa-user
             span Bài Hát
           a.nav-tab(href="/admin/playlists")
             i.fas.fa-list-ul
@@ -51,8 +51,8 @@ html(lang="vi")
               .avatar
                 i.fas.fa-user-circle
               .user-detail
-                p.user-name Admin User
-                p.user-role Super Admin
+                if user
+                  p.user-name #{user.username}
 
         #notification.notification
 
@@ -63,47 +63,8 @@ html(lang="vi")
               i.fas.fa-users
               span Quản Lý Người Dùng
 
-          .form-card
-            h3 Tạo Người Dùng Mới
-            form.admin-form#user-create-form(action="/users" method="post")
-              .form-row
-                .form-group
-                  label
-                    i.fas.fa-user
-                    span Tên người dùng
-                  input.form-control(type="text" name="username" placeholder="Nhập tên người dùng" required)
-
-                .form-group
-                  label
-                    i.fas.fa-envelope
-                    span Email
-                  input.form-control(type="email" name="email" placeholder="example@email.com" required)
-
-              .form-row
-                .form-group
-                  label
-                    i.fas.fa-lock
-                    span Mật khẩu
-                  input.form-control(type="password" name="password" placeholder="Nhập mật khẩu" required)
-
-                .form-group
-                  label
-                    i.fas.fa-user-tag
-                    span Vai trò
-                  select.form-control(name="role")
-                    option(value="user" selected) User
-                    option(value="admin") Admin
-
-              button.btn.btn-primary(type="submit")
-                i.fas.fa-plus
-                span Tạo Người Dùng
-
           .panel-header.mt-4
             h3 Danh Sách Người Dùng
-            button.btn.btn-secondary#refresh-users(type="button")
-              i.fas.fa-sync-alt
-              span Tải Lại
-
           .data-table-container
             table.data-table
               thead
@@ -120,7 +81,7 @@ html(lang="vi")
                 tr
                   td(colspan="8")
                     .loading
-                      i.fas.fa-spinner.fa-spin
+                      
                       span Đang tải dữ liệu...
 
     script(src="/public/js/admin.js")

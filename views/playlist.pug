@@ -1,0 +1,133 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Playlist - MusicApp
+    link(rel="stylesheet", href="/public/css/home.css")
+    link(rel="stylesheet", href="/public/css/playlists.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+  body
+    .app-container
+      //- Sidebar
+      aside.sidebar
+        .sidebar-header
+          .logo
+            i.fas.fa-music
+            span MusicApp
+        
+        nav.sidebar-nav
+          a.nav-item.active(href="/")
+            i.fas.fa-home
+            span Khám Phá
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-chart-line
+          //-   span BXH Nhạc Mới
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-fire
+          //-   span Chủ Đề & Thể Loại
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-star
+          //-   span Top 100
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-podcast
+          //-   span Podcast
+
+          .divider
+
+        .library-section
+          h4.library-title Thư Viện
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-heart
+          //-   span Yêu Thích
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-clock-rotate-left
+          //-   span Nghe Gần Đây
+          a.nav-item(href="#")
+            i.fas.fa-folder
+            span Playlist Của Tôi
+
+      //- Main Content
+      main.main-content
+        //- Header
+        header.main-header
+          .header-left
+            h1.page-title Playlist
+          
+          .header-actions
+            if user
+              a.btn.btn-primary(href="/playlists/create")
+                i.fas.fa-plus
+                span Tạo Playlist
+              .user-menu
+                .user-avatar
+                  i.fas.fa-user-circle
+                span.user-name= user.username
+                .dropdown-menu
+                  a(href="/profile")
+                    i.fas.fa-user
+                    span Trang cá nhân
+                  if user.role === 'admin'
+                    a(href="/admin")
+                      i.fas.fa-cog
+                      span Admin Dashboard
+                  a(href="/logout")
+                    i.fas.fa-sign-out-alt
+                    span Đăng xuất
+            else
+              a.btn.btn-login(href="/login") Đăng Nhập
+              a.btn.btn-register(href="/register") Đăng Ký
+
+        //- Playlists Content
+        .content-wrapper
+          .playlists-header
+            .search-box
+              i.fas.fa-search
+              input(type="text" placeholder="Tìm kiếm playlist..." id="searchPlaylists")
+            
+            .filter-buttons
+              button.filter-btn.active(data-filter="all") Tất Cả
+              button.filter-btn(data-filter="trending") Thịnh Hành
+              button.filter-btn(data-filter="new") Mới Nhất
+          
+          .playlists-grid#playlistsGrid
+            //- Playlist cards will be loaded here
+            p.loading-text Đang tải playlist...
+
+      //- Music Player
+      .music-player
+        .player-content
+          .player-left
+            .song-thumbnail
+              i.fas.fa-music
+            .song-info
+              p.song-name Chọn một bài hát
+              p.song-artist ---
+          
+          .player-center
+            .player-controls
+              button.control-btn
+                i.fas.fa-random
+              button.control-btn
+                i.fas.fa-step-backward
+              button.control-btn.play-btn
+                i.fas.fa-play
+              button.control-btn
+                i.fas.fa-step-forward
+              button.control-btn
+                i.fas.fa-redo
+            
+            .player-progress
+              span.time-current 0:00
+              .progress-bar
+                .progress-fill
+              span.time-total 0:00
+          
+          .player-right
+            button.control-btn
+              i.fas.fa-list-ul
+            .volume-control
+              i.fas.fa-volume-up
+              input(type="range" min="0" max="100" value="70")
+
+    script(src="/public/js/playlists.js")

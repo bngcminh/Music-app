@@ -19,42 +19,36 @@ html(lang="vi")
           a.nav-item.active(href="/")
             i.fas.fa-home
             span Khám Phá
-          a.nav-item(href="#")
-            i.fas.fa-chart-line
-            span BXH Nhạc Mới
-          a.nav-item(href="#")
-            i.fas.fa-fire
-            span Chủ Đề & Thể Loại
-          a.nav-item(href="#")
-            i.fas.fa-star
-            span Top 100
-          a.nav-item(href="#")
-            i.fas.fa-podcast
-            span Podcast
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-chart-line
+          //-   span BXH Nhạc Mới
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-fire
+          //-   span Chủ Đề & Thể Loại
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-star
+          //-   span Top 100
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-podcast
+          //-   span Podcast
 
         .divider
 
         .library-section
           h4.library-title Thư Viện
-          a.nav-item(href="#")
-            i.fas.fa-heart
-            span Yêu Thích
-          a.nav-item(href="#")
-            i.fas.fa-clock-rotate-left
-            span Nghe Gần Đây
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-heart
+          //-   span Yêu Thích
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-clock-rotate-left
+          //-   span Nghe Gần Đây
           a.nav-item(href="#")
             i.fas.fa-folder
             span Playlist Của Tôi
 
         .sidebar-footer
           if user
-            //- Hiển thị thông tin user
-            .user-info-sidebar
-              .avatar
-                i.fas.fa-user-circle
-              .user-details
-                p.username= user.username
-                p.user-role= user.role || 'User'
+
           else
             //- Hiển thị nút đăng nhập
             a.btn.btn-login-sidebar(href="/login")
@@ -67,12 +61,12 @@ html(lang="vi")
         header.header
           .search-box
             i.fas.fa-search
-            input(type="text" placeholder="Tìm bài hát, nghệ sĩ, MV...")
+            input(type="text" placeholder="Tìm kiếm")
 
           .header-actions
-            a.btn.btn-premium(href="#")
-              i.fas.fa-crown
-              span Nâng Cấp VIP
+            //- a.btn.btn-premium(href="#")
+            //-   i.fas.fa-crown
+            //-   span Nâng Cấp VIP
 
             if user
               //- Hiển thị khi đã đăng nhập
@@ -84,6 +78,10 @@ html(lang="vi")
                   a(href="/profile")
                     i.fas.fa-user
                     span Trang cá nhân
+                  if user.role === 'admin'
+                    a(href="/admin")
+                      i.fas.fa-cog
+                      span Admin Dashboard
                   a(href="/logout")
                     i.fas.fa-sign-out-alt
                     span Đăng xuất
@@ -99,24 +97,6 @@ html(lang="vi")
               .banner-content
                 h1 Âm Nhạc Là Cả Một Thế Giới
                 p Khám phá hàng triệu bài hát từ các nghệ sĩ hàng đầu
-                .banner-actions
-                  button.btn.btn-play-large
-                    i.fas.fa-play
-                    span Phát Nhạc Ngay
-                  button.btn.btn-explore
-                    i.fas.fa-compass
-                    span Khám Phá
-
-        //- Quick Categories
-        .quick-categories
-          a.category-chip(href="#") Tất Cả
-          a.category-chip.active(href="#") V-Pop
-          a.category-chip(href="#") US-UK
-          a.category-chip(href="#") K-Pop
-          a.category-chip(href="#") Hòa Tấu
-          a.category-chip(href="#") Rap Việt
-          a.category-chip(href="#") EDM
-
         //- Featured Section - Top Trending
         section.content-section
           .section-header
@@ -220,10 +200,10 @@ html(lang="vi")
               h4.player-song-name Tên Bài Hát
               p.player-artist-name Tên Nghệ Sĩ
             .player-actions-left
-              button.btn-icon(title="Yêu thích")
-                i.far.fa-heart
-              button.btn-icon(title="Thêm")
-                i.fas.fa-plus
+              //- button.btn-icon(title="Yêu thích")
+              //-   i.far.fa-heart
+              //- button.btn-icon(title="Thêm")
+              //-   i.fas.fa-plus
 
           .player-center
             .player-controls
@@ -246,8 +226,8 @@ html(lang="vi")
               span.time-total 3:45
 
           .player-right
-            button.btn-control(title="Lyrics")
-              i.fas.fa-microphone-lines
+            //- button.btn-control(title="Lyrics")
+            //-   i.fas.fa-microphone-lines
             button.btn-control(title="Playlist")
               i.fas.fa-list-ul
             .volume-control
@@ -256,5 +236,33 @@ html(lang="vi")
               .volume-slider
                 .volume-track
                   .volume-fill(style="width: 70%")
+
+    //- Playlist Queue Modal
+    .playlist-queue-modal#playlistQueueModal
+      .queue-overlay
+      .queue-panel
+        .queue-header
+          h3 Danh Sách Phát
+          button.btn-close-queue#closeQueueBtn
+            i.fas.fa-times
+
+        .queue-content
+          .now-playing-section
+            h4 Đang Phát
+            .now-playing-item
+              .song-thumbnail-queue
+                i.fas.fa-music
+              .song-info-queue
+                p.song-name Chọn một bài hát
+                p.song-artist ---
+              .song-duration 0:00
+
+          .queue-list-section
+            .queue-list-header
+              h4 Tiếp Theo
+              span.queue-count 0 bài hát
+
+            .queue-list#queueList
+              p.empty-queue Danh sách phát trống
 
     script(src="/public/js/home.js")

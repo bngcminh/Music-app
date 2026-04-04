@@ -64,12 +64,16 @@ const login = async function(req, rep){
     })
 
     rep.setCookie('token', token);
+    rep.redirect('/');
+}
 
-    return rep.redirect('/')
+const logout = function(req, rep){
+    rep.clearCookie('token');
+    return rep.redirect('/');
 }
 
 module.exports = {
     register,
     login,
-    // logout
+    logout
 }
