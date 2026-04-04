@@ -5,10 +5,12 @@ const fastifyStatic = require('@fastify/static')
 const fastifyViews = require('@fastify/view');
 const fastifyFormbody = require('@fastify/formbody');
 const fastifyMutipart = require('@fastify/multipart')
+const fastifyJWT = require('@fastify/jwt');
+const fastifyCookie = require('@fastify/cookie');
 const path = require('node:path');
 
-// const connectDB = require('@fastify/mongodb');
 const connectDB = require('./config/db')
+const authentication = require('./hook/authentication');
 const authRoute = require('./routes/authRoute');
 const adminRoute  = require('./routes/adminRoute');
 
@@ -21,6 +23,22 @@ dns.setServers(['1.1.1.1']);
 //     forceClose: false,
 //     url: process.env.DATABASE
 // })
+
+// MongoDB
+fastify.register(connectDB);
+
+// Authentication
+fastify.register(authentication);
+
+// Jwt
+fastify.register(fastifyJWT, {
+    secret: 'projectBE'
+})
+
+// Cookie
+fastify.register(fastifyCookie, {
+    hook: 'onRequest'
+})
 
 // View file
 fastify.register(fastifyViews, {
@@ -54,7 +72,7 @@ fastify.register(adminRoute);
 
 fastify.get('/', (req, rep) => {
     // rep.send('hello world');
-    rep.view("home.pug");
+    return rep.view("home.pug", );
 })
 
 fastify.get('/login', (req, rep) => {
@@ -67,8 +85,24 @@ fastify.get('/register', (req, rep) => {
     rep.view("register.pug");
 })
 
-fastify.get('/admin', (res, rep) => {
+fastify.get('/admin', (req, rep) => {
+    rep.view("admin/dashboard.pug")
+})
+
+fastify.get('/admin/users', (req, rep) => {
+    rep.view("admin/users.pug")
+})
+
+fastify.get('/admin/artists', (req, rep) => {
+    rep.view("admin/artists.pug")
+})
+
+fastify.get('/admin/songs', (req, rep) => {
     rep.view("admin/songs.pug")
+})
+
+fastify.get('/admin/playlists', (req, rep) => {
+    rep.view("admin/playlists.pug")
 })
 
 // fastify.listen({ port: 3000 }, (err) => {
@@ -80,14 +114,6 @@ fastify.get('/admin', (res, rep) => {
 //     }
 // })
 
-async function start() {
-    try {
-        await fastify.register(connectDB);
-        fastify.listen({ port: 3000 })
-    }catch(err){
-        fastify.log.error(err);
-        process.exit(1);
-    }
-}
-
-start();
+fastify.listen({ port:3000 }, (err) => {
+    console.log(err);
+})

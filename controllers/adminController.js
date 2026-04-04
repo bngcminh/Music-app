@@ -104,15 +104,15 @@ const createArtist = async function(req, rep){
         const parts = req.parts();
         const data = {};
         for await (const part of parts){
-            let upload
             if(part.type === 'field'){
                 data[part.fieldname] = part.value;
             }
             if(part.type === 'file'){
                 const uploadCover = path.join(__dirname, '../public/upload/cover', part.filename);
                 data.avatar = `/upload/cover/${part.filename}`;
+                await pipeline(part.file, fs.createWriteStream(uploadCover))
             }
-            await pipeline(part.file, fs.createWriteStream(upload))
+            
         }
         const artist = await Artist.create(data);
         rep.send(artist);
@@ -276,17 +276,17 @@ const createSong = async function(req, rep){
                 data[part.fieldname] = part.value;
             }
             if(part.type === 'file'){
-                let upload
                 if(part.fieldname === 'audio'){
                     const uploadAudio  = path.join(__dirname, '../public/upload/audio', part.filename);
                     data.audioURL = `/upload/audio/${part.filename}`
+                    await pipeline(part.file, fs.createWriteStream(uploadAudio));
                 }
                 if(part.fieldname === 'cover'){
                     const uploadCover  = path.join(__dirname, '../public/upload/audio', part.filename);
                     data.coverURL = `/upload/cover/${part.filename}`
+                    await pipeline(part.file, fs.createWriteStream(uploadCover));
                 }
             }
-            await pipeline(part.file, fs.createWriteStream(upload))
         }
 
         if(data.artist && typeof data.artist === 'string'){

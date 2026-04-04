@@ -3,7 +3,7 @@ html(lang="vi")
   head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    title Admin Dashboard - MusicApp
+    title Quản Lý Bài Hát - Admin MusicApp
     link(rel="stylesheet", href="/public/css/admin.css")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
   body
@@ -18,24 +18,21 @@ html(lang="vi")
             p Quản Trị Hệ Thống
 
         nav.admin-nav
-          button.nav-tab.active(type="button" data-tab="dashboard")
+          a.nav-tab(href="/admin")
             i.fas.fa-chart-line
             span Dashboard
           button.nav-tab(type="button" data-tab="users")
             i.fas.fa-users
             span Người Dùng
-          button.nav-tab(type="button" data-tab="artists")
+          a.nav-tab(href="/admin/artists")
             i.fas.fa-microphone
             span Nghệ Sĩ
-          button.nav-tab(type="button" data-tab="songs")
+          a.nav-tab.active(href="/admin/songs")
             i.fas.fa-music
             span Bài Hát
-          button.nav-tab(type="button" data-tab="playlists")
+          a.nav-tab(href="/admin/playlists")
             i.fas.fa-list-ul
             span Playlist
-          button.nav-tab(type="button" data-tab="albums")
-            i.fas.fa-compact-disc
-            span Albums
 
         .sidebar-footer
           a.btn-back(href="/")
@@ -46,234 +43,21 @@ html(lang="vi")
       main.admin-main
         header.admin-header
           .header-left
-            h1#page-title Dashboard
-            p#page-desc Tổng quan hệ thống
-          .header-right
-            .admin-user
-              img(src="https://picsum.photos/seed/admin/40/40" alt="Admin")
-              span Admin User
+            h1#page-title Quản Lý Bài Hát
+            p#page-desc Tạo và quản lý bài hát
 
-        //- Notification Area
+          .header-right
+            .user-info
+              .avatar
+                i.fas.fa-user-circle
+              .user-detail
+                p.user-name Admin User
+                p.user-role Super Admin
+
         #notification.notification
 
-        //- Dashboard Panel
-        section.panel.active(data-panel="dashboard")
-          .stats-grid
-            .stat-card
-              .stat-icon.bg-primary
-                i.fas.fa-users
-              .stat-info
-                h3 1,234
-                p Người Dùng
-              .stat-trend.up
-                i.fas.fa-arrow-up
-                span +12%
-
-            .stat-card
-              .stat-icon.bg-success
-                i.fas.fa-microphone
-              .stat-info
-                h3 456
-                p Nghệ Sĩ
-              .stat-trend.up
-                i.fas.fa-arrow-up
-                span +8%
-
-            .stat-card
-              .stat-icon.bg-warning
-                i.fas.fa-music
-              .stat-info
-                h3 5,678
-                p Bài Hát
-              .stat-trend.up
-                i.fas.fa-arrow-up
-                span +15%
-
-            .stat-card
-              .stat-icon.bg-info
-                i.fas.fa-list-ul
-              .stat-info
-                h3 89
-                p Playlists
-              .stat-trend.down
-                i.fas.fa-arrow-down
-                span -3%
-
-          .dashboard-charts
-            .chart-card
-              h3
-                i.fas.fa-chart-bar
-                span Thống Kê Lượt Nghe
-              .chart-placeholder
-                p Biểu đồ thống kê sẽ hiển thị ở đây
-
-            .chart-card
-              h3
-                i.fas.fa-fire
-                span Top Bài Hát Trending
-              .trending-songs
-                each i in [1,2,3,4,5]
-                  .trending-song-item
-                    .song-rank= i
-                    .song-thumb
-                      img(src=`https://picsum.photos/seed/song${i}/40/40` alt="")
-                    .song-detail
-                      h4 Bài hát #{i}
-                      p Nghệ sĩ #{i}
-                    .song-plays
-                      i.fas.fa-headphones
-                      span 1.2M
-
-        //- Users Panel
-        section.panel(data-panel="users")
-          .panel-header
-            h2
-              i.fas.fa-users
-              span Quản Lý Người Dùng
-            button.btn.btn-primary#refresh-users(type="button")
-              i.fas.fa-sync-alt
-              span Tải Lại
-
-          .data-table-container
-            table.data-table
-              thead
-                tr
-                  th #
-                  th Username
-                  th Email
-                  th Role
-                  th Ngày Tạo
-                  th Thao Tác
-              tbody#users-body
-                tr
-                  td(colspan="6")
-                    .loading
-                      i.fas.fa-spinner.fa-spin
-                      span Đang tải dữ liệu...
-
-        //- Artists Panel
-        section.panel(data-panel="artists")
-          .panel-header
-            h2
-              i.fas.fa-microphone
-              span Quản Lý Nghệ Sĩ
-
-          .form-card
-            h3 Tạo Nghệ Sĩ Mới
-            form.admin-form#artist-create-form(enctype="multipart/form-data")
-              .form-row
-                .form-group
-                  label
-                    i.fas.fa-user
-                    span Tên Nghệ Sĩ
-                  input.form-control(type="text" name="name" placeholder="Nhập tên nghệ sĩ" required)
-
-                .form-group
-                  label
-                    i.fas.fa-image
-                    span Ảnh Đại Diện
-                  input.form-control(type="file" name="avatar" accept="image/*")
-
-              .form-group
-                label
-                  i.fas.fa-align-left
-                  span Tiểu Sử
-                textarea.form-control(name="bio" rows="3" placeholder="Mô tả về nghệ sĩ...")
-
-              button.btn.btn-primary(type="submit")
-                i.fas.fa-plus
-                span Tạo Nghệ Sĩ
-
-          .panel-header.mt-4
-            h3 Danh Sách Nghệ Sĩ
-            button.btn.btn-secondary#refresh-artists(type="button")
-              i.fas.fa-sync-alt
-              span Tải Lại
-
-          .data-table-container
-            table.data-table
-              thead
-                tr
-                  th #
-                  th Avatar
-                  th Tên Nghệ Sĩ
-                  th Tiểu Sử
-                  th Số Bài Hát
-                  th Thao Tác
-              tbody#artists-body
-                tr
-                  td(colspan="6")
-                    .loading
-                      i.fas.fa-spinner.fa-spin
-                      span Đang tải dữ liệu...
-
-        //- Playlists Panel
-        section.panel(data-panel="playlists")
-          .panel-header
-            h2
-              i.fas.fa-list-ul
-              span Quản Lý Playlist
-
-          .form-card
-            h3 Tạo Playlist Mới
-            form.admin-form#playlist-create-form
-              .form-row
-                .form-group
-                  label
-                    i.fas.fa-heading
-                    span Tên Playlist
-                  input.form-control(type="text" name="playlistName" placeholder="Nhập tên playlist" required)
-
-                .form-group
-                  label
-                    i.fas.fa-link
-                    span Cover URL
-                  input.form-control(type="text" name="coverUrl" placeholder="/upload/cover.jpg")
-
-              .form-group
-                label
-                  i.fas.fa-music
-                  span Danh Sách Song ID (phân tách bởi dấu phay)
-                input.form-control(type="text" name="songs" placeholder="id1,id2,id3")
-
-              .form-row
-                .form-group
-                  label
-                    i.fas.fa-eye
-                    span Công Khai
-                  select.form-control(name="isPublic")
-                    option(value="true") Có
-                    option(value="false" selected) Không
-
-              button.btn.btn-primary(type="submit")
-                i.fas.fa-plus
-                span Tạo Playlist
-
-          .panel-header.mt-4
-            h3 Danh Sách Playlist
-            button.btn.btn-secondary#refresh-playlists(type="button")
-              i.fas.fa-sync-alt
-              span Tải Lại
-
-          .data-table-container
-            table.data-table
-              thead
-                tr
-                  th #
-                  th Cover
-                  th Tên Playlist
-                  th Số Bài Hát
-                  th Công Khai
-                  th Thao Tác
-              tbody#playlists-body
-                tr
-                  td(colspan="6")
-                    .loading
-                      i.fas.fa-spinner.fa-spin
-                      span Đang tải dữ liệu...
-
         //- Songs Panel
-        section.panel(data-panel="songs")
+        section.panel.active(data-panel="songs")
           .panel-header
             h2
               i.fas.fa-music
@@ -281,7 +65,7 @@ html(lang="vi")
 
           .form-card
             h3 Tạo Bài Hát Mới
-            form.admin-form#song-create-form(enctype="multipart/form-data")
+            form.admin-form#song-create-form(action="/songs" method="post" enctype="multipart/form-data")
               .form-row
                 .form-group
                   label
@@ -336,44 +120,5 @@ html(lang="vi")
                       i.fas.fa-spinner.fa-spin
                       span Đang tải dữ liệu...
 
-        //- Albums Panel
-        section.panel(data-panel="albums")
-          .panel-header
-            h2
-              i.fas.fa-compact-disc
-              span Quản Lý Albums
-
-          .form-card
-            h3 Tạo Album Mới
-            form.admin-form#album-create-form(enctype="multipart/form-data")
-              .form-row
-                .form-group
-                  label
-                    i.fas.fa-heading
-                    span Tên Album
-                  input.form-control(type="text" name="albumName" placeholder="Nhập tên album" required)
-
-                .form-group
-                  label
-                    i.fas.fa-microphone
-                    span Nghệ Sĩ
-                  input.form-control(type="text" name="artist" placeholder="Tên nghệ sĩ" required)
-
-              .form-row
-                .form-group
-                  label
-                    i.fas.fa-calendar
-                    span Ngày Phát Hành
-                  input.form-control(type="date" name="releaseDate" required)
-
-                .form-group
-                  label
-                    i.fas.fa-image
-                    span Cover Album
-                  input.form-control(type="file" name="cover" accept="image/*")
-
-              button.btn.btn-primary(type="submit")
-                i.fas.fa-plus
-                span Tạo Album
-
     script(src="/public/js/admin.js")
+

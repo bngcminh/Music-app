@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs')
 const User = require('../models/User')
 
@@ -59,9 +58,12 @@ const login = async function(req, rep){
         return rep.code(400).send('Tai khoan hoac mat khau khong dung');
     }
 
-    // const token = {
+    const token = req.server.jwt.sign({
+        username: existAccount.username,
+        role: existAccount.role
+    })
 
-    // }
+    rep.setCookie('token', token);
 
     return rep.redirect('/')
 }

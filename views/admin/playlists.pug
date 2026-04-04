@@ -1,0 +1,117 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Quản Lý Playlist - Admin MusicApp
+    link(rel="stylesheet", href="/public/css/admin.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+  body
+    .admin-wrapper
+      //- Sidebar
+      aside.admin-sidebar
+        .admin-brand
+          .brand-icon
+            i.fas.fa-music
+          .brand-text
+            h1 MusicApp Admin
+            p Quản Trị Hệ Thống
+
+        nav.admin-nav
+          a.nav-tab(href="/admin")
+            i.fas.fa-chart-line
+            span Dashboard
+          button.nav-tab(type="button" data-tab="users")
+            i.fas.fa-users
+            span Người Dùng
+          a.nav-tab(href="/admin/artists")
+            i.fas.fa-microphone
+            span Nghệ Sĩ
+          a.nav-tab(href="/admin/songs")
+            i.fas.fa-music
+            span Bài Hát
+          button.nav-tab.active(type="button" data-tab="playlists")
+            i.fas.fa-list-ul
+            span Playlist
+
+        .sidebar-footer
+          a.btn-back(href="/")
+            i.fas.fa-arrow-left
+            span Về Trang Chủ
+
+      //- Main Content
+      main.admin-main
+        header.admin-header
+          .header-left
+            h1#page-title Quản Lý Playlist
+            p#page-desc Tạo và quản lý playlist
+
+          .header-right
+            .user-info
+              .avatar
+                i.fas.fa-user-circle
+              .user-detail
+                p.user-name Admin User
+                p.user-role Super Admin
+
+        #notification.notification
+
+        //- Playlists Panel
+        section.panel.active(data-panel="playlists")
+          .panel-header
+            h2
+              i.fas.fa-list-ul
+              span Quản Lý Playlist
+
+          .form-card
+            h3 Tạo Playlist Mới
+            form.admin-form#playlist-create-form(action="/playlists" method="post" enctype="multipart/form-data")
+              .form-row
+                .form-group
+                  label
+                    i.fas.fa-heading
+                    span Tên Playlist
+                  input.form-control(type="text" name="playlistName" placeholder="Nhập tên playlist" required)
+
+                .form-group
+                  label
+                    i.fas.fa-link
+                    span Ảnh Playlist
+                  input.form-control(type="file" name="coverUrl" accept="image/*")
+              //- .form-row
+              //-   .form-group
+              //-     label
+              //-       i.fas.fa-eye
+              //-       span Công Khai
+              //-     select.form-control(name="isPublic")
+              //-       option(value="true") Có
+              //-       option(value="false" selected) Không
+
+              button.btn.btn-primary(type="submit")
+                i.fas.fa-plus
+                span Tạo Playlist
+
+          .panel-header.mt-4
+            h3 Danh Sách Playlist
+            button.btn.btn-secondary#refresh-playlists(type="button")
+              i.fas.fa-sync-alt
+              span Tải Lại
+
+          .data-table-container
+            table.data-table
+              thead
+                tr
+                  th #
+                  th Cover
+                  th Tên Playlist
+                  th Số Bài Hát
+                  th Công Khai
+                  th Thao Tác
+              tbody#playlists-body
+                tr
+                  td(colspan="6")
+                    .loading
+                      i.fas.fa-spinner.fa-spin
+                      span Đang tải dữ liệu...
+
+    script(src="/public/js/admin.js")

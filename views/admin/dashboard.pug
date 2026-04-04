@@ -1,0 +1,152 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Dashboard - Admin MusicApp
+    link(rel="stylesheet", href="/public/css/admin.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+  body
+    .admin-wrapper
+      //- Sidebar
+      aside.admin-sidebar
+        .admin-brand
+          .brand-icon
+            i.fas.fa-music
+          .brand-text
+            h1 MusicApp Admin
+            p Quản Trị Hệ Thống
+
+        nav.admin-nav
+          button.nav-tab.active(type="button" data-tab="dashboard")
+            i.fas.fa-chart-line
+            span Dashboard
+          button.nav-tab(type="button" data-tab="users")
+            i.fas.fa-users
+            span Người Dùng
+          a.nav-tab(href="/admin/artists")
+            i.fas.fa-microphone
+            span Nghệ Sĩ
+          a.nav-tab(href="/admin/songs")
+            i.fas.fa-music
+            span Bài Hát
+          a.nav-tab(href="/admin/playlists")
+            i.fas.fa-list-ul
+            span Playlist
+
+        .sidebar-footer
+          a.btn-back(href="/")
+            i.fas.fa-arrow-left
+            span Về Trang Chủ
+
+      //- Main Content
+      main.admin-main
+        header.admin-header
+          .header-left
+            h1#page-title Dashboard
+            p#page-desc Tổng quan hệ thống
+
+          .header-right
+            .user-info
+              .avatar
+                i.fas.fa-user-circle
+              .user-detail
+                p.user-name Admin User
+
+        #notification.notification
+
+        //- Dashboard Panel
+        section.panel.active(data-panel="dashboard")
+          .stats-grid
+            .stat-card
+              .stat-icon.bg-primary
+                i.fas.fa-users
+              .stat-info
+                h3 1,234
+                p Người Dùng
+              .stat-trend.up
+                i.fas.fa-arrow-up
+                span +12%
+
+            .stat-card
+              .stat-icon.bg-success
+                i.fas.fa-microphone
+              .stat-info
+                h3 456
+                p Nghệ Sĩ
+              .stat-trend.up
+                i.fas.fa-arrow-up
+                span +8%
+
+            .stat-card
+              .stat-icon.bg-warning
+                i.fas.fa-music
+              .stat-info
+                h3 5,678
+                p Bài Hát
+              .stat-trend.up
+                i.fas.fa-arrow-up
+                span +15%
+
+            .stat-card
+              .stat-icon.bg-info
+                i.fas.fa-list-ul
+              .stat-info
+                h3 89
+                p Playlists
+              .stat-trend.down
+                i.fas.fa-arrow-down
+                span -3%
+
+          .dashboard-charts
+            .chart-card
+              h3
+                i.fas.fa-chart-bar
+                span Thống Kê Lượt Nghe
+              .chart-placeholder
+                p Biểu đồ thống kê sẽ hiển thị ở đây
+
+            .chart-card
+              h3
+                i.fas.fa-fire
+                span Top Bài Hát Trending
+              .trending-songs
+                each i in [1,2,3,4,5]
+                  .trending-song-item
+                    .song-rank= i
+                    .song-thumb
+                      img(src=`https://picsum.photos/seed/song${i}/40/40` alt="")
+                    .song-detail
+                      h4 Bài hát #{i}
+                      p Nghệ sĩ #{i}
+                    .song-plays
+                      i.fas.fa-headphones
+                      span 1.2M
+
+        //- Users Panel
+        section.panel(data-panel="users")
+          .panel-header
+            h2
+              i.fas.fa-users
+              span Quản Lý Người Dùng
+            button.btn.btn-primary#refresh-users(type="button")
+              i.fas.fa-sync-alt
+              span Tải Lại
+
+          .data-table-container
+            table.data-table
+              thead
+                tr
+                  th #
+                  th Tên
+                  th Email
+                  th Vai Trò
+                  th Trạng Thái
+              tbody#users-list
+                tr
+                  td(colspan="5")
+                    .loading
+                      i.fas.fa-spinner.fa-spin
+                      span Đang tải dữ liệu...
+
+    script(src="/public/js/admin.js")
