@@ -60,14 +60,14 @@ html(lang="vi")
             span hoặc
 
           //- Login Form
-          form.auth-form#login-form(action="/auth/login", method="post")
+          form.auth-form#login-form(action="/login", method="post")
             .form-group
               label(for="username")
                 i.fas.fa-user
                 span Username hoặc Email
               input.form-control#username(
                 type="text"
-                name="username"
+                name="email"
                 placeholder="Nhập username hoặc email"
                 required
               )

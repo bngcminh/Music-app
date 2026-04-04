@@ -38,7 +38,6 @@ const register = async function(req, rep){
 
 const login = async function(req, rep){
     const { email, password } = req.body;
-    
     // console.log("result", null.password)
     // if(!username || !password){
     //     return rep.code(400).send('Vui long nhap day du thong tin');

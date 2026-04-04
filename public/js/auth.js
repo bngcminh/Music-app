@@ -92,7 +92,7 @@ if (loginForm) {
       submitBtn.disabled = false;
       
       // Uncomment when backend is ready
-      // this.submit();
+      this.submit();
       console.log('Login data:', { username, password });
     }, 1500);
   });
@@ -150,7 +150,7 @@ if (registerForm) {
       submitBtn.disabled = false;
       
       // Uncomment when backend is ready
-      // this.submit();
+      this.submit();
       console.log('Register data:', { username, email, password });
     }, 1500);
   });
