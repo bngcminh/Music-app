@@ -65,7 +65,7 @@ html(lang="vi")
 
           .form-card
             h3 Tạo Playlist Mới
-            form.admin-form#playlist-create-form(action="/admin/playlists" method="post" enctype="multipart/form-data")
+            form.admin-form#playlist-create-form(action="/admin/create/playlist" method="post" enctype="multipart/form-data")
               .form-row
                 .form-group
                   label
@@ -82,7 +82,7 @@ html(lang="vi")
                   label
                     i.fas.fa-link
                     span Thêm bài hát
-                  select(name="songs" multiple)
+                  select.form-control(name="songs" multiple size="6")
                     each song in songs
                       option(value=song._id) #{song.songName}
               //- .form-row
@@ -120,9 +120,9 @@ html(lang="vi")
                         img(src=p.coverUrl alt="Cover" width="80")
                       td #{p.songs.length}
                       td
-                        form(action=`/admin/playlists/${p._id}` method="GET")
+                        form(action=`/admin/delete/playlist/${p._id}` method="GET")
                           button Xóa
-                        a(href=`/admin/playlists/edit/${p._id}`) Sửa
+                        a(href=`/playlists/${p._id}`) Sửa
                 else
                   tr
                     td(colspan="6") Không có playlist nào.

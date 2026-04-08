@@ -94,28 +94,28 @@ html(lang="vi")
 
             .form-card
               h3 Noi Dung Playlist
-              form.admin-form(action=playlistData && playlistData._id ? `/admin/playlists/${playlistData._id}` : '#', method="post")
+              form.admin-form(action=`/admin/update/playlist/${playlist._id}`, method="post" enctype="multipart/form-data")
                 .form-row
                   .form-group
                     label(for="playlistName")
                       i.fas.fa-heading
                       span Ten playlist
-                    input#playlistName.form-control(type="text", name="playlistName", value=playlistData && playlistData.playlistName ? playlistData.playlistName : '', placeholder="Nhap ten playlist")
+                    input#playlistName.form-control(type="text", name="playlistName", value=playlist.playlistName : '', placeholder="Nhap ten playlist")
 
                   .form-group
                     label(for="coverUrl")
                       i.fas.fa-image
                       span Cover URL
-                    input#coverUrl.form-control(type="text", name="coverUrl", value=coverUrl, placeholder="/upload/cover/playlist.jpg")
+                    input#coverUrl.form-control(type="file", name="coverUrl", placeholder="/upload/cover/playlist.jpg")
 
                 .form-row
-                  .form-group
-                    label(for="isPublic")
-                      i.fas.fa-earth-asia
-                      span Hien thi
-                    select#isPublic.form-control(name="isPublic")
-                      option(value="true", selected=playlistData && playlistData.isPublic === true) Public
-                      option(value="false", selected=!playlistData || playlistData.isPublic !== true) Private
+                  //- .form-group
+                  //-   label(for="isPublic")
+                  //-     i.fas.fa-earth-asia
+                  //-     span Hien thi
+                  //-   select#isPublic.form-control(name="isPublic")
+                  //-     option(value="true", selected=playlistData && playlistData.isPublic === true) Public
+                  //-     option(value="false", selected=!playlistData || playlistData.isPublic !== true) Private
 
                   .form-group
                     label(for="songs")
@@ -123,8 +123,8 @@ html(lang="vi")
                       span Danh sach bai hat
                     input#songs.form-control(type="text", name="songs", value=songs.map(item => item && item._id ? item._id : item).join(', '), placeholder="Nhap ID bai hat, cach nhau boi dau phay")
 
-                p.form-help
-                  | O danh sach bai hat, giao dien hien tai dung chuoi ID phan cach boi dau phay de giu form don gian.
+                //- p.form-help
+                //-   | O danh sach bai hat, giao dien hien tai dung chuoi ID phan cach boi dau phay de giu form don gian.
 
                 .form-actions
                   a.btn.btn-outline(href="/admin/playlists") Huy

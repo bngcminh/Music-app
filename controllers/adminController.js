@@ -178,73 +178,79 @@ const getAllPlaylists = async function(req, rep){
 const getPlaylist = async function(req, rep){
     try{
         const playlistId = req.params.playlistId;
-        const playlist = await Playlist.findById(playlistId);
+        const playlist = await Playlist.findById(playlistId).populate('songs', 'songName');
 
         if(!playlist){
             return rep.code(404).send('Playlist khong ton tai');
         }
 
-        // rep.view('admin/playlists', {playlists});
+        return rep.view('admin/update_playlist.pug', { playlist });
     }catch(err){
         console.log(err);
         rep.code(500).send('Co loi khi lay playlist');
     }
 }
 
-// const createPlaylist = async function(req, rep){
-//     try{
-//         const { playlistName, songs, coverURL } = req.body;
-//         const playlist = await Playlist.create({
-//             playlistName,
-//             songs,
-//             coverURL,
-//             totalSongs: songs ? songs.length : 0
-//         });
-//         rep.redirect('/admin/playlists');
-//     }catch(err){
-//         console.log(err);
-//         rep.code(500).send('Co loi trong qua trinh tao playlist')
-//     }
-// }
-
 const createPlaylist = async function(req, rep){
-  try {
-    const parts = req.parts();
-    const data = {};
+    try {
+        const parts = req.parts();
+        const data = {};
 
-    for await (const part of parts) {
-      if (part.type === 'field') {
-        data[part.fieldname] = part.value;
-      }
-      if (part.type === 'file') {
-        const uploadCover = path.join(__dirname, '../public/upload/cover', part.filename);
-        data.coverUrl = `/upload/cover/${part.filename}`;
-        await pipeline(part.file, fs.createWriteStream(uploadCover));
-      }
+        for await (const part of parts) {
+            if (part.type === 'field') {
+                data[part.fieldname] = part.value;
+            }
+            if (part.type === 'file') {
+                const uploadCover = path.join(__dirname, '../public/upload/cover', part.filename);
+                data.coverUrl = `/upload/cover/${part.filename}`;
+                await pipeline(part.file, fs.createWriteStream(uploadCover));
+            }
+        }
+
+        const { playlistName, songs } = data;
+        const playlist = await Playlist.create({
+            playlistName,
+            songs,
+            coverUrl: data.coverUrl,
+        });
+
+        return rep.redirect('/admin/playlists');
+    } catch (err) {
+        console.log(err);
+        return rep.code(500).send('Co loi trong qua trinh tao playlist');
     }
-
-    const { playlistName, songs } = data;
-    const playlist = await Playlist.create({
-      playlistName,
-      songs,
-      coverUrl: data.coverUrl,
-    });
-
-    return rep.redirect('/admin/playlists');
-  } catch (err) {
-    console.log(err);
-    return rep.code(500).send('Co loi trong qua trinh tao playlist');
-  }
 }
 
 const updatePlaylist = async function(req, rep){
     try{
         const playlistId = req.params.playlistId;
-        const { playlistName, songs, coverUrl } = req.body;
-
+        const parts = req.parts();
+        const data = {};
+        for await(const part of parts){
+            if(part.type === 'field'){
+                if (part.fieldname === 'songs') {
+                    if (!Array.isArray(data.songs)) {
+                        data.songs = [];
+                    }
+                    data.songs.push(part.value);
+                    continue;
+                }
+                data[part.fieldname] = part.value;
+            }
+            if(part.type === 'file' && part.filename){
+                if(part.fieldname === 'coverUrl'){
+                    const uploadCover = path.join(__dirname, '../public/upload/cover', part.filename);
+                    data.coverUrl = `/upload/cover/${part.filename}`;
+                    await pipeline(part.file, fs.createWriteStream(uploadCover))
+                }
+            }
+        }
         const update = await Playlist.findByIdAndUpdate(
             playlistId,
-            { playlistName, songs, coverUrl },
+            { 
+                playlistName: data.playlistName, 
+                songs: data.songs, 
+                coverUrl: data.coverUrl },
             { new: true, runValidators: true }
         )
 
@@ -347,7 +353,7 @@ const updateSong = async function(req, rep){
             if(part.type === 'field'){
                 data[part.fieldname] = part.value;
             }
-            if(part.type === 'file'){
+            if(part.type === 'file' && part.filename){
                 if(part.fieldname === 'audioUrl'){
                     const uploadAudio = path.join(__dirname, '../public/upload/audio', part.filename);
                     data.audioUrl = `/upload/audio/${part.filename}`
@@ -355,7 +361,7 @@ const updateSong = async function(req, rep){
                 }
                 if(part.fieldname === 'coverUrl'){
                     const uploadCover = path.join(__dirname, '../public/upload/cover', part.filename);
-                    data.coverUrl = `/upload/audio/${part.filename}`
+                    data.coverUrl = `/upload/cover/${part.filename}`
                     await pipeline(part.file, fs.createWriteStream(uploadCover));
                 }
             }

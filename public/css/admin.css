@@ -600,6 +600,30 @@ textarea.form-control {
   min-height: 100px;
 }
 
+.song-picker {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fff 0%, #f6f8fb 100%);
+  padding: 10px;
+}
+
+.song-picker-select {
+  min-height: 160px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.song-picker-select:focus {
+  box-shadow: none;
+}
+
+.song-picker-select option {
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
 /* Data Table */
 .data-table-container {
   background: white;
