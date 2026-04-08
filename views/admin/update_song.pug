@@ -1,0 +1,128 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Cap Nhat Bai Hat - Admin MusicApp
+    link(rel="stylesheet", href="/public/css/admin.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+  body
+    - const songData = typeof song !== 'undefined' ? song : null
+    - const coverUrl = songData && songData.coverUrl ? songData.coverUrl : ''
+    - const audioUrl = songData && songData.audioUrl ? songData.audioUrl : ''
+    - const artistName = songData && songData.artist && songData.artist.name ? songData.artist.name : (songData && songData.artist ? songData.artist : '')
+    - const updatedAt = songData && songData.updatedAt ? String(songData.updatedAt).slice(0, 10) : 'Chua cap nhat'
+
+    .admin-wrapper
+      aside.admin-sidebar
+        .admin-brand
+          .brand-icon
+            i.fas.fa-music
+          .brand-text
+            h1 MusicApp Admin
+            p Quan tri he thong
+
+        nav.admin-nav
+          a.nav-tab(href="/admin")
+            i.fas.fa-chart-line
+            span Dashboard
+          a.nav-tab(href="/admin/users")
+            i.fas.fa-users
+            span Nguoi Dung
+          a.nav-tab(href="/admin/artists")
+            i.fas.fa-microphone
+            span Nghe Si
+          a.nav-tab.active(href="/admin/songs")
+            i.fas.fa-music
+            span Bai Hat
+          a.nav-tab(href="/admin/playlists")
+            i.fas.fa-list-ul
+            span Playlist
+
+        .sidebar-footer
+          a.btn-back(href="/")
+            i.fas.fa-arrow-left
+            span Ve Trang Chu
+
+      main.admin-main
+        header.admin-header
+          .header-left
+            h1 Cap Nhat Bai Hat
+            p Chinh sua thong tin hien thi cua bai hat
+          .header-right
+            a.btn.btn-secondary(href="/admin/songs")
+              i.fas.fa-arrow-left
+              span Quay Lai
+
+        section.panel.active
+          .panel-header
+            h2
+              i.fas.fa-compact-disc
+              span Chinh Sua Bai Hat
+
+          .update-shell
+            .entity-card
+              .entity-media
+                if coverUrl
+                  img.entity-cover-image(src=coverUrl, alt=songData && songData.songName ? songData.songName : 'Cover bai hat')
+                else
+                  .entity-cover.entity-cover-icon
+                    i.fas.fa-music
+
+              .entity-content
+                h3= songData && songData.songName ? songData.songName : 'Bai hat'
+                p= artistName || 'Chua gan nghe si'
+
+                .entity-meta
+                  span.meta-chip
+                    i.fas.fa-user
+                    |  #{artistName || 'Nghe si dang trong'}
+                  span.meta-chip
+                    i.fas.fa-clock
+                    |  #{updatedAt}
+
+                .meta-grid
+                  .meta-item
+                    span Audio hien tai
+                    strong= audioUrl || 'Chua co file'
+                  .meta-item
+                    span Song ID
+                    strong= songData && songData._id ? songData._id : 'Dang cho du lieu'
+
+            .form-card
+              h3 Noi Dung Chinh
+              form.admin-form(action=songData && songData._id ? `/admin/songs/${songData._id}` : '#', method="post")
+                .form-row
+                  .form-group
+                    label(for="songName")
+                      i.fas.fa-heading
+                      span Ten bai hat
+                    input#songName.form-control(type="text", name="songName", value=songData && songData.songName ? songData.songName : '', placeholder="Nhap ten bai hat")
+
+                  .form-group
+                    label(for="artist")
+                      i.fas.fa-microphone
+                      span Nghe si
+                    input#artist.form-control(type="text", name="artist", value=artistName, placeholder="Nhap ten hoac ID nghe si")
+
+                .form-row
+                  .form-group
+                    label(for="audioUrl")
+                      i.fas.fa-file-audio
+                      span Audio URL
+                    input#audioUrl.form-control(type="text", name="audioUrl", value=audioUrl, placeholder="/upload/audio/song.mp3")
+
+                  .form-group
+                    label(for="coverUrl")
+                      i.fas.fa-image
+                      span Cover URL
+                    input#coverUrl.form-control(type="text", name="coverUrl", value=coverUrl, placeholder="/upload/cover/song.jpg")
+
+                p.form-help
+                  | Layout duoc thiet ke de de dien du lieu bai hat hien tai, khong kem xu ly upload hay PATCH tu frontend.
+
+                .form-actions
+                  a.btn.btn-outline(href="/admin/songs") Huy
+                  button.btn.btn-primary(type="submit")
+                    i.fas.fa-floppy-disk
+                    span Luu Thay Doi

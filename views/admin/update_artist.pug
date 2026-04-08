@@ -1,0 +1,117 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Cap Nhat Nghe Si - Admin MusicApp
+    link(rel="stylesheet", href="/public/css/admin.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+  body
+    - const artistData = typeof artist !== 'undefined' ? artist : null
+    - const avatarUrl = artistData && artistData.avatar ? artistData.avatar : ''
+    - const bioText = artistData && artistData.bio ? artistData.bio : ''
+    - const updatedAt = artistData && artistData.updatedAt ? String(artistData.updatedAt).slice(0, 10) : 'Chua cap nhat'
+
+    .admin-wrapper
+      aside.admin-sidebar
+        .admin-brand
+          .brand-icon
+            i.fas.fa-music
+          .brand-text
+            h1 MusicApp Admin
+            p Quan tri he thong
+
+        nav.admin-nav
+          a.nav-tab(href="/admin")
+            i.fas.fa-chart-line
+            span Dashboard
+          a.nav-tab(href="/admin/users")
+            i.fas.fa-users
+            span Nguoi Dung
+          a.nav-tab.active(href="/admin/artists")
+            i.fas.fa-microphone
+            span Nghe Si
+          a.nav-tab(href="/admin/songs")
+            i.fas.fa-music
+            span Bai Hat
+          a.nav-tab(href="/admin/playlists")
+            i.fas.fa-list-ul
+            span Playlist
+
+        .sidebar-footer
+          a.btn-back(href="/")
+            i.fas.fa-arrow-left
+            span Ve Trang Chu
+
+      main.admin-main
+        header.admin-header
+          .header-left
+            h1 Cap Nhat Nghe Si
+            p Chinh sua profile va thong tin gioi thieu nghe si
+          .header-right
+            a.btn.btn-secondary(href="/admin/artists")
+              i.fas.fa-arrow-left
+              span Quay Lai
+
+        section.panel.active
+          .panel-header
+            h2
+              i.fas.fa-microphone-lines
+              span Chinh Sua Nghe Si
+
+          .update-shell
+            .entity-card
+              .entity-media
+                if avatarUrl
+                  img.entity-cover-image(src=avatarUrl, alt=artistData && artistData.name ? artistData.name : 'Avatar nghe si')
+                else
+                  .entity-cover.entity-cover-icon
+                    i.fas.fa-microphone
+
+              .entity-content
+                h3= artistData && artistData.name ? artistData.name : 'Nghe si'
+                if bioText
+                  p.entity-description= bioText
+                else
+                  p.entity-description Chua co tieu su cho nghe si nay.
+
+                .entity-meta
+                  span.meta-chip
+                    i.fas.fa-pen
+                    |  #{updatedAt}
+
+                .meta-grid
+                  .meta-item
+                    span Artist ID
+                    strong= artistData && artistData._id ? artistData._id : 'Dang cho du lieu'
+                  .meta-item
+                    span Avatar
+                    strong= avatarUrl || 'Chua co anh'
+
+            .form-card
+              h3 Ho So Nghe Si
+              form.admin-form(action=artistData && artistData._id ? `/admin/artists/${artistData._id}` : '#', method="post")
+                .form-row
+                  .form-group
+                    label(for="name")
+                      i.fas.fa-user
+                      span Ten nghe si
+                    input#name.form-control(type="text", name="name", value=artistData && artistData.name ? artistData.name : '', placeholder="Nhap ten nghe si")
+
+                  .form-group
+                    label(for="avatar")
+                      i.fas.fa-image
+                      span Avatar URL
+                    input#avatar.form-control(type="text", name="avatar", value=avatarUrl, placeholder="/upload/cover/artist.jpg")
+
+                .form-group
+                  label(for="bio")
+                    i.fas.fa-align-left
+                    span Tieu su
+                  textarea#bio.form-control(name="bio", rows="8", placeholder="Nhap mo ta ngan cho nghe si")= bioText
+
+                .form-actions
+                  a.btn.btn-outline(href="/admin/artists") Huy
+                  button.btn.btn-primary(type="submit")
+                    i.fas.fa-floppy-disk
+                    span Luu Thay Doi

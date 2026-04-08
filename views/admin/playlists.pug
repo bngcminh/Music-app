@@ -65,7 +65,7 @@ html(lang="vi")
 
           .form-card
             h3 Tạo Playlist Mới
-            form.admin-form#playlist-create-form(action="/playlists" method="post" enctype="multipart/form-data")
+            form.admin-form#playlist-create-form(action="/admin/playlists" method="post" enctype="multipart/form-data")
               .form-row
                 .form-group
                   label
@@ -78,6 +78,13 @@ html(lang="vi")
                     i.fas.fa-link
                     span Ảnh Playlist
                   input.form-control(type="file" name="coverUrl" accept="image/*")
+                .form-group
+                  label
+                    i.fas.fa-link
+                    span Thêm bài hát
+                  select(name="songs" multiple)
+                    each song in songs
+                      option(value=song._id) #{song.songName}
               //- .form-row
               //-   .form-group
               //-     label
@@ -99,16 +106,25 @@ html(lang="vi")
               thead
                 tr
                   th #
-                  th Cover
                   th Tên Playlist
+                  th Cover
                   th Số Bài Hát
-                  th Công Khai
                   th Thao Tác
               tbody#playlists-body
-                tr
-                  td(colspan="6")
-                    .loading
-                      i.fas.fa-spinner.fa-spin
-                      span Đang tải dữ liệu...
+                if playlists && playlists.length
+                  each p, index in playlists
+                    tr
+                      td #{index + 1}
+                      td #{p.playlistName}
+                      td 
+                        img(src=p.coverUrl alt="Cover" width="80")
+                      td #{p.songs.length}
+                      td
+                        form(action=`/admin/playlists/${p._id}` method="GET")
+                          button Xóa
+                        a(href=`/admin/playlists/edit/${p._id}`) Sửa
+                else
+                  tr
+                    td(colspan="6") Không có playlist nào.
 
     script(src="/public/js/admin.js")

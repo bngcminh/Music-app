@@ -65,7 +65,7 @@ html(lang="vi")
 
           .form-card
             h3 Tạo Nghệ Sĩ Mới
-            form.admin-form#artist-create-form(action="/artists" method="post" enctype="multipart/form-data")
+            form.admin-form#artist-create-form(action="/admin/artists" method="post" enctype="multipart/form-data")
               .form-row
                 .form-group
                   label
@@ -108,8 +108,6 @@ html(lang="vi")
               tbody#artists-body
                 tr
                   td(colspan="6")
-                    .loading
-                      i.fas.fa-spinner.fa-spin
-                      span Đang tải dữ liệu...
+                    
 
     script(src="/public/js/admin.js")

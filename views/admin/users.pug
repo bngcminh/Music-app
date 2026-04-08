@@ -72,16 +72,20 @@ html(lang="vi")
                   th #
                   th Avatar
                   th Tên
-                  th Email
                   th Vai Trò
-                  th Trạng Thái
-                  th Ngày Tạo
                   th Thao Tác
               tbody#users-body
-                tr
-                  td(colspan="8")
-                    .loading
-                      
-                      span Đang tải dữ liệu...
+                each user, index in users
+                  tr
+                    td #{index + 1}
+                    td 
+                      img(src=user.avartar, alt="", srcset="")
+                    td #{user.username}
+                    td #{user.role}
+                    td
+                      form(action=`/admin/users/${user._id}` method="GET")
+                        button Xóa
+                      a(href=`/admin/users/${user._id}`) Sửa
+                  
 
     script(src="/public/js/admin.js")

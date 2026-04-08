@@ -753,3 +753,153 @@ textarea.form-control {
   }
 }
 
+/* Update Pages */
+.update-shell {
+  display: grid;
+  grid-template-columns: minmax(280px, 320px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.entity-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 112px;
+}
+
+.entity-media {
+  margin-bottom: 20px;
+}
+
+.entity-cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255, 71, 87, 0.12), rgba(55, 66, 250, 0.12));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.entity-cover-icon i {
+  font-size: 52px;
+  color: var(--primary-color);
+}
+
+.entity-cover-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.entity-content h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.entity-content p {
+  color: var(--text-secondary);
+}
+
+.entity-description {
+  margin-top: 8px;
+}
+
+.entity-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 71, 87, 0.08);
+  color: var(--primary-color);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.meta-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.meta-item {
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+}
+
+.meta-item span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+
+.meta-item strong {
+  display: block;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.form-help {
+  margin-top: -4px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.btn-outline {
+  border: 1px solid var(--border-color);
+  background: white;
+  color: var(--text-primary);
+}
+
+.btn-outline:hover {
+  background: var(--bg-main);
+}
+
+@media (max-width: 1024px) {
+  .update-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .entity-card {
+    position: static;
+  }
+}

@@ -10,8 +10,9 @@ const Song = require('../models/Song');
 // Quản lý người dùng
 const getAllUsers = async function(req, rep){
     try{
-        const users = await User.find().select('username email');
-        return rep.send(users);
+        const users = await User.find();
+        console.log(users)
+        return rep.view('admin/users.pug', {users});
     }catch(err){
         console.log(err);
         rep.code(500).send('Khong the lay users');
@@ -25,7 +26,7 @@ const getUser = async function(req, rep){
         if(!user){
             return rep.code(500).send('Khong tim duoc nguoi dung')
         }
-        return rep.send(user)
+        return rep.view('admin/update_user.pug', {user})
     }catch(err){
         console.log(err);
         rep.code(500).send('Khong the lay user');
@@ -78,7 +79,7 @@ const deleteUser = async function(req, rep){
 const getAllArtists = async function(req, rep){
     try{
         const artists = await Artist.find();
-        rep.send(artists)
+        return rep.view('admin/artists.pug', {artists});
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi lay artist');
@@ -115,7 +116,7 @@ const createArtist = async function(req, rep){
             
         }
         const artist = await Artist.create(data);
-        rep.send(artist);
+        return rep.redirect('admin/artists.pug');
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi tao artist');
@@ -164,8 +165,10 @@ const deleteArtist = async function(req, rep){
 // Quản lý Playlist
 const getAllPlaylists = async function(req, rep){
     try{
-       const playlists = await Playlist.find().select('playlistName');
-       rep.send(playlists);
+       const playlists = await Playlist.find().select('playlistName songs coverUrl');
+       const songs = await Song.find().select('songName');
+       console.log(playlists);
+       return rep.view('admin/playlists.pug', {playlists, songs});
     } catch (err) {
         console.log(err);
         rep.code(500).send('Co loi khi lay danh sach playlist');
@@ -181,27 +184,57 @@ const getPlaylist = async function(req, rep){
             return rep.code(404).send('Playlist khong ton tai');
         }
 
-        return rep.send('Lay playlist thanh cong');
+        // rep.view('admin/playlists', {playlists});
     }catch(err){
         console.log(err);
         rep.code(500).send('Co loi khi lay playlist');
     }
 }
 
+// const createPlaylist = async function(req, rep){
+//     try{
+//         const { playlistName, songs, coverURL } = req.body;
+//         const playlist = await Playlist.create({
+//             playlistName,
+//             songs,
+//             coverURL,
+//             totalSongs: songs ? songs.length : 0
+//         });
+//         rep.redirect('/admin/playlists');
+//     }catch(err){
+//         console.log(err);
+//         rep.code(500).send('Co loi trong qua trinh tao playlist')
+//     }
+// }
+
 const createPlaylist = async function(req, rep){
-    try{
-        const { playlistName, songs, coverURL } = req.body;
-        const playlist = await Playlist.create({
-            playlistName,
-            songs,
-            coverURL,
-            totalSongs: songs ? songs.length : 0
-        });
-        rep.send('Tao playlist thanh cong');
-    }catch(err){
-        console.log(err);
-        rep.code(500).send('Co loi trong qua trinh tao playlist')
+  try {
+    const parts = req.parts();
+    const data = {};
+
+    for await (const part of parts) {
+      if (part.type === 'field') {
+        data[part.fieldname] = part.value;
+      }
+      if (part.type === 'file') {
+        const uploadCover = path.join(__dirname, '../public/upload/cover', part.filename);
+        data.coverUrl = `/upload/cover/${part.filename}`;
+        await pipeline(part.file, fs.createWriteStream(uploadCover));
+      }
     }
+
+    const { playlistName, songs } = data;
+    const playlist = await Playlist.create({
+      playlistName,
+      songs,
+      coverUrl: data.coverUrl,
+    });
+
+    return rep.redirect('/admin/playlists');
+  } catch (err) {
+    console.log(err);
+    return rep.code(500).send('Co loi trong qua trinh tao playlist');
+  }
 }
 
 const updatePlaylist = async function(req, rep){
@@ -219,7 +252,7 @@ const updatePlaylist = async function(req, rep){
             return rep.code(404).send('Khong tim thay thong tin playlist');
         }
 
-        return rep.send('Cap nhat playlist thanh cong');
+        rep.redirect('/admin/playlists');
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi cap nhat playlist')
@@ -235,7 +268,7 @@ const deletePlaylist = async function(req, rep){
             return rep.code(404).send("Khong tim thay playlist can xoa")
         }
 
-        rep.send('xoa playlist thanh cong')
+        rep.redirect('/admin/playlists');
     }catch(err) {
         console.log(err);
         rep.code(500).send('Co loi trong qua trinh xoa playlist')
@@ -246,7 +279,7 @@ const deletePlaylist = async function(req, rep){
 const getAllSongs = async function(req, rep){
     try{
         const songs = await Song.find().select('songName');
-        rep.send(songs);
+        return rep.view('admin/songs.pug', {songs})
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi lay tat ca bai hat');

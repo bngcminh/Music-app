@@ -107,15 +107,17 @@ html(lang="vi")
                   th Cover
                   th Tên Bài Hát
                   th Nghệ Sĩ
-                  th Lượt Nghe
+                  //- th Lượt Nghe
                   th Thời Lượng
                   th Thao Tác
               tbody#songs-body
-                tr
-                  td(colspan="7")
-                    .loading
-                      i.fas.fa-spinner.fa-spin
-                      span Đang tải dữ liệu...
+                each song, index in songs
+                  tr
+                    td #{index + 1}
+                    td 
+                      img(src=song.coverUrl alt="Cover" width="80")
+                    td #{song.songName}
+                    td #{song.artist}
 
     script(src="/public/js/admin.js")
 

@@ -1,0 +1,133 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Cap Nhat Playlist - Admin MusicApp
+    link(rel="stylesheet", href="/public/css/admin.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+  body
+    - const playlistData = typeof playlist !== 'undefined' ? playlist : null
+    - const coverUrl = playlistData && playlistData.coverUrl ? playlistData.coverUrl : ''
+    - const songs = playlistData && Array.isArray(playlistData.songs) ? playlistData.songs : []
+    - const songCount = songs.length
+    - const updatedAt = playlistData && playlistData.updatedAt ? String(playlistData.updatedAt).slice(0, 10) : 'Chua cap nhat'
+
+    .admin-wrapper
+      aside.admin-sidebar
+        .admin-brand
+          .brand-icon
+            i.fas.fa-music
+          .brand-text
+            h1 MusicApp Admin
+            p Quan tri he thong
+
+        nav.admin-nav
+          a.nav-tab(href="/admin")
+            i.fas.fa-chart-line
+            span Dashboard
+          a.nav-tab(href="/admin/users")
+            i.fas.fa-users
+            span Nguoi Dung
+          a.nav-tab(href="/admin/artists")
+            i.fas.fa-microphone
+            span Nghe Si
+          a.nav-tab(href="/admin/songs")
+            i.fas.fa-music
+            span Bai Hat
+          a.nav-tab.active(href="/admin/playlists")
+            i.fas.fa-list-ul
+            span Playlist
+
+        .sidebar-footer
+          a.btn-back(href="/")
+            i.fas.fa-arrow-left
+            span Ve Trang Chu
+
+      main.admin-main
+        header.admin-header
+          .header-left
+            h1 Cap Nhat Playlist
+            p Cap nhat thong tin hien thi va tom tat noi dung playlist
+          .header-right
+            a.btn.btn-secondary(href="/admin/playlists")
+              i.fas.fa-arrow-left
+              span Quay Lai
+
+        section.panel.active
+          .panel-header
+            h2
+              i.fas.fa-list-check
+              span Chinh Sua Playlist
+
+          .update-shell
+            .entity-card
+              .entity-media
+                if coverUrl
+                  img.entity-cover-image(src=coverUrl, alt=playlistData && playlistData.playlistName ? playlistData.playlistName : 'Cover playlist')
+                else
+                  .entity-cover.entity-cover-icon
+                    i.fas.fa-list-ul
+
+              .entity-content
+                h3= playlistData && playlistData.playlistName ? playlistData.playlistName : 'Playlist'
+                p= `${songCount} bai hat hien co`
+
+                .entity-meta
+                  span.meta-chip
+                    i.fas.fa-music
+                    |  #{songCount} bai hat
+                  span.meta-chip
+                    i.fas.fa-pen
+                    |  #{updatedAt}
+
+                if songCount
+                  .tag-list
+                    each item, index in songs
+                      if index < 4
+                        - const songLabel = item && item.songName ? item.songName : item
+                        span.meta-chip= songLabel
+                      else if index === 4
+                        span.meta-chip +#{songCount - 4} muc
+                else
+                  p.entity-description Chua co bai hat trong playlist nay.
+
+            .form-card
+              h3 Noi Dung Playlist
+              form.admin-form(action=playlistData && playlistData._id ? `/admin/playlists/${playlistData._id}` : '#', method="post")
+                .form-row
+                  .form-group
+                    label(for="playlistName")
+                      i.fas.fa-heading
+                      span Ten playlist
+                    input#playlistName.form-control(type="text", name="playlistName", value=playlistData && playlistData.playlistName ? playlistData.playlistName : '', placeholder="Nhap ten playlist")
+
+                  .form-group
+                    label(for="coverUrl")
+                      i.fas.fa-image
+                      span Cover URL
+                    input#coverUrl.form-control(type="text", name="coverUrl", value=coverUrl, placeholder="/upload/cover/playlist.jpg")
+
+                .form-row
+                  .form-group
+                    label(for="isPublic")
+                      i.fas.fa-earth-asia
+                      span Hien thi
+                    select#isPublic.form-control(name="isPublic")
+                      option(value="true", selected=playlistData && playlistData.isPublic === true) Public
+                      option(value="false", selected=!playlistData || playlistData.isPublic !== true) Private
+
+                  .form-group
+                    label(for="songs")
+                      i.fas.fa-list
+                      span Danh sach bai hat
+                    input#songs.form-control(type="text", name="songs", value=songs.map(item => item && item._id ? item._id : item).join(', '), placeholder="Nhap ID bai hat, cach nhau boi dau phay")
+
+                p.form-help
+                  | O danh sach bai hat, giao dien hien tai dung chuoi ID phan cach boi dau phay de giu form don gian.
+
+                .form-actions
+                  a.btn.btn-outline(href="/admin/playlists") Huy
+                  button.btn.btn-primary(type="submit")
+                    i.fas.fa-floppy-disk
+                    span Luu Thay Doi

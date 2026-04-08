@@ -1,0 +1,129 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Cap Nhat Nguoi Dung - Admin MusicApp
+    link(rel="stylesheet", href="/public/css/admin.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+  body
+    - const userData = typeof user !== 'undefined' ? user : null
+    - const avatarUrl = userData && userData.avartar ? userData.avartar : ''
+    - const createdAt = userData && userData.createdAt ? String(userData.createdAt).slice(0, 10) : 'Chua co'
+    - const updatedAt = userData && userData.updatedAt ? String(userData.updatedAt).slice(0, 10) : 'Chua cap nhat'
+
+    .admin-wrapper
+      aside.admin-sidebar
+        .admin-brand
+          .brand-icon
+            i.fas.fa-music
+          .brand-text
+            h1 MusicApp Admin
+            p Quan tri he thong
+
+        nav.admin-nav
+          a.nav-tab(href="/admin")
+            i.fas.fa-chart-line
+            span Dashboard
+          a.nav-tab.active(href="/admin/users")
+            i.fas.fa-users
+            span Nguoi Dung
+          a.nav-tab(href="/admin/artists")
+            i.fas.fa-microphone
+            span Nghe Si
+          a.nav-tab(href="/admin/songs")
+            i.fas.fa-music
+            span Bai Hat
+          a.nav-tab(href="/admin/playlists")
+            i.fas.fa-list-ul
+            span Playlist
+
+        .sidebar-footer
+          a.btn-back(href="/")
+            i.fas.fa-arrow-left
+            span Ve Trang Chu
+
+      main.admin-main
+        header.admin-header
+          .header-left
+            h1 Cap Nhat Nguoi Dung
+            p Dieu chinh thong tin tai khoan trong giao dien admin
+          .header-right
+            a.btn.btn-secondary(href="/admin/users")
+              i.fas.fa-arrow-left
+              span Quay Lai
+
+        section.panel.active
+          .panel-header
+            h2
+              i.fas.fa-user-pen
+              span Chinh Sua Tai Khoan
+
+          .update-shell
+            .entity-card
+              .entity-media
+                if avatarUrl
+                  img.entity-cover-image(src=avatarUrl, alt=userData && userData.username ? userData.username : 'Avatar nguoi dung')
+                else
+                  .entity-cover.entity-cover-icon
+                    i.fas.fa-user
+
+              .entity-content
+                h3= userData && userData.username ? userData.username : 'Nguoi dung'
+                p= userData && userData.email ? userData.email : 'Chua co email'
+
+                .entity-meta
+                  span.meta-chip
+                    i.fas.fa-shield-halved
+                    |  #{userData && userData.role ? userData.role : 'user'}
+                  span.meta-chip
+                    i.fas.fa-calendar-plus
+                    |  #{createdAt}
+
+                .meta-grid
+                  .meta-item
+                    span User ID
+                    strong= userData && userData._id ? userData._id : 'Dang cho du lieu'
+                  .meta-item
+                    span Lan cap nhat
+                    strong= updatedAt
+
+            .form-card
+              h3 Thong Tin Co Ban
+              form.admin-form(action=userData && userData._id ? `/admin/users/${userData._id}` : '#', method="post")
+                .form-row
+                  .form-group
+                    label(for="username")
+                      i.fas.fa-user
+                      span Ten hien thi
+                    input#username.form-control(type="text", name="username", value=userData && userData.username ? userData.username : '', placeholder="Nhap ten nguoi dung")
+
+                  .form-group
+                    label(for="email")
+                      i.fas.fa-envelope
+                      span Email
+                    input#email.form-control(type="email", name="email", value=userData && userData.email ? userData.email : '', placeholder="example@email.com")
+
+                .form-row
+                  .form-group
+                    label(for="role")
+                      i.fas.fa-user-shield
+                      span Vai tro
+                    select#role.form-control(name="role")
+                      option(value="user", selected=!userData || userData.role === 'user') User
+                      option(value="admin", selected=userData && userData.role === 'admin') Admin
+
+                  .form-group
+                    label(for="avatar")
+                      i.fas.fa-image
+                      span Avatar URL
+                    input#avatar.form-control(type="text", name="avartar", value=avatarUrl, placeholder="/upload/avatar/user.jpg")
+
+                p.form-help
+                  | Giao dien nay chi tap trung vao HTML/CSS. Neu muon submit dung luong cap nhat, can dong bo them route va xu ly form.
+
+                .form-actions
+                  a.btn.btn-outline(href="/admin/users") Huy
+                  button.btn.btn-primary(type="submit")
+                    i.fas.fa-floppy-disk
+                    span Luu Thay Doi
