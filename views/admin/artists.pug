@@ -91,10 +91,6 @@ html(lang="vi")
 
           .panel-header.mt-4
             h3 Danh Sách Nghệ Sĩ
-            button.btn.btn-secondary#refresh-artists(type="button")
-              i.fas.fa-sync-alt
-              span Tải Lại
-
           .data-table-container
             table.data-table
               thead
@@ -103,11 +99,18 @@ html(lang="vi")
                   th Avatar
                   th Tên Nghệ Sĩ
                   th Tiểu Sử
-                  th Số Bài Hát
                   th Thao Tác
               tbody#artists-body
-                tr
-                  td(colspan="6")
-                    
+                each artist, index in artists
+                    tr
+                      td #{index + 1}
+                      td 
+                        img(src=artist.avatar alt="Cover" width="80")
+                      td #{artist.name}
+                      td #{artist.bio}
+                      td
+                        form(action=`/admin/artist/${artist._id}` method="GET")
+                          button Xóa
+                        a(href=`/artists/${artist._id}`) Sửa
 
     script(src="/public/js/admin.js")

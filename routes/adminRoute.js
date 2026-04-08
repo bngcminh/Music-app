@@ -11,10 +11,10 @@ function adminRoute(fastify, options){
 
     // Artist API
     fastify.get('/admin/artists', adminController.getAllArtists);
-    fastify.get('/admin/artists/:artistId', adminController.getArtist);
+    fastify.get('/artists/:artistId', adminController.getArtist);
     fastify.post('/admin/artists', adminController.createArtist)
     fastify.patch('/admin/artists/:artistId', adminController.updateArtist);
-    fastify.delete('/admin/artists/:artistId', adminController.deleteArtist); 
+    fastify.get('/admin/artists/:artistId', adminController.deleteArtist); 
 
     // Playlist API
     fastify.get('/admin/playlists', adminController.getAllPlaylists);
@@ -25,10 +25,10 @@ function adminRoute(fastify, options){
 
     // Song API
     fastify.get('/admin/songs', adminController.getAllSongs);
-    fastify.get('/admin/songs/:songId', adminController.getSong);
+    fastify.get('/admin/song/:songId', adminController.getSong);
     fastify.post('/admin/songs', adminController.createSong);
-    fastify.patch('/admin/songs/:songId', adminController.updateSong);
-    fastify.delete('/admin/songs/:songId', adminController.deleteSong);
+    fastify.post('/admin/update/:songId', adminController.updateSong);
+    fastify.get('/admin/delete/:songId', adminController.deleteSong);
 }
 
 module.exports = adminRoute;

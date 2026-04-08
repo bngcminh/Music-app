@@ -6,4 +6,4 @@ const artistSchema = new mongoose.Schema({
     bio: String,
 }, { timestamps: true });
 
-module.exports = mongoose.model('Artists', artistSchema);
+module.exports = mongoose.model('Artist', artistSchema);

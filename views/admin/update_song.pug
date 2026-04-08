@@ -91,36 +91,34 @@ html(lang="vi")
 
             .form-card
               h3 Noi Dung Chinh
-              form.admin-form(action=songData && songData._id ? `/admin/songs/${songData._id}` : '#', method="post")
+              form.admin-form(action=`/admin/update/${song._id}`, method="POST" enctype="multipart/form-data")
                 .form-row
                   .form-group
                     label(for="songName")
                       i.fas.fa-heading
-                      span Ten bai hat
-                    input#songName.form-control(type="text", name="songName", value=songData && songData.songName ? songData.songName : '', placeholder="Nhap ten bai hat")
+                      span Tên bài hát
+                    input#songName.form-control(type="text", name="songName", value=song.songName, placeholder="Nhập tên bài hát")
 
                   .form-group
                     label(for="artist")
                       i.fas.fa-microphone
-                      span Nghe si
-                    input#artist.form-control(type="text", name="artist", value=artistName, placeholder="Nhap ten hoac ID nghe si")
+                      span Nghệ sĩ
+                    input#artist.form-control(type="text", name="artist", value=song.artist.name, placeholder="Nhập tên nghệ sĩ")
 
                 .form-row
                   .form-group
                     label(for="audioUrl")
                       i.fas.fa-file-audio
                       span Audio URL
-                    input#audioUrl.form-control(type="text", name="audioUrl", value=audioUrl, placeholder="/upload/audio/song.mp3")
+                    input#audioUrl.form-control(type="file", name="audioUrl", placeholder="/upload/audio/song.mp3", accept="audio/*")
 
                   .form-group
                     label(for="coverUrl")
                       i.fas.fa-image
                       span Cover URL
-                    input#coverUrl.form-control(type="text", name="coverUrl", value=coverUrl, placeholder="/upload/cover/song.jpg")
+                    input#coverUrl.form-control(type="file", name="coverUrl", placeholder="/upload/cover/song.jpg", accept="image/*")
 
                 p.form-help
-                  | Layout duoc thiet ke de de dien du lieu bai hat hien tai, khong kem xu ly upload hay PATCH tu frontend.
-
                 .form-actions
                   a.btn.btn-outline(href="/admin/songs") Huy
                   button.btn.btn-primary(type="submit")

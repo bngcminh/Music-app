@@ -93,7 +93,7 @@ const getArtist = async function(req, rep){
         if(!artist){
             return rep.code(404).send('Khong tim thay artist');
         }
-        return rep.send(artist);
+        return rep.view('admin/update_artist.pug', {artist});
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi lay artist');
@@ -116,7 +116,7 @@ const createArtist = async function(req, rep){
             
         }
         const artist = await Artist.create(data);
-        return rep.redirect('admin/artists.pug');
+        return rep.redirect('/admin/artists');
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi tao artist');
@@ -153,7 +153,7 @@ const deleteArtist = async function(req, rep){
             return rep.code(404).send('Khong tim thay artist');
         }
 
-        rep.send('Xoa artist thanh cong')
+        return rep.redirect('/admin/artists');
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi xoa artist');
@@ -278,7 +278,8 @@ const deletePlaylist = async function(req, rep){
 // Quản lý bài hát
 const getAllSongs = async function(req, rep){
     try{
-        const songs = await Song.find().select('songName');
+        const songs = await Song.find().populate('artist', 'name');
+        console.log(songs);
         return rep.view('admin/songs.pug', {songs})
     }catch(err){
         console.log(err);
@@ -289,11 +290,11 @@ const getAllSongs = async function(req, rep){
 const getSong = async function(req, rep){
     try{
        const songId = req.params.songId;
-       const song = await Song.findById(songId);
+       const song = await Song.findById(songId).populate('artist', 'name');
        if(!song){
             return rep.code(404).send('Khong tim thay bai hat');       
        }
-       return rep.send(song);
+       return rep.view('admin/update_song.pug', {song});
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi lay bai hat');
@@ -309,14 +310,14 @@ const createSong = async function(req, rep){
                 data[part.fieldname] = part.value;
             }
             if(part.type === 'file'){
-                if(part.fieldname === 'audio'){
+                if(part.fieldname === 'audioUrl'){
                     const uploadAudio  = path.join(__dirname, '../public/upload/audio', part.filename);
-                    data.audioURL = `/upload/audio/${part.filename}`
+                    data.audioUrl = `/upload/audio/${part.filename}`
                     await pipeline(part.file, fs.createWriteStream(uploadAudio));
                 }
-                if(part.fieldname === 'cover'){
-                    const uploadCover  = path.join(__dirname, '../public/upload/audio', part.filename);
-                    data.coverURL = `/upload/cover/${part.filename}`
+                if(part.fieldname === 'coverUrl'){
+                    const uploadCover  = path.join(__dirname, '../public/upload/cover', part.filename);
+                    data.coverUrl = `/upload/cover/${part.filename}`
                     await pipeline(part.file, fs.createWriteStream(uploadCover));
                 }
             }
@@ -329,8 +330,8 @@ const createSong = async function(req, rep){
             }
             data.artist = artist._id;
         }
-        const song = await Song.create(data);
-        rep.code(200).send('Tao bai hat thanh cong')
+        const user = await Song.create(data);
+        rep.redirect('/admin/songs')
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi lay tao bai hat');
@@ -340,19 +341,43 @@ const createSong = async function(req, rep){
 const updateSong = async function(req, rep){
     try{
         const songId = req.params.songId;
-        const { songName, artist } = req.body;
+        const parts = req.parts();
+        const data = {};
+        for await(const part of parts){
+            if(part.type === 'field'){
+                data[part.fieldname] = part.value;
+            }
+            if(part.type === 'file'){
+                if(part.fieldname === 'audioUrl'){
+                    const uploadAudio = path.join(__dirname, '../public/upload/audio', part.filename);
+                    data.audioUrl = `/upload/audio/${part.filename}`
+                    await pipeline(part.file, fs.createWriteStream(uploadAudio));
+                }
+                if(part.fieldname === 'coverUrl'){
+                    const uploadCover = path.join(__dirname, '../public/upload/cover', part.filename);
+                    data.coverUrl = `/upload/audio/${part.filename}`
+                    await pipeline(part.file, fs.createWriteStream(uploadCover));
+                }
+            }
+        }
 
+        const artistName = await Artist.findOne({ name: data.artist });
         const update = await Song.findByIdAndUpdate(
             songId,
-            { songName, artist },
+            { 
+                songName: data.songName, 
+                artist: artistName._id,
+                coverUrl: data.coverUrl,
+                audioUrl: data.audioUrl
+            },
             { new: true, runValidators: true }
         )
 
         if(!update){
             return rep.code(404).send('Cap nhat bai hat khong thanh cong');
         }
-
-        return rep.send('Cap nhat bai hat thanh cong');
+        console.log(update)
+        return rep.redirect('/admin/songs')
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi cap nhat bai hat');

@@ -65,7 +65,7 @@ html(lang="vi")
 
           .form-card
             h3 Tạo Bài Hát Mới
-            form.admin-form#song-create-form(action="/songs" method="post" enctype="multipart/form-data")
+            form.admin-form#song-create-form(action="/admin/songs" method="post" enctype="multipart/form-data")
               .form-row
                 .form-group
                   label
@@ -84,13 +84,13 @@ html(lang="vi")
                   label
                     i.fas.fa-file-audio
                     span File Audio
-                  input.form-control(type="file" name="audio" accept="audio/*" required)
+                  input.form-control(type="file" name="audioUrl" accept="audio/*" required)
 
                 .form-group
                   label
                     i.fas.fa-image
                     span Ảnh Bìa
-                  input.form-control(type="file" name="cover" accept="image/*")
+                  input.form-control(type="file" name="coverUrl" accept="image/*")
 
               button.btn.btn-primary(type="submit")
                 i.fas.fa-plus
@@ -108,7 +108,7 @@ html(lang="vi")
                   th Tên Bài Hát
                   th Nghệ Sĩ
                   //- th Lượt Nghe
-                  th Thời Lượng
+                  //- th Thời Lượng
                   th Thao Tác
               tbody#songs-body
                 each song, index in songs
@@ -117,7 +117,9 @@ html(lang="vi")
                     td 
                       img(src=song.coverUrl alt="Cover" width="80")
                     td #{song.songName}
-                    td #{song.artist}
-
-    script(src="/public/js/admin.js")
+                    td #{song.artist ? song.artist.name : 'Khong co nghe si'}
+                    td
+                      form(action=`/admin/delete/${song._id}` method="GET")
+                        button Xóa
+                      a(href=`/admin/song/${song._id}`) Chỉnh sửa
 
