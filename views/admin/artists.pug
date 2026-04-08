@@ -65,7 +65,7 @@ html(lang="vi")
 
           .form-card
             h3 Tạo Nghệ Sĩ Mới
-            form.admin-form#artist-create-form(action="/admin/artists" method="post" enctype="multipart/form-data")
+            form.admin-form#artist-create-form(action="/admin/create/artist" method="post" enctype="multipart/form-data")
               .form-row
                 .form-group
                   label
@@ -109,7 +109,7 @@ html(lang="vi")
                       td #{artist.name}
                       td #{artist.bio}
                       td
-                        form(action=`/admin/artist/${artist._id}` method="GET")
+                        form(action=`/admin/delete/artist/${artist._id}` method="GET")
                           button Xóa
                         a(href=`/artists/${artist._id}`) Sửa
 

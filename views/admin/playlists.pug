@@ -111,18 +111,14 @@ html(lang="vi")
                   th Số Bài Hát
                   th Thao Tác
               tbody#playlists-body
-                if playlists && playlists.length
-                  each p, index in playlists
+                  each playlist, index in playlists
                     tr
                       td #{index + 1}
-                      td #{p.playlistName}
+                      td #{playlist.playlistName}
                       td 
-                        img(src=p.coverUrl alt="Cover" width="80")
-                      td #{p.songs.length}
+                        img(src=playlist.coverUrl alt="Cover" width="80")
+                      td #{playlist.songs.length}
                       td
-                        form(action=`/admin/delete/playlist/${p._id}` method="GET")
+                        form(action=`/admin/delete/playlist/${playlist._id}` method="GET")
                           button Xóa
-                        a(href=`/playlists/${p._id}`) Sửa
-                else
-                  tr
-                    td(colspan="6") Không có playlist nào.
+                        a(href=`/playlists/${playlist._id}`) Sửa

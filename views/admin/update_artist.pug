@@ -90,25 +90,25 @@ html(lang="vi")
 
             .form-card
               h3 Ho So Nghe Si
-              form.admin-form(action=artistData && artistData._id ? `/admin/artists/${artistData._id}` : '#', method="post")
+              form.admin-form(action=`/admin/update/artist/${artist._id}` method="POST" enctype="multipart/form-data")
                 .form-row
                   .form-group
                     label(for="name")
                       i.fas.fa-user
                       span Ten nghe si
-                    input#name.form-control(type="text", name="name", value=artistData && artistData.name ? artistData.name : '', placeholder="Nhap ten nghe si")
+                    input#name.form-control(type="text", name="name", value=artist.name, placeholder="Nhap ten nghe si")
 
                   .form-group
                     label(for="avatar")
                       i.fas.fa-image
                       span Avatar URL
-                    input#avatar.form-control(type="text", name="avatar", value=avatarUrl, placeholder="/upload/cover/artist.jpg")
+                    input#avatar.form-control(type="file", name="avatar", placeholder="/upload/cover/artist.jpg", accept="image/*")
 
                 .form-group
                   label(for="bio")
                     i.fas.fa-align-left
                     span Tieu su
-                  textarea#bio.form-control(name="bio", rows="8", placeholder="Nhap mo ta ngan cho nghe si")= bioText
+                  textarea#bio.form-control(type="text", name="bio", rows="8", placeholder="Nhap mo ta ngan cho nghe si")= bioText
 
                 .form-actions
                   a.btn.btn-outline(href="/admin/artists") Huy

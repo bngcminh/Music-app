@@ -60,15 +60,15 @@ const deleteUser = async function(req, rep){
         const userId = req.params.userId;
         const del = await User.findByIdAndDelete(userId);
         
-        // if(req.user.id === userId){
-        //     return rep.code(500).send('Khong the xoa chinh minh');
-        // }
+        if(req.user.id === userId){
+            return rep.code(500).send('Khong the xoa chinh minh');
+        }
 
         if(!del){
             return rep.code(404).send('Khong tim thay thong tin nguoi dung nay')
         }
 
-        return rep.send('Xoa nguoi dung thanh cong'); 
+        return rep.redirect('/admin/users');
     }catch(err) {
         console.log(err);
         return rep.code(500).send('Co loi khi xoa nguoi dung');
@@ -126,10 +126,25 @@ const createArtist = async function(req, rep){
 const updateArtist = async function(req, rep){
     try{
         const artistId = req.params.artistId;
-        const { name, avatar, bio } = req.body;
+        const parts = req.parts();
+        const data = {};
+        for await(const part of parts){
+            if(part.type === 'field'){
+                data[part.fieldname] = part.value;
+            }
+            if(part.type === 'file'){
+                const uploadAvatar = path.join(__dirname, '../public/upload/cover', part.filename);
+                data.avatar = `/upload/cover/${part.filename}`;
+                await pipeline(part.file, fs.createWriteStream(uploadAvatar))
+            }
+        }
         const update = await Artist.findByIdAndUpdate(
             artistId,
-            { name, avatar, bio },
+            { 
+                name: data.name, 
+                avatar: data.avatar, 
+                bio: data.bio 
+            },
             { new: true, runValidators: true }
         )
 
@@ -137,7 +152,7 @@ const updateArtist = async function(req, rep){
             return rep.code(404).send('Khong tim thay artist');
         }
 
-        rep.send('Cap nhat artist thanh cong');
+        rep.redirect('/admin/artists');
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi cap nhat artist');
@@ -399,7 +414,7 @@ const deleteSong = async function(req, rep){
             return rep.code(404).send('Bai hat khong ton tai');
         }
 
-        return rep.send('Xoa bai hat thanh cong')
+        rep.redirect('/admin/songs')
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi xoa bai hat');
