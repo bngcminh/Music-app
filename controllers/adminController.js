@@ -38,17 +38,13 @@ const updateUser = async function(req, rep){
         const userId = req.params.userId;
         const { username, email, role } = req.body;
 
-        const update = await User.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
             userId,
             { username, email, role },
             { new: true, runValidators: true }
-        ).select('-password')
+        )
 
-        if(!update){
-            return rep.code(500).send('Khong tim thay thong tin nguoi dung nay');  
-        }
-
-        return rep.send('Cap nhat thanh cong');
+        return rep.redirect('/admin/users');
     }catch(err){
         console.log(err);
         return rep.code(500).send('co loi')
@@ -58,16 +54,10 @@ const updateUser = async function(req, rep){
 const deleteUser = async function(req, rep){
     try{
         const userId = req.params.userId;
-        const del = await User.findByIdAndDelete(userId);
-        
         if(req.user.id === userId){
             return rep.code(500).send('Khong the xoa chinh minh');
         }
-
-        if(!del){
-            return rep.code(404).send('Khong tim thay thong tin nguoi dung nay')
-        }
-
+        await User.findByIdAndDelete(userId);
         return rep.redirect('/admin/users');
     }catch(err) {
         console.log(err);

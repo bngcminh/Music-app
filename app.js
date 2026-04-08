@@ -68,7 +68,7 @@ fastify.register(fastifyFormbody)
 fastify.register(authRoute);
 fastify.register(adminRoute);
 
-fastify.get('/', {preHandler: [authentication]},async (req, rep) => {
+fastify.get('/', async (req, rep) => {
     return rep.view("home.pug", { user: req.user });
 })
 

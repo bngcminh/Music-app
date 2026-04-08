@@ -5,9 +5,9 @@ const authorization = require('../hook/authorization');
 function adminRoute(fastify, options){
     // User API
     fastify.get('/admin/users', {preHandler: [authentication, authorization('admin')]},adminController.getAllUsers);
-    fastify.get('/admin/users/:userId', adminController.getUser);
+    fastify.get('/admin/user/:userId', adminController.getUser);
     fastify.post('/admin/update/user/:userId', adminController.updateUser);
-    fastify.get('/admin/delete/user/:userId', adminController.deleteUser);
+    fastify.get('/admin/delete/user/:userId', {preHandler: [authentication, authorization('admin')]}, adminController.deleteUser);
 
     // Artist API
     fastify.get('/admin/artists', adminController.getAllArtists);

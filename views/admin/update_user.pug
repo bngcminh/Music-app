@@ -90,19 +90,19 @@ html(lang="vi")
 
             .form-card
               h3 Thong Tin Co Ban
-              form.admin-form(action=userData && userData._id ? `/admin/users/${userData._id}` : '#', method="post")
+              form.admin-form(action=`/admin/update/user/${userData._id}` , method="POST")
                 .form-row
                   .form-group
                     label(for="username")
                       i.fas.fa-user
                       span Ten hien thi
-                    input#username.form-control(type="text", name="username", value=userData && userData.username ? userData.username : '', placeholder="Nhap ten nguoi dung")
+                    input#username.form-control(type="text", name="username", value=user.username : '', placeholder="Nhap ten nguoi dung")
 
                   .form-group
                     label(for="email")
                       i.fas.fa-envelope
                       span Email
-                    input#email.form-control(type="email", name="email", value=userData && userData.email ? userData.email : '', placeholder="example@email.com")
+                    input#email.form-control(type="email", name="email", value=user.email, placeholder="example@email.com")
 
                 .form-row
                   .form-group
@@ -114,10 +114,10 @@ html(lang="vi")
                       option(value="admin", selected=userData && userData.role === 'admin') Admin
 
                   .form-group
-                    label(for="avatar")
-                      i.fas.fa-image
-                      span Avatar URL
-                    input#avatar.form-control(type="text", name="avartar", value=avatarUrl, placeholder="/upload/avatar/user.jpg")
+                    //- label(for="avatar")
+                    //-   i.fas.fa-image
+                    //-   span Avatar URL
+                    //- input#avatar.form-control(type="file", name="avartar", placeholder="/upload/avatar/user.jpg")
 
                 p.form-help
                   | Giao dien nay chi tap trung vao HTML/CSS. Neu muon submit dung luong cap nhat, can dong bo them route va xu ly form.
