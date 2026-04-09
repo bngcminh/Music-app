@@ -13,6 +13,7 @@ const connectDB = require('./config/db');
 const authentication = require('./hook/authentication');
 const authorization = require('./hook/authorization');
 const authRoute = require('./routes/authRoute');
+const homeRoute= require('./routes/homeRoute');
 const adminRoute  = require('./routes/adminRoute');
 
 // Fix Error: querySrv ECONNREFUSED MongoDB
@@ -66,11 +67,12 @@ fastify.register(fastifyMutipart,{
 fastify.register(fastifyFormbody)
 
 fastify.register(authRoute);
+fastify.register(homeRoute);
 fastify.register(adminRoute);
 
-fastify.get('/', async (req, rep) => {
-    return rep.view("home.pug", { user: req.user });
-})
+// fastify.get('/', async (req, rep) => {
+//     return rep.view("home.pug", { user: req.user });
+// })
 
 fastify.get('/profile', { preHandler: authentication }, async (req, rep) => {
     if (!req.user) {
