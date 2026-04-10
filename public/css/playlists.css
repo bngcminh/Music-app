@@ -255,6 +255,7 @@
 }
 
 .panel-card {
+  width: 1219px;
   background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.55);

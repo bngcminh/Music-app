@@ -225,17 +225,7 @@ html(lang="vi")
                   .progress-thumb
               span.time-total 3:45
 
-          .player-right
-            //- button.btn-control(title="Lyrics")
-            //-   i.fas.fa-microphone-lines
-            button.btn-control(title="Playlist")
-              i.fas.fa-list-ul
-            .volume-control
-              button.btn-control(title="Volume")
-                i.fas.fa-volume-high
-              .volume-slider
-                .volume-track
-                  .volume-fill(style="width: 70%")
+      include partials/music-player
 
     //- Playlist Queue Modal
     .playlist-queue-modal#playlistQueueModal
