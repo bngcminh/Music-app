@@ -3,54 +3,57 @@ html(lang="vi")
   head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    title Bài Hát - MusicApp
+    title Chi Tiáº¿t BÃ i HÃ¡t - MusicApp
     link(rel="stylesheet", href="/public/css/home.css")
     link(rel="stylesheet", href="/public/css/songs.css")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
   body
     .app-container
-      //- Sidebar
       aside.sidebar
         .sidebar-header
           .logo
             i.fas.fa-music
             span MusicApp
-        
-        nav.sidebar-nav
-          a.nav-item(href="/")
-            i.fas.fa-home
-            span Trang Chủ
-          a.nav-item(href="/songs")
-            i.fas.fa-music
-            span Bài Hát
-          a.nav-item.active(href="/playlists")
-            i.fas.fa-list-ul
-            span Playlist
-          if user
-            a.nav-item(href="/my-playlists")
-              i.fas.fa-heart
-              span Playlist Của Tôi
-        
-        .sidebar-footer
-          if user
-            .user-info-sidebar
-              .avatar
-                i.fas.fa-user-circle
-              .user-details
-                p.username= user.username
-                p.user-role= user.role || 'User'
-          else
-            a.btn.btn-login-sidebar(href="/login")
-              i.fas.fa-sign-in-alt
-              span Đăng Nhập
 
-      //- Main Content
+        nav.nav-menu
+          a.nav-item.active(href="/")
+            i.fas.fa-home
+            span Khám Phá
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-chart-line
+          //-   span BXH Nhạc Mới
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-fire
+          //-   span Chủ Đề & Thể Loại
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-star
+          //-   span Top 100
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-podcast
+          //-   span Podcast
+
+        .divider
+
+        .library-section
+          h4.library-title Thư Viện
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-heart
+          //-   span Yêu Thích
+          //- a.nav-item(href="#")
+          //-   i.fas.fa-clock-rotate-left
+          //-   span Nghe Gần Đây
+          a.nav-item(href="#")
+            i.fas.fa-folder
+            span Playlist Của Tôi
+
       main.main-content
-        //- Header
-        header.main-header
+        header.main-header.song-header
           .header-left
-            h1.page-title Bài Hát
-          
+
+          .search-box
+            i.fas.fa-search
+            input(type="text" placeholder="Tìm kiếm")
+
           .header-actions
             if user
               .user-menu
@@ -69,60 +72,122 @@ html(lang="vi")
                     i.fas.fa-sign-out-alt
                     span Đăng xuất
             else
-              a.btn.btn-login(href="/login") Đăng Nhập
-              a.btn.btn-register(href="/register") Đăng Ký
+              a.btn.btn-login(href="/login") Đăng nhập
+              a.btn.btn-register(href="/register") Đăng ký
 
-        //- Songs Content
-        .content-wrapper
-          .songs-header
-            .search-box
-              i.fas.fa-search
-              input(type="text" placeholder="Tìm kiếm bài hát..." id="searchSongs")
-            
-            .filter-buttons
-              button.filter-btn.active(data-filter="all") Tất Cả
-              button.filter-btn(data-filter="vpop") V-Pop
-              button.filter-btn(data-filter="usuk") US-UK
-              button.filter-btn(data-filter="kpop") K-Pop
-          
-          .songs-grid#songsGrid
-            //- Song cards will be loaded here
-            p.loading-text Đang tải bài hát...
+        .content-wrapper.song-detail-page
+          section.song-hero
+            .song-hero-art
+              .art-frame
+                img#songCover.song-cover-image(src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=900&q=80" alt="Cover bÃ i hÃ¡t")
+              .art-glow
 
-      //- Music Player
-      .music-player
-        .player-content
-          .player-left
-            .song-thumbnail
-              i.fas.fa-music
-            .song-info
-              p.song-name Chọn một bài hát
-              p.song-artist ---
-          
-          .player-center
-            .player-controls
-              button.control-btn
-                i.fas.fa-random
-              button.control-btn
-                i.fas.fa-step-backward
-              button.control-btn.play-btn
-                i.fas.fa-play
-              button.control-btn
-                i.fas.fa-step-forward
-              button.control-btn
-                i.fas.fa-redo
-            
-            .player-progress
-              span.time-current 0:00
-              .progress-bar
-                .progress-fill
-              span.time-total 0:00
-          
-          .player-right
-            button.control-btn
-              i.fas.fa-list-ul
-            .volume-control
-              i.fas.fa-volume-up
-              input(type="range" min="0" max="100" value="70")
+            .song-hero-body
+              //- .hero-badge Single Spotlight
+              h2#songTitle.song-title Hex On My Chest, It's Going Down
+              p#songSummary.song-summary Mot ban thu co mau sac dark-pop, bass day va khong khi dem muon.
 
+              .song-artist-row
+                .artist-pill
+                  .artist-pill-avatar
+                    i.fas.fa-user
+                  .artist-pill-copy
+                    span.artist-pill-label Nghệ sĩ
+                    strong#songArtist Che
+                //- .song-stat-chip
+                //-   i.fas.fa-clock
+                //-   span#songDuration 02:08
+                //- .song-stat-chip
+                //-   i.fas.fa-compact-disc
+                //-   span#songGenre Dark Pop
+
+              .song-reaction-row
+                //- .reaction-block
+                //-   button.reaction-btn(type="button" aria-label="Yeu thich")
+                //-     i.fas.fa-heart
+                //-   span#songLikes 2.4K
+                //- .reaction-block
+                //-   button.reaction-btn(type="button" aria-label="Chia se")
+                //-     i.fas.fa-share-nodes
+                //-   span#songShares 318
+                .reaction-block
+                  button.reaction-btn(type="button" aria-label="Them vao playlist")
+                    i.fas.fa-ellipsis
+
+              .song-hero-actions
+                button#heroPlayBtn.btn-hero.btn-hero-primary(type="button")
+                  i.fas.fa-play
+                  span Phát ngay
+                button.btn-hero(type="button")
+                  i.fas.fa-list-ul
+                  span Thêm vào danh sách phát
+                //- a.btn-hero(href="#relatedSongs")
+                //-   i.fas.fa-arrow-down
+                //-   span Xem gợi Ã½
+
+              //- .song-facts
+              //-   .fact-card
+              //-     span.fact-label Nam phat hanh
+              //-     strong#songYear 2024
+              //-   .fact-card
+              //-     span.fact-label Hang dia
+              //-     strong#songLabel Neon Room
+              //-   .fact-card
+              //-     span.fact-label TÃ¢m trang
+              //-     strong#songMood Moody, Night Drive
+
+          .detail-grid
+            section.lyrics-panel.panel-card
+              .panel-heading
+                div
+                  p.panel-kicker Lời bài hát
+                  h3 Khoảng lặng và cao trào
+                button.ghost-chip(type="button") Lưu lời
+              #songLyrics.lyrics-body
+                p Lá»i bÃ i hÃ¡t sáº½ sá»›m Ä‘Æ°á»£c cáº­p nháº­t...
+
+            aside.info-stack
+              section.panel-card.artist-panel
+                .panel-heading
+                  div
+                    p.panel-kicker Nghá»‡ sÄ©
+                    h3 Há»“ sÆ¡ thá»ƒ hiá»‡n
+                .artist-card
+                  .artist-card-avatar
+                    img#artistAvatar(src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80" alt="Anh nghe si")
+                  .artist-card-copy
+                    h4#artistName Che
+                    p#artistFollowers 8 nguoi theo doi
+                    p#artistBio Artist theo duoi mau sac dark-pop va alternative electronic.
+                  button.artist-follow-btn(type="button") Theo dõi
+
+              section.panel-card.meta-panel
+                .panel-heading
+                  div
+                    p.panel-kicker Thông tin nhanh
+                    h3 Ghi chú bản thu
+                ul.meta-list
+                  li
+                    span Hinh thuc
+                    strong#songFormat Single
+                  li
+                    span Chat luong
+                    strong Lossless / 24-bit
+                  li
+                    span Chu de
+                    strong#songTheme Noi tam, dem muon
+                  li
+                    span Cap nhat
+                    strong 09/04/2026
+
+          section.panel-card.related-panel
+            .panel-heading
+              div
+                p.panel-kicker Cùng cảm xúc
+                h3 Bài hát gợi ý từ nghệ sĩ và cùng chất liệu
+              a.ghost-chip(href="/playlist") Mở playlist
+            .related-list#relatedSongs
+
+    include partials/music-player.pug
+    script(src="/public/js/home.js")
     script(src="/public/js/songs.js")

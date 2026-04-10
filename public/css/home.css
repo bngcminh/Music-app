@@ -50,10 +50,15 @@ img {
 }
 
 /* ========== App Wrapper Layout ========== */
-.app-wrapper {
+.app-wrapper,
+.app-container {
   display: flex;
   min-height: 100vh;
   padding-bottom: var(--player-height);
+}
+
+.music-player {
+  display: none;
 }
 
 /* ========== Sidebar ========== */

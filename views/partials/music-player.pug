@@ -1,0 +1,70 @@
+.player-bar
+  .player-content
+    .player-song-info
+      .player-thumbnail
+        img(src="https://picsum.photos/seed/playing/56/56" alt="")
+      .player-details
+        h4.player-song-name TÃªn BÃ i HÃ¡t
+        p.player-artist-name TÃªn Nghá»‡ SÄ©
+      .player-actions-left
+        //- button.btn-icon(title="YÃªu thÃ­ch")
+        //-   i.far.fa-heart
+        //- button.btn-icon(title="ThÃªm")
+        //-   i.fas.fa-plus
+
+    .player-center
+      .player-controls
+        button.btn-control(title="Shuffle")
+          i.fas.fa-shuffle
+        button.btn-control(title="Previous")
+          i.fas.fa-backward-step
+        button.btn-control.btn-play-main(title="Play")
+          i.fas.fa-play
+        button.btn-control(title="Next")
+          i.fas.fa-forward-step
+        button.btn-control(title="Repeat")
+          i.fas.fa-repeat
+      .player-timeline
+        span.time-current 0:00
+        .progress-bar
+          .progress-track
+            .progress-fill(style="width: 30%")
+            .progress-thumb
+        span.time-total 3:45
+
+    .player-right
+      button.btn-control(title="Playlist")
+        i.fas.fa-list-ul
+      .volume-control
+        button.btn-control(title="Volume")
+          i.fas.fa-volume-high
+        .volume-slider
+          .volume-track
+            .volume-fill(style="width: 70%")
+
+.playlist-queue-modal#playlistQueueModal
+  .queue-overlay
+  .queue-panel
+    .queue-header
+      h3 Danh SÃ¡ch PhÃ¡t
+      button.btn-close-queue#closeQueueBtn
+        i.fas.fa-times
+
+    .queue-content
+      .now-playing-section
+        h4 Äang PhÃ¡t
+        .now-playing-item
+          .song-thumbnail-queue
+            i.fas.fa-music
+          .song-info-queue
+            p.song-name Chá»n má»™t bÃ i hÃ¡t
+            p.song-artist ---
+          .song-duration 0:00
+
+      .queue-list-section
+        .queue-list-header
+          h4 Tiáº¿p Theo
+          span.queue-count 0 bÃ i hÃ¡t
+
+        .queue-list#queueList
+          p.empty-queue Danh sÃ¡ch phÃ¡t trá»‘ng
