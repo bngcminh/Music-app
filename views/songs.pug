@@ -3,7 +3,7 @@ html(lang="vi")
   head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    title Chi Tiáº¿t BÃ i HÃ¡t - MusicApp
+    title 
     link(rel="stylesheet", href="/public/css/home.css")
     link(rel="stylesheet", href="/public/css/songs.css")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
@@ -85,7 +85,6 @@ html(lang="vi")
             .song-hero-body
               //- .hero-badge Single Spotlight
               h2#songTitle.song-title Hex On My Chest, It's Going Down
-              p#songSummary.song-summary Mot ban thu co mau sac dark-pop, bass day va khong khi dem muon.
 
               .song-artist-row
                 .artist-pill
@@ -93,7 +92,7 @@ html(lang="vi")
                     i.fas.fa-user
                   .artist-pill-copy
                     span.artist-pill-label Nghệ sĩ
-                    strong#songArtist Che
+
                 //- .song-stat-chip
                 //-   i.fas.fa-clock
                 //-   span#songDuration 02:08
@@ -110,9 +109,9 @@ html(lang="vi")
                 //-   button.reaction-btn(type="button" aria-label="Chia se")
                 //-     i.fas.fa-share-nodes
                 //-   span#songShares 318
-                .reaction-block
-                  button.reaction-btn(type="button" aria-label="Them vao playlist")
-                    i.fas.fa-ellipsis
+                //- .reaction-block
+                //-   button.reaction-btn(type="button" aria-label="Them vao playlist")
+                //-     i.fas.fa-ellipsis
 
               .song-hero-actions
                 button#heroPlayBtn.btn-hero.btn-hero-primary(type="button")
@@ -121,6 +120,9 @@ html(lang="vi")
                 button.btn-hero(type="button")
                   i.fas.fa-list-ul
                   span Thêm vào danh sách phát
+                button.btn-hero(type="button")
+                  i.fas.fa-light.fa-plus
+                  span Thêm vào Playlist
                 //- a.btn-hero(href="#relatedSongs")
                 //-   i.fas.fa-arrow-down
                 //-   span Xem gợi Ã½
@@ -140,53 +142,23 @@ html(lang="vi")
             section.lyrics-panel.panel-card
               .panel-heading
                 div
-                  p.panel-kicker Lời bài hát
-                  h3 Khoảng lặng và cao trào
-                button.ghost-chip(type="button") Lưu lời
+                  h3 Lời bài hát
               #songLyrics.lyrics-body
-                p Lá»i bÃ i hÃ¡t sáº½ sá»›m Ä‘Æ°á»£c cáº­p nháº­t...
+                p Lời hát sẽ sớm cập nhật...
 
             aside.info-stack
               section.panel-card.artist-panel
                 .panel-heading
                   div
-                    p.panel-kicker Nghá»‡ sÄ©
-                    h3 Há»“ sÆ¡ thá»ƒ hiá»‡n
-                .artist-card
-                  .artist-card-avatar
-                    img#artistAvatar(src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80" alt="Anh nghe si")
-                  .artist-card-copy
-                    h4#artistName Che
-                    p#artistFollowers 8 nguoi theo doi
-                    p#artistBio Artist theo duoi mau sac dark-pop va alternative electronic.
-                  button.artist-follow-btn(type="button") Theo dõi
-
-              section.panel-card.meta-panel
-                .panel-heading
-                  div
-                    p.panel-kicker Thông tin nhanh
-                    h3 Ghi chú bản thu
-                ul.meta-list
-                  li
-                    span Hinh thuc
-                    strong#songFormat Single
-                  li
-                    span Chat luong
-                    strong Lossless / 24-bit
-                  li
-                    span Chu de
-                    strong#songTheme Noi tam, dem muon
-                  li
-                    span Cap nhat
-                    strong 09/04/2026
-
-          section.panel-card.related-panel
-            .panel-heading
-              div
-                p.panel-kicker Cùng cảm xúc
-                h3 Bài hát gợi ý từ nghệ sĩ và cùng chất liệu
-              a.ghost-chip(href="/playlist") Mở playlist
-            .related-list#relatedSongs
+                    h3 Nghệ sĩ
+                    .artist-info
+                      .artist-card-avatar
+                        img#artistAvatar(src="https://www.pinterest.com/pin/36239971992480803/" alt="Anh nghe si")
+                      .artist-card-copy
+                        h4#artistName Che
+                  //-   p#artistFollowers 8 nguoi theo doi
+                  //-   p#artistBio Artist theo duoi mau sac dark-pop va alternative electronic.
+                  //- button.artist-follow-btn(type="button") Theo dõi
 
     include partials/music-player.pug
     script(src="/public/js/home.js")
