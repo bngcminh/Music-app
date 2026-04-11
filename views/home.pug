@@ -196,21 +196,6 @@ html(lang="vi")
                   h4.artist-name #{artist.name}
                   //- p.artist-followers 1.5M theo dõi
 
-      //- Music Player Bar (Fixed Bottom)
-      .player-bar
-        .player-content
-          .player-song-info
-            .player-thumbnail
-              img(src="https://picsum.photos/seed/playing/56/56" alt="")
-            .player-details
-              h4.player-song-name Tên Bài Hát
-              p.player-artist-name Tên Nghệ Sĩ
-            .player-actions-left
-              //- button.btn-icon(title="Yêu thích")
-              //-   i.far.fa-heart
-              //- button.btn-icon(title="Thêm")
-              //-   i.fas.fa-plus
-
       include partials/music-player
 
     script(src="/public/js/home.js")

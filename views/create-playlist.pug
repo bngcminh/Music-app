@@ -7,95 +7,68 @@ html(lang="vi")
     link(rel="stylesheet", href="/public/css/home.css")
     link(rel="stylesheet", href="/public/css/create-playlist.css")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
-  body
-    .app-container
-      //- Sidebar
+  body.create-playlist-page
+    .app-wrapper
       aside.sidebar
         .sidebar-header
-          .logo
-            i.fas.fa-music
-            span MusicApp
-        
-        nav.sidebar-nav
-          a.nav-item.active(href="/")
+          a.logo(href="/")
+            i.fas.fa-music.logo-icon
+            span.logo-text MusicApp
+
+        nav.nav-menu
+          a.nav-item(href="/")
             i.fas.fa-home
             span Khám Phá
-          //- a.nav-item(href="#")
-          //-   i.fas.fa-chart-line
-          //-   span BXH Nhạc Mới
-          //- a.nav-item(href="#")
-          //-   i.fas.fa-fire
-          //-   span Chủ Đề & Thể Loại
-          //- a.nav-item(href="#")
-          //-   i.fas.fa-star
-          //-   span Top 100
-          //- a.nav-item(href="#")
-          //-   i.fas.fa-podcast
-          //-   span Podcast
-
           .divider
 
         .library-section
           h4.library-title Thư Viện
-          //- a.nav-item(href="#")
-          //-   i.fas.fa-heart
-          //-   span Yêu Thích
-          //- a.nav-item(href="#")
-          //-   i.fas.fa-clock-rotate-left
-          //-   span Nghe Gần Đây
-          a.nav-item(href="#")
+          a.nav-item(href="/my-playlists")
             i.fas.fa-folder
-            span Playlist Của Tôi
-
-      //- Main Content
+            span Playlist của tôi
       main.main-content
-        
+        .create-playlist-main
+          .content-wrapper.create-playlist-wrap
+            .create-playlist-head
+              h1.create-playlist-title Tạo playlist mới
 
-        //- Create Playlist Form
-        .content-wrapper
-          .create-playlist-container
-            .form-section
-              h2 Thông Tin Playlist
-              
+            .create-playlist-card
               form#createPlaylistForm
-                .form-group
-                  label(for="playlistName") Tên Playlist
-                    span.required *
-                  input#playlistName(type="text" placeholder="Nhập tên playlist..." required)
-                
-                .form-group
-                  label(for="playlistDesc") Mô Tả
-                  textarea#playlistDesc(rows="4" placeholder="Mô tả về playlist của bạn...")
-                
-                .form-group
-                  label(for="playlistImage") Ảnh Bìa
-                  .upload-box
-                    input#playlistImage(type="file" accept="image/*" hidden)
-                    label.upload-label(for="playlistImage")
-                      i.fas.fa-cloud-upload-alt
-                      span Tải lên ảnh bìa
-                    .preview-image#imagePreview(style="display: none")
-                      img
-                      button.remove-image(type="button")
-                        i.fas.fa-times
-                
-                //- .form-group
-                //-   label Quyền Riêng Tư
-                //-   .radio-group
-                //-     label.radio-label
-                //-       input(type="radio" name="privacy" value="public" checked)
-                //-       span Công Khai
-                //-       small Ai cũng có thể xem
-                //-     label.radio-label
-                //-       input(type="radio" name="privacy" value="private")
-                //-       span Riêng Tư
-                //-       small Chỉ mình bạn xem được
-                
-                .form-actions
-                  a.btn.btn-secondary(href="/my-playlists") Hủy
+                .create-playlist-grid
+                  .create-cover-column
+                    label.field-label Ảnh bìa
+                    .upload-box.create-upload-box
+                      input#playlistImage(type="file" accept="image/*" hidden)
+                      label.upload-label(for="playlistImage")
+                        i.fas.fa-image
+                        span Chọn ảnh từ máy
+                      .preview-image#createPlaylistPreview(style="display: none")
+                        img#createPlaylistPreviewImg(alt="Xem trước ảnh bìa")
+                        button.remove-image#createPlaylistRemovePreview(type="button" aria-label="Xóa ảnh")
+                          i.fas.fa-times
+
+                  .create-fields-column
+                    .form-group
+                      label(for="playlistName")
+                        | Tên playlist
+                        span.required *
+                      input#playlistName(
+                        type="text"
+                        name="playlistName"
+                        placeholder="Ví dụ: Nhạc chill cuối tuần"
+                        required
+                        maxlength="120"
+                        autocomplete="off"
+                      )
+
+                .form-actions.create-playlist-actions
+                  a.btn.btn-secondary(href="/my-playlists")
+                    i.fas.fa-times
+                    span Hủy
                   button.btn.btn-primary(type="submit")
-                    i.fas.fa-save
-                    span Tạo Playlist
+                    i.fas.fa-check
+                    span Tạo playlist
+
     include partials/music-player.pug
     script(src="/public/js/home.js")
-    script(src="/public/js/create-playlist.js")
+    script(src="/public/js/create-playlist-page.js")

@@ -346,6 +346,20 @@
   color: var(--text-secondary);
 }
 
+/* Gộp thông tin cơ bản + playlist trong một tab */
+.profile-account-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .profile-account-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
 /* Edit Profile Tab */
 .edit-form-container {
   background: var(--bg-card);

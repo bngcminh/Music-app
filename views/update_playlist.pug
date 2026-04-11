@@ -1,0 +1,130 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Cập nhật Playlist - MusicApp
+    link(rel="stylesheet", href="/public/css/home.css")
+    link(rel="stylesheet", href="/public/css/create-playlist.css")
+    link(rel="stylesheet", href="/public/css/update-playlist.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+  body
+    .app-container
+      aside.sidebar
+        .sidebar-header
+          .logo
+            i.fas.fa-music
+            span MusicApp
+
+        nav.sidebar-nav
+          a.nav-item.active(href="/")
+            i.fas.fa-home
+            span Khám Phá
+          .divider
+
+        .library-section
+          h4.library-title Thư Viện
+          a.nav-item(href="#")
+            i.fas.fa-folder
+            span Playlist Của Tôi
+
+      main.main-content.update-playlist-page
+        .content-wrapper
+          .update-playlist-toolbar
+            .page-intro
+              h1 Cập nhật playlist
+
+          //- Một khối: thông tin + ảnh + danh sách bài
+          .update-playlist-container
+            .update-playlist-unified.form-section
+              h2.playlist-unified-title Thông tin playlist &amp; bài hát
+
+              form#updatePlaylistForm(onsubmit="return false;")
+                .playlist-edit-top
+                  .playlist-cover-block
+                    label.playlist-cover-label Ảnh bìa playlist
+                    .playlist-cover-preview-wrap
+                      .playlist-cover-preview
+                        img#updatePlaylistCoverPreview(
+                          src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=400&q=80"
+                          alt="Ảnh bìa playlist"
+                        )
+                        .playlist-cover-overlay
+                          label.btn-cover-change(for="updatePlaylistCover")
+                            i.fas.fa-camera
+                            span Đổi ảnh
+                      input#updatePlaylistCover(type="file" accept="image/*" hidden)
+
+                  .playlist-edit-fields
+                    .form-group
+                      label(for="updatePlaylistName")
+                        | Tên playlist
+                        span.required *
+                      input#updatePlaylistName(
+                        type="text"
+                        value="Playlist mẫu"
+                        placeholder="Nhập tên playlist..."
+                        autocomplete="off"
+                      )
+
+                .playlist-unified-divider(role="presentation")
+
+                .playlist-tracks-block
+                  h3.playlist-tracks-heading Bài hát trong playlist
+                  ol.playlist-track-list
+                    li.playlist-track-item
+                      span.playlist-track-drag(aria-hidden="true" title="Kéo để sắp xếp")
+                        i.fas.fa-grip-vertical
+                      span.playlist-track-index 1
+                      .playlist-track-thumb
+                        i.fas.fa-music
+                      .playlist-track-meta
+                        p.playlist-track-name Shape of You
+                        p.playlist-track-artist Ed Sheeran
+                      button.playlist-track-remove(type="button" title="Xóa khỏi playlist" aria-label="Xóa khỏi playlist")
+                        i.fas.fa-times
+
+                    li.playlist-track-item
+                      span.playlist-track-drag(aria-hidden="true")
+                        i.fas.fa-grip-vertical
+                      span.playlist-track-index 2
+                      .playlist-track-thumb
+                        i.fas.fa-music
+                      .playlist-track-meta
+                        p.playlist-track-name Blinding Lights
+                        p.playlist-track-artist The Weeknd
+                      button.playlist-track-remove(type="button" title="Xóa khỏi playlist" aria-label="Xóa khỏi playlist")
+                        i.fas.fa-times
+
+                    li.playlist-track-item
+                      span.playlist-track-drag(aria-hidden="true")
+                        i.fas.fa-grip-vertical
+                      span.playlist-track-index 3
+                      .playlist-track-thumb
+                        i.fas.fa-music
+                      .playlist-track-meta
+                        p.playlist-track-name Levitating
+                        p.playlist-track-artist Dua Lipa
+                      button.playlist-track-remove(type="button" title="Xóa khỏi playlist" aria-label="Xóa khỏi playlist")
+                        i.fas.fa-times
+
+                    li.playlist-track-item
+                      span.playlist-track-drag(aria-hidden="true")
+                        i.fas.fa-grip-vertical
+                      span.playlist-track-index 4
+                      .playlist-track-thumb
+                        i.fas.fa-music
+                      .playlist-track-meta
+                        p.playlist-track-name As It Was
+                        p.playlist-track-artist Harry Styles
+                      button.playlist-track-remove(type="button" title="Xóa khỏi playlist" aria-label="Xóa khỏi playlist")
+                        i.fas.fa-times
+
+                .form-actions.playlist-unified-actions
+                  a.btn.btn-secondary(href="#") Hủy
+                  button.btn.btn-primary(type="button")
+                    i.fas.fa-save
+                    span Lưu thay đổi
+
+    include partials/music-player.pug
+    script(src="/public/js/home.js")

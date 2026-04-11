@@ -12,41 +12,37 @@
     // ===== CENTER =====
     .player-center
       .player-controls
-        button.btn-control#shuffle-btn(title="Shuffle")
+        button.btn-control#shuffle-btn(type="button" title="Phát ngẫu nhiên")
           i.fas.fa-shuffle
 
-        button.btn-control#prev-btn(title="Previous")
+        button.btn-control#prev-btn(type="button" title="Bài trước")
           i.fas.fa-backward-step
 
-        button.btn-control.btn-play-main#play-btn(title="Play")
+        button.btn-control.btn-play-main#play-btn(type="button" title="Phát / Tạm dừng")
           i.fas.fa-play
 
-        button.btn-control#next-btn(title="Next")
+        button.btn-control#next-btn(type="button" title="Bài tiếp")
           i.fas.fa-forward-step
 
-        button.btn-control#repeat-btn(title="Repeat")
+        button.btn-control#repeat-btn(type="button" title="Lặp lại: tắt / tất cả / một bài")
           i.fas.fa-repeat
 
       .player-timeline
-
         .progress-bar#progress-bar
           .progress-track
             .progress-fill#progress-fill(style="width: 0%")
-            //- .progress-thumb
-
-
 
     // ===== RIGHT =====
     .player-right
-      button.btn-control#open-queue(title="Playlist")
+      button.btn-control#open-queue(type="button" title="Danh sách phát")
         i.fas.fa-list-ul
 
       .volume-control
-        button.btn-control(title="Volume")
+        button.btn-control#volume-mute-btn(type="button" title="Tắt tiếng")
           i.fas.fa-volume-high
-        .volume-slider
-          .volume-track
-            .volume-fill(style="width: 70%")
+        .volume-slider#volume-slider(aria-label="Âm lượng")
+          .volume-track#volume-track
+            .volume-fill#volume-fill(style="width: 70%")
 
 // ===== QUEUE =====
 .playlist-queue-modal#playlistQueueModal

@@ -74,8 +74,7 @@ html(lang="vi")
                         input#avatarUpload(type="file" accept="image/*" hidden)
 
                 .profile-details
-                  h2.profile-name= user ? user.username : 'Guest'
-                  p.profile-email= user ? user.email : ''
+                  h2.profile-name #{user.username}
                   .profile-stats
                     //- .stat-item
                     //-   span.stat-number 0
@@ -89,9 +88,7 @@ html(lang="vi")
 
             //- Tabs Navigation
             .profile-tabs
-              //- button.tab-btn.active(data-tab="overview") Tổng Quan
-              button.tab-btn(data-tab="edit") Thông tin cơ bản
-              button.tab-btn(data-tab="playlists") Playlist
+              button.tab-btn.active(data-tab="edit") Thông tin và Playlist
               button.tab-btn(data-tab="security") Bảo Mật
 
             //- Tab Content
@@ -132,59 +129,57 @@ html(lang="vi")
                   //-       .stat-content
                   //-         p.stat-value 348
                   //-         p.stat-label Bài hát
-                  //-           //- Edit Profile Tab
-              .tab-panel#editTab
-                .edit-form-container
-                  form#editProfileForm
-                    .form-section
-                      h3 Thông Tin Cá Nhân
+                  //-           //- Thông tin + Playlist (một tab)
+              .tab-panel.active#editTab
+                .profile-account-layout
+                  .edit-form-container
+                    form#editProfileForm
+                      .form-section
+                        h3 Thông Tin Cá Nhân
 
-                      .form-row
-                        .form-group
-                          label(for="editUsername") Tên Người Dùng
-                          input#editUsername(type="text" value=user ? user.username : '' placeholder="Nhập tên người dùng")
+                        .form-row
+                          .form-group
+                            label(for="editUsername") Tên Người Dùng
+                            input#editUsername(type="text" value=infor.username placeholder="Nhập tên người dùng")
 
-                        .form-group
-                          label(for="editEmail") Email
-                          input#editEmail(type="email" value=user ? user.email : '' placeholder="Nhập email")
+                          .form-group
+                            label(for="editEmail") Email
+                            input#editEmail(type="email" value=infor.email placeholder="Nhập email")
 
-                      .form-actions
-                        button.btn.btn-secondary(type="button") Hủy
-                        button.btn.btn-primary(type="submit") Lưu Thay Đổi
+                        .form-actions
+                          button.btn.btn-primary(type="submit") Lưu Thay Đổi
 
-              //- Playlists Tab
-              .tab-panel#playlistsTab
-                .playlists-management
-                  .playlists-header-tab
-                    h3 Playlist của tôi
-                    a.btn.btn-primary(href="/playlists/create")
-                      i.fas.fa-plus
-                      span Tạo Mới
+                  .playlists-management
+                    .playlists-header-tab
+                      h3 Playlist của tôi
+                      a.btn.btn-primary(href="/playlists/create")
+                        i.fas.fa-plus
+                        span Tạo Mới
 
-                  .playlists-list
-                    .playlist-item
-                      .playlist-thumbnail-small
-                        i.fas.fa-list-ul
-                      .playlist-info-item
-                        h4 Nhạc Yêu Thích
-                        p 15 bài hát • Công khai
-                      .playlist-actions-item
-                        button.btn-icon(title="Chỉnh sửa")
-                          i.fas.fa-edit
-                        button.btn-icon(title="Xóa")
-                          i.fas.fa-trash
+                    .playlists-list
+                      .playlist-item
+                        .playlist-thumbnail-small
+                          i.fas.fa-list-ul
+                        .playlist-info-item
+                          h4 Nhạc Yêu Thích
+                          p 15 bài hát • Công khai
+                        .playlist-actions-item
+                          button.btn-icon(title="Chỉnh sửa")
+                            i.fas.fa-edit
+                          button.btn-icon(title="Xóa")
+                            i.fas.fa-trash
 
-                    .playlist-item
-                      .playlist-thumbnail-small
-                        i.fas.fa-list-ul
-                      .playlist-info-item
-                        h4 Nhạc Buồn
-                        p 8 bài hát • Riêng tư
-                      .playlist-actions-item
-                        button.btn-icon(title="Chỉnh sửa")
-                          i.fas.fa-edit
-                        button.btn-icon(title="Xóa")
-                          i.fas.fa-trash
+                      .playlist-item
+                        .playlist-thumbnail-small
+                          i.fas.fa-list-ul
+                        .playlist-info-item
+                          h4 Nhạc Buồn
+                          p 8 bài hát • Riêng tư
+                        .playlist-actions-item
+                          button.btn-icon(title="Chỉnh sửa")
+                            i.fas.fa-edit
+                          button.btn-icon(title="Xóa")
+                            i.fas.fa-trash
 
               //- Security Tab
               .tab-panel#securityTab
