@@ -6,7 +6,7 @@ async function authentication(req, rep){
             const user = req.server.jwt.verify(token);
             req.user = user;
         }else{
-            rep.redirect('/');
+            req.user = null;
         }
         console.log("result user:", req.user);
     }catch(err){
