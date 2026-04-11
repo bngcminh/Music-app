@@ -500,6 +500,16 @@ img {
   opacity: 1;
 }
 
+.trending-item.playing {
+  background: rgba(31, 207, 222, 0.15);
+  border-left: 3px solid #23cfde;
+}
+
+.trending-item.playing .song-name {
+  color: #23cfde;
+  font-weight: 600;
+}
+
 .play-overlay i {
   color: white;
   font-size: 20px;

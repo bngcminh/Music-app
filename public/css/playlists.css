@@ -333,8 +333,10 @@
 }
 
 .track-row:hover,
-.track-row.is-active {
-  background: rgba(31, 207, 222, 0.08);
+.track-row.is-active,
+.track-row.playing {
+  background: rgba(31, 207, 222, 0.15);
+  border-left: 3px solid #23cfde;
 }
 
 .track-index {

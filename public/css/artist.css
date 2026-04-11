@@ -26,6 +26,7 @@
   border-radius: 12px;
   background: rgba(20, 34, 44, 0.04);
   transition: background 0.2s ease;
+  cursor: pointer;
 }
 
 .song-item:hover {
@@ -64,6 +65,26 @@
   text-align: right;
   font-size: 13px;
   color: var(--text-secondary);
+}
+
+/* Playing state styles */
+.song-item.playing {
+  background: rgba(31, 207, 222, 0.15);
+  border: 1px solid rgba(31, 207, 222, 0.3);
+}
+
+.song-item.playing .song-number {
+  color: #23cfde;
+  font-weight: 800;
+}
+
+.song-item.playing .song-info h4 {
+  color: #23cfde;
+  font-weight: 700;
+}
+
+.song-clickable {
+  cursor: pointer;
 }
 
 .artist-info-box {
