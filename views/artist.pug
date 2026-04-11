@@ -3,7 +3,7 @@ html(lang="vi")
   head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    title= artist.name + " - MusicApp"
+    title 
     link(rel="stylesheet", href="/public/css/home.css")
     link(rel="stylesheet", href="/public/css/songs.css")
     link(rel="stylesheet", href="/public/css/artist.css")
@@ -20,12 +20,12 @@ html(lang="vi")
           a.nav-item(href="/")
             i.fas.fa-home
             span Khám Phá
-          a.nav-item(href="/song")
-            i.fas.fa-music
-            span Bài Hát
-          a.nav-item(href="/playlist")
-            i.fas.fa-list-ul
-            span Playlist
+        //-   a.nav-item(href="/song")
+        //-     i.fas.fa-music
+        //-     span Bài Hát
+        //-   a.nav-item(href="/playlist")
+        //-     i.fas.fa-list-ul
+        //-     span Playlist
           if user
             a.nav-item(href="/my-playlists")
               i.fas.fa-heart
@@ -39,18 +39,6 @@ html(lang="vi")
             i.fas.fa-folder
             span Playlist Của Tôi
 
-        .sidebar-footer
-          if user
-            .user-info-sidebar
-              .avatar
-                i.fas.fa-user-circle
-              .user-details
-                p.username= user.username
-                p.user-role= user.role || 'User'
-          else
-            a.btn.btn-login-sidebar(href="/login")
-              i.fas.fa-sign-in-alt
-              span Đăng Nhập
 
       main.main-content
         header.main-header.song-header
@@ -84,20 +72,20 @@ html(lang="vi")
         .content-wrapper.song-detail-page
           section.song-hero
             .song-hero-art
-              .art-frame
-                if artist.avatar
-                  img#artistCover.song-cover-image(src=artist.avatar alt=artist.name)
-                else
-                  img#artistCover.song-cover-image(src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80" alt=artist.name)
-              .art-glow
+            //-   .art-frame
+            //-     if artist.avatar
+            //-       img#artistCover.song-cover-image(src=artist.avatar alt=artist.name)
+            //-     else
+            //-       img#artistCover.song-cover-image(src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80" alt=artist.name)
+            //-   .art-glow
 
             .song-hero-body
-              h2#artistTitle.song-title= artist.name
+              h2#artistTitle.song-title 
               
-              if artist.bio
-                p.song-summary= artist.bio
-              else
-                p.song-summary Một nghệ sĩ tài năng trong ứng dụng MusicApp
+            //-   if artist.bio
+            //-     p.song-summary= artist.bio
+            //-   else
+            //-     p.song-summary Một nghệ sĩ tài năng trong ứng dụng MusicApp
 
               .song-hero-actions
                 button#heroPlayBtn.btn-hero.btn-hero-primary(type="button")
@@ -116,17 +104,17 @@ html(lang="vi")
                 div
                   h3 Bài hát nổi bật
               #artistSongs.lyrics-body
-                if songs && songs.length > 0
-                  ul.artist-songs-list
-                    each song, index in songs
-                      li.song-item
-                        span.song-number= index + 1
-                        .song-info
-                          h4= song.title
-                          p= song.artist || "Nghệ sĩ"
-                        span.song-duration= song.duration || "3:00"
-                else
-                  p Chưa có bài hát từ nghệ sĩ này
+                //- if songs && songs.length > 0
+                //-   ul.artist-songs-list
+                //-     each song, index in songs
+                //-       li.song-item
+                //-         span.song-number= index + 1
+                //-         .song-info
+                //-           h4= song.title
+                //-           p= song.artist || "Nghệ sĩ"
+                //-         span.song-duration= song.duration || "3:00"
+                //- else
+                //-   p Chưa có bài hát từ nghệ sĩ này
 
             aside.info-stack
               section.panel-card.artist-panel
@@ -136,7 +124,7 @@ html(lang="vi")
                 .artist-info-box
                   .info-item
                     span.info-label Tổng bài hát
-                    strong.info-value= songs.length
+                    //- strong.info-value= songs.length
                   .info-item
                     span.info-label Tham gia
                     strong.info-value 2024

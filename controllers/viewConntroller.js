@@ -1,0 +1,58 @@
+const Song = require('../models/Song');
+const Playlist = require('../models/Playlist');
+const Artist = require('../models/Artist');
+
+const getHome = async function(req, rep){
+    const songs = await Song.find().limit(5).populate('artist', 'name');
+    const playlists = await Playlist.find().limit(5);
+    const artists = await Artist.find().limit(5);
+
+    return rep.view('home.pug', {
+        songs,
+        playlists,
+        artists,
+        user: req.user || null
+    });
+}
+
+const getArtist = async function(req, rep){
+    const artistId = req.params.artistId;
+    const artist = await Artist.findById(artistId);
+    const songs = await Song.find().select('songName', 'artist').limit(10);
+
+    return rep.view('artist.pug', {
+        artist,
+        songs,
+        user: req.user
+    })
+}
+
+const getPlaylist = async function(req, rep){
+    const playlistId = req.params.playlistId;
+    const playlist = await Playlist.findById(playlistId);
+    const songs = await Song.find().limit(50);
+
+    return rep.view('playlist.pug', {
+        playlist,
+        songs,
+        user: req.user
+    })
+}
+
+const getSong = async function(req, rep){
+    const songId = req.params.songId;
+    const song = await Song.findById(songId);
+
+    return rep.view('song.pug', {
+        song,
+        songs,
+        user: req.user
+    })
+}
+
+module.exports = {
+    getHome,
+    getArtist,
+    getPlaylist,
+    getSong
+};
