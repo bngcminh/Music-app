@@ -11,14 +11,14 @@ function adminRoute(fastify, options){
 
     // Artist API
     fastify.get('/admin/artists', adminController.getAllArtists);
-    fastify.get('/artists/:artistId', adminController.getArtist);
+    fastify.get('/admin/artist/:artistId', {preHandler: [authentication, authorization('admin')]}, adminController.getArtist);
     fastify.post('/admin/create/artist', adminController.createArtist)
     fastify.post('/admin/update/artist/:artistId', adminController.updateArtist);
     fastify.get('/admin/delete/artist/:artistId', adminController.deleteArtist); 
 
     // Playlist API
     fastify.get('/admin/playlists', adminController.getAllPlaylists);
-    fastify.get('/playlists/:playlistId', adminController.getPlaylist);
+    fastify.get('/admin/playlist/:playlistId', {preHandler: [authentication, authorization('admin')]}, adminController.getPlaylist);
     fastify.post('/admin/create/playlist', adminController.createPlaylist);
     fastify.post('/admin/update/playlist/:playlistId', adminController.updatePlaylist);
     fastify.get('/admin/delete/playlist/:playlistId', adminController.deletePlaylist);

@@ -287,6 +287,7 @@
 }
 
 .artist-info {
+  padding-top: 10px;
   display: flex;
   align-items: center;
   gap: 16px;

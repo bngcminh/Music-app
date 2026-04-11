@@ -84,14 +84,14 @@ html(lang="vi")
 
             .song-hero-body
               //- .hero-badge Single Spotlight
-              h2#songTitle.song-title Hex On My Chest, It's Going Down
+              h2#songTitle.song-title #{song.songName}
 
               .song-artist-row
                 .artist-pill
                   .artist-pill-avatar
                     i.fas.fa-user
                   .artist-pill-copy
-                    span.artist-pill-label Nghệ sĩ
+                    span.artist-pill-label #{song.artist.name}
 
                 //- .song-stat-chip
                 //-   i.fas.fa-clock
@@ -153,9 +153,9 @@ html(lang="vi")
                     h3 Nghệ sĩ
                     .artist-info
                       .artist-card-avatar
-                        img#artistAvatar(src="https://www.pinterest.com/pin/36239971992480803/" alt="Anh nghe si")
+                        img#artistAvatar(src=`${song.artist.avatar}` alt="Anh nghe si")
                       .artist-card-copy
-                        h4#artistName Che
+                        h4#artistName #{song.artist.name}
                   //-   p#artistFollowers 8 nguoi theo doi
                   //-   p#artistBio Artist theo duoi mau sac dark-pop va alternative electronic.
                   //- button.artist-follow-btn(type="button") Theo dõi

@@ -41,11 +41,10 @@ const getPlaylist = async function(req, rep){
 
 const getSong = async function(req, rep){
     const songId = req.params.songId;
-    const song = await Song.findById(songId);
+    const song = await Song.findById(songId).populate('artist', 'name avatar');
 
     return rep.view('song.pug', {
         song,
-        songs,
         user: req.user
     })
 }

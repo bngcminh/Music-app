@@ -116,7 +116,7 @@ html(lang="vi")
                     .play-overlay
                       i.fas.fa-play
                   .song-details
-                    h4.song-name(href=``) #{song.songName}
+                    a.song-name(href=`/song/${song._id}`) #{song.songName}
                     p.artist-name #{song.artist.name}
                 //- .song-stats
                 //-   i.fas.fa-headphones
@@ -139,13 +139,13 @@ html(lang="vi")
 
           .grid-playlists
             each playlist, index in playlists
-              .playlist-card
+              a.playlist-card(href=`/playlist/${playlist._id}`)
                 .playlist-cover
                   img(src=`${playlist.coverUrl}` alt="")
-                  .play-button
-                    i.fas.fa-play
+                  //- .play-button
+                  //-   i.fas.fa-play
                 .playlist-info
-                  h4.playlist-name Playlist #{i}
+                  h4.playlist-name #{playlist.playlistName}
                   //- p.playlist-desc 50 bài hát • 2.5M lượt nghe
 
         //- //- New Release Albums
@@ -181,11 +181,11 @@ html(lang="vi")
 
           .grid-artists
             each artist in artists
-              .artist-card
+              a.artist-card(href=`/artist/${artist._id}`)
                 .artist-avatar
                   img(src=`${artist.avatar}` alt="")
-                  .follow-button
-                    i.fas.fa-user-plus
+                  //- .follow-button
+                  //-   i.fas.fa-user-plus
                 .artist-info
                   h4.artist-name #{artist.name}
                   //- p.artist-followers 1.5M theo dõi
