@@ -10,14 +10,6 @@ const playlistSchema = new mongoose.Schema({
     ],
     coverUrl: String,
     isPublic: Boolean,
-    owner: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    ownerRole: {
-        type: String,
-        enum: ['admin','user']
-    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Playlist', playlistSchema);
