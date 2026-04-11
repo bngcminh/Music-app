@@ -1,0 +1,145 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title= artist.name + " - MusicApp"
+    link(rel="stylesheet", href="/public/css/home.css")
+    link(rel="stylesheet", href="/public/css/songs.css")
+    link(rel="stylesheet", href="/public/css/artist.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+  body
+    .app-container
+      aside.sidebar
+        .sidebar-header
+          .logo
+            i.fas.fa-music
+            span MusicApp
+
+        nav.nav-menu
+          a.nav-item(href="/")
+            i.fas.fa-home
+            span Khám Phá
+          a.nav-item(href="/song")
+            i.fas.fa-music
+            span Bài Hát
+          a.nav-item(href="/playlist")
+            i.fas.fa-list-ul
+            span Playlist
+          if user
+            a.nav-item(href="/my-playlists")
+              i.fas.fa-heart
+              span Playlist Của Tôi
+
+        .divider
+
+        .library-section
+          h4.library-title Thư Viện
+          a.nav-item(href="#")
+            i.fas.fa-folder
+            span Playlist Của Tôi
+
+        .sidebar-footer
+          if user
+            .user-info-sidebar
+              .avatar
+                i.fas.fa-user-circle
+              .user-details
+                p.username= user.username
+                p.user-role= user.role || 'User'
+          else
+            a.btn.btn-login-sidebar(href="/login")
+              i.fas.fa-sign-in-alt
+              span Đăng Nhập
+
+      main.main-content
+        header.main-header.song-header
+          .header-left
+
+          .search-box
+            i.fas.fa-search
+            input(type="text" placeholder="Tìm kiếm")
+
+          .header-actions
+            if user
+              .user-menu
+                .user-avatar
+                  i.fas.fa-user-circle
+                span.user-name= user.username
+                .dropdown-menu
+                  a(href="/profile")
+                    i.fas.fa-user
+                    span Trang cá nhân
+                  if user.role === 'admin'
+                    a(href="/admin")
+                      i.fas.fa-cog
+                      span Admin Dashboard
+                  a(href="/logout")
+                    i.fas.fa-sign-out-alt
+                    span Đăng xuất
+            else
+              a.btn.btn-login(href="/login") Đăng nhập
+              a.btn.btn-register(href="/register") Đăng ký
+
+        .content-wrapper.song-detail-page
+          section.song-hero
+            .song-hero-art
+              .art-frame
+                if artist.avatar
+                  img#artistCover.song-cover-image(src=artist.avatar alt=artist.name)
+                else
+                  img#artistCover.song-cover-image(src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80" alt=artist.name)
+              .art-glow
+
+            .song-hero-body
+              h2#artistTitle.song-title= artist.name
+              
+              if artist.bio
+                p.song-summary= artist.bio
+              else
+                p.song-summary Một nghệ sĩ tài năng trong ứng dụng MusicApp
+
+              .song-hero-actions
+                button#heroPlayBtn.btn-hero.btn-hero-primary(type="button")
+                  i.fas.fa-play
+                  span Phát ngay
+                button.btn-hero(type="button")
+                  i.fas.fa-user-plus
+                  span Theo dõi
+                button.btn-hero(type="button")
+                  i.fas.fa-share-nodes
+                  span Chia sẻ
+
+          .detail-grid
+            section.lyrics-panel.panel-card
+              .panel-heading
+                div
+                  h3 Bài hát nổi bật
+              #artistSongs.lyrics-body
+                if songs && songs.length > 0
+                  ul.artist-songs-list
+                    each song, index in songs
+                      li.song-item
+                        span.song-number= index + 1
+                        .song-info
+                          h4= song.title
+                          p= song.artist || "Nghệ sĩ"
+                        span.song-duration= song.duration || "3:00"
+                else
+                  p Chưa có bài hát từ nghệ sĩ này
+
+            aside.info-stack
+              section.panel-card.artist-panel
+                .panel-heading
+                  div
+                    h3 Thông tin
+                .artist-info-box
+                  .info-item
+                    span.info-label Tổng bài hát
+                    strong.info-value= songs.length
+                  .info-item
+                    span.info-label Tham gia
+                    strong.info-value 2024
+
+    include partials/music-player.pug
+    script(src="/public/js/home.js")

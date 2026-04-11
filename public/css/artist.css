@@ -1,0 +1,94 @@
+/* Artist Detail Page */
+
+.artist-songs-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.song-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(20, 34, 44, 0.04);
+  transition: background 0.2s ease;
+}
+
+.song-item:hover {
+  background: rgba(20, 34, 44, 0.08);
+}
+
+.song-number {
+  min-width: 32px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.song-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.song-info h4 {
+  font-size: 15px;
+  margin: 0;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-info p {
+  font-size: 13px;
+  margin: 4px 0 0 0;
+  color: var(--text-secondary);
+}
+
+.song-duration {
+  min-width: 50px;
+  text-align: right;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.artist-info-box {
+  display: grid;
+  gap: 16px;
+}
+
+.info-item {
+  display: grid;
+  gap: 6px;
+}
+
+.info-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.info-value {
+  font-size: 18px;
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .song-item {
+    gap: 12px;
+  }
+
+  .song-info h4 {
+    font-size: 14px;
+  }
+}

@@ -107,26 +107,26 @@ html(lang="vi")
               i.fas.fa-chevron-right
 
           .trending-list
-            each item, index in [1,2,3,4,5]
+            each song, index in songs
               .trending-item
-                .rank(class=index < 3 ? 'top-rank' : '')= index + 1
+                .rank #{index + 1}
                 .song-info
                   .song-thumbnail
-                    img(src=`https://picsum.photos/seed/trend${item}/80/80` alt="")
+                    img(src=`${song.coverUrl}` alt="")
                     .play-overlay
                       i.fas.fa-play
                   .song-details
-                    h4.song-name Bài hát thịnh hành #{item}
-                    p.artist-name Nghệ sĩ mẫu #{item}
-                .song-stats
-                  i.fas.fa-headphones
-                  span 1.2M
-                .song-duration 3:45
-                .song-actions
-                  button.btn-icon(title="Thêm vào yêu thích")
-                    i.far.fa-heart
-                  button.btn-icon(title="Thêm vào playlist")
-                    i.fas.fa-plus
+                    h4.song-name(href=``) #{song.songName}
+                    p.artist-name #{song.artist.name}
+                //- .song-stats
+                //-   i.fas.fa-headphones
+                //-   span 1.2M
+                //- .song-duration 3:45
+                //- .song-actions
+                //-   button.btn-icon(title="Thêm vào yêu thích")
+                //-     i.far.fa-heart
+                //-   button.btn-icon(title="Thêm vào playlist")
+                //-     i.fas.fa-plus
 
         //- Playlists Section
         section.content-section
@@ -134,41 +134,41 @@ html(lang="vi")
             h2.section-title
               i.fas.fa-list-ul
               span Playlist Nổi Bật
-            a.view-all(href="#") Xem tất cả
+            //- a.view-all(href="#") Xem tất cả
               i.fas.fa-chevron-right
 
           .grid-playlists
-            each i in [1,2,3,4,5,6]
+            each playlist, index in playlists
               .playlist-card
                 .playlist-cover
-                  img(src=`https://picsum.photos/seed/pl${i}/300/300` alt="")
+                  img(src=`${playlist.coverUrl}` alt="")
                   .play-button
                     i.fas.fa-play
                 .playlist-info
                   h4.playlist-name Playlist #{i}
-                  p.playlist-desc 50 bài hát • 2.5M lượt nghe
+                  //- p.playlist-desc 50 bài hát • 2.5M lượt nghe
 
-        //- New Release Albums
-        section.content-section
-          .section-header
-            h2.section-title
-              i.fas.fa-compact-disc
-              span Album Mới Phát Hành
-            a.view-all(href="#") Xem tất cả
-              i.fas.fa-chevron-right
+        //- //- New Release Albums
+        //- section.content-section
+        //-   .section-header
+        //-     h2.section-title
+        //-       i.fas.fa-compact-disc
+        //-       span Album Mới Phát Hành
+        //-     a.view-all(href="#") Xem tất cả
+        //-       i.fas.fa-chevron-right
 
-          .grid-albums
-            each i in [1,2,3,4,5]
-              .album-card
-                .album-cover
-                  img(src=`https://picsum.photos/seed/album${i}/250/250` alt="")
-                  .album-overlay
-                    button.btn-play-album
-                      i.fas.fa-play
-                .album-info
-                  h4.album-name Album Mới #{i}
-                  p.album-artist Nghệ sĩ #{i}
-                  p.album-date 15/03/2026
+        //-   .grid-albums
+        //-     each i in [1,2,3,4,5]
+        //-       .album-card
+        //-         .album-cover
+        //-           img(src=`https://picsum.photos/seed/album${i}/250/250` alt="")
+        //-           .album-overlay
+        //-             button.btn-play-album
+        //-               i.fas.fa-play
+        //-         .album-info
+        //-           h4.album-name Album Mới #{i}
+        //-           p.album-artist Nghệ sĩ #{i}
+        //-           p.album-date 15/03/2026
 
         //- Artists Section
         section.content-section
@@ -176,19 +176,19 @@ html(lang="vi")
             h2.section-title
               i.fas.fa-microphone
               span Nghệ Sĩ Nổi Bật
-            a.view-all(href="#") Xem tất cả
+            //- a.view-all(href="#") Xem tất cả
               i.fas.fa-chevron-right
 
           .grid-artists
-            each i in [1,2,3,4,5,6]
+            each artist in artists
               .artist-card
                 .artist-avatar
-                  img(src=`https://picsum.photos/seed/artist${i}/200/200` alt="")
+                  img(src=`${artist.avatar}` alt="")
                   .follow-button
                     i.fas.fa-user-plus
                 .artist-info
-                  h4.artist-name Nghệ Sĩ #{i}
-                  p.artist-followers 1.5M theo dõi
+                  h4.artist-name #{artist.name}
+                  //- p.artist-followers 1.5M theo dõi
 
       //- Music Player Bar (Fixed Bottom)
       .player-bar

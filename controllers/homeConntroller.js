@@ -3,7 +3,7 @@ const Playlist = require('../models/Playlist');
 const Artist = require('../models/Artist');
 
 const getHome = async function(req, rep){
-    const songs = await Song.find().limit(5);
+    const songs = await Song.find().limit(5).populate('artist', 'name');
     const playlists = await Playlist.find().limit(5);
     const artists = await Artist.find().limit(5);
 
