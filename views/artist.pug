@@ -72,49 +72,46 @@ html(lang="vi")
         .content-wrapper.song-detail-page
           section.song-hero
             .song-hero-art
-            //-   .art-frame
-            //-     if artist.avatar
-            //-       img#artistCover.song-cover-image(src=artist.avatar alt=artist.name)
-            //-     else
-            //-       img#artistCover.song-cover-image(src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80" alt=artist.name)
-            //-   .art-glow
+              .art-frame
+                  img#artistCover.song-cover-image(src=artist.avatar alt=artist.name)
+              .art-glow
 
             .song-hero-body
-              h2#artistTitle.song-title 
+              h2#artistTitle.song-title #{artist.name}
               
-            //-   if artist.bio
-            //-     p.song-summary= artist.bio
-            //-   else
-            //-     p.song-summary Một nghệ sĩ tài năng trong ứng dụng MusicApp
+              if artist.bio
+                p.song-summary #{artist.bio}
+              else
+                p.song-summary Không có
 
               .song-hero-actions
                 button#heroPlayBtn.btn-hero.btn-hero-primary(type="button")
                   i.fas.fa-play
                   span Phát ngay
-                button.btn-hero(type="button")
-                  i.fas.fa-user-plus
-                  span Theo dõi
-                button.btn-hero(type="button")
-                  i.fas.fa-share-nodes
-                  span Chia sẻ
+                //- button.btn-hero(type="button")
+                //-   i.fas.fa-user-plus
+                //-   span Theo dõi
+                //- button.btn-hero(type="button")
+                //-   i.fas.fa-share-nodes
+                //-   span Chia sẻ
 
           .detail-grid
             section.lyrics-panel.panel-card
               .panel-heading
                 div
-                  h3 Bài hát nổi bật
+                  h3 Bài hát của #{artist.name}
               #artistSongs.lyrics-body
-                //- if songs && songs.length > 0
-                //-   ul.artist-songs-list
-                //-     each song, index in songs
-                //-       li.song-item
-                //-         span.song-number= index + 1
-                //-         .song-info
-                //-           h4= song.title
-                //-           p= song.artist || "Nghệ sĩ"
-                //-         span.song-duration= song.duration || "3:00"
-                //- else
-                //-   p Chưa có bài hát từ nghệ sĩ này
+                if songs && songs.length > 0
+                  ul.artist-songs-list
+                    each song, index in songs
+                      li.song-item
+                        span.song-number #{index + 1}
+                        .song-info
+                          h4 #{song.songName}
+                          p #{song.artist.name}
+                        //- span.song-duration= song.duration || "3:00"
+                else
+                  p Chưa có bài hát từ nghệ sĩ này
 
             aside.info-stack
               section.panel-card.artist-panel
@@ -124,10 +121,10 @@ html(lang="vi")
                 .artist-info-box
                   .info-item
                     span.info-label Tổng bài hát
-                    //- strong.info-value= songs.length
+                    strong.info-value= songs.length
                   .info-item
-                    span.info-label Tham gia
-                    strong.info-value 2024
+                    //- span.info-label Tham gia
+                    //- strong.info-value 2024
 
     include partials/music-player.pug
     script(src="/public/js/home.js")

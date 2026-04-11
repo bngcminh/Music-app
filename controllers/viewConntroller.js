@@ -18,7 +18,7 @@ const getHome = async function(req, rep){
 const getArtist = async function(req, rep){
     const artistId = req.params.artistId;
     const artist = await Artist.findById(artistId);
-    const songs = await Song.find().select('songName', 'artist').limit(10);
+    const songs = await Song.find({artist: artistId}).select('songName artist').limit(10);
 
     return rep.view('artist.pug', {
         artist,

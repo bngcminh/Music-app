@@ -269,7 +269,7 @@
 }
 
 .panel-card {
-  height: 176px;
+  height: auto;
   background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.55);
