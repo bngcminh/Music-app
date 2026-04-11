@@ -79,7 +79,7 @@ html(lang="vi")
           section.song-hero
             .song-hero-art
               .art-frame
-                img#songCover.song-cover-image(src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=900&q=80" alt="Cover bÃ i hÃ¡t")
+                img#songCover.song-cover-image(src=`${song.coverUrl}` alt="")
               .art-glow
 
             .song-hero-body
@@ -117,9 +117,9 @@ html(lang="vi")
                 button#heroPlayBtn.btn-hero.btn-hero-primary(type="button")
                   i.fas.fa-play
                   span Phát ngay
-                button.btn-hero(type="button")
-                  i.fas.fa-list-ul
-                  span Thêm vào danh sách phát
+                //- button.btn-hero(type="button")
+                  //- i.fas.fa-list-ul
+                  //- span Thêm vào danh sách phát
                 button.btn-hero(type="button")
                   i.fas.fa-light.fa-plus
                   span Thêm vào Playlist

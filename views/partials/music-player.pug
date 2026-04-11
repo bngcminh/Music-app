@@ -1,40 +1,46 @@
 .player-bar
   .player-content
+
+    // ===== LEFT =====
     .player-song-info
       .player-thumbnail
-        img(src="https://picsum.photos/seed/playing/56/56" alt="")
+        img#player-cover(src="" alt="")
       .player-details
-        h4.player-song-name TÃªn BÃ i HÃ¡t
-        p.player-artist-name TÃªn Nghá»‡ SÄ©
-      .player-actions-left
-        //- button.btn-icon(title="YÃªu thÃ­ch")
-        //-   i.far.fa-heart
-        //- button.btn-icon(title="ThÃªm")
-        //-   i.fas.fa-plus
+        h4.player-song-name#player-title Tên bài hát
+        p.player-artist-name#player-artist Tên nghệ sĩ
 
+    // ===== CENTER =====
     .player-center
       .player-controls
-        button.btn-control(title="Shuffle")
+        button.btn-control#shuffle-btn(title="Shuffle")
           i.fas.fa-shuffle
-        button.btn-control(title="Previous")
-          i.fas.fa-backward-step
-        button.btn-control.btn-play-main(title="Play")
-          i.fas.fa-play
-        button.btn-control(title="Next")
-          i.fas.fa-forward-step
-        button.btn-control(title="Repeat")
-          i.fas.fa-repeat
-      .player-timeline
-        span.time-current
-        .progress-bar
-          .progress-track
-            .progress-fill(style="width: 30%")
-            .progress-thumb
-        span.time-total
 
+        button.btn-control#prev-btn(title="Previous")
+          i.fas.fa-backward-step
+
+        button.btn-control.btn-play-main#play-btn(title="Play")
+          i.fas.fa-play
+
+        button.btn-control#next-btn(title="Next")
+          i.fas.fa-forward-step
+
+        button.btn-control#repeat-btn(title="Repeat")
+          i.fas.fa-repeat
+
+      .player-timeline
+
+        .progress-bar#progress-bar
+          .progress-track
+            .progress-fill#progress-fill(style="width: 0%")
+            //- .progress-thumb
+
+
+
+    // ===== RIGHT =====
     .player-right
-      button.btn-control(title="Playlist")
+      button.btn-control#open-queue(title="Playlist")
         i.fas.fa-list-ul
+
       .volume-control
         button.btn-control(title="Volume")
           i.fas.fa-volume-high
@@ -42,9 +48,11 @@
           .volume-track
             .volume-fill(style="width: 70%")
 
+// ===== QUEUE =====
 .playlist-queue-modal#playlistQueueModal
   .queue-overlay
   .queue-panel
+
     .queue-header
       h3 Danh sách phát
       button.btn-close-queue#closeQueueBtn
@@ -52,19 +60,22 @@
 
     .queue-content
       .now-playing-section
-        h4 đang phát
+        h4 Đang phát
         .now-playing-item
           .song-thumbnail-queue
-            i.fas.fa-music
+            img#queue-cover(src="" alt="")
           .song-info-queue
-            p.song-name Chá»n má»™t bÃ i hÃ¡t
-            p.song-artist ---
-          .song-duration 0:00
+            p.song-name#queue-title Chọn một bài hát
+            p.song-artist#queue-artist ---
+          .song-duration#queue-duration 0:00
 
       .queue-list-section
         .queue-list-header
           h4 Tiếp theo
-          span.queue-count 0 bÃ i hÃ¡t
+          span.queue-count#queue-count 0 bài hát
 
         .queue-list#queueList
-          p.empty-queue Danh sÃ¡ch phÃ¡t trá»‘ng
+          p.empty-queue Danh sách phát trống
+
+// ===== AUDIO (BẮT BUỘC) =====
+audio#audioPlayer
