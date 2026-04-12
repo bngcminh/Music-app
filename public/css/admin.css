@@ -120,6 +120,7 @@ img {
   font-size: 15px;
   transition: all 0.2s;
   text-align: left;
+  text-decoration: none;
 }
 
 .nav-tab:hover {
@@ -491,6 +492,7 @@ img {
   font-size: 14px;
   transition: all 0.2s;
   white-space: nowrap;
+  text-decoration: none;
 }
 
 .btn-primary {
@@ -521,6 +523,13 @@ img {
 .btn-danger {
   background: var(--danger-color);
   color: white;
+}
+
+.nav-tab:focus-visible,
+.btn:focus-visible,
+.btn-back:focus-visible {
+  outline: 3px solid rgba(255, 71, 87, 0.2);
+  outline-offset: 2px;
 }
 
 .btn-sm {

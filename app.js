@@ -72,17 +72,7 @@ fastify.register(userRoute)
 fastify.register(viewRoute);
 fastify.register(adminRoute);
 
-// fastify.get('/update', { preHandler: authentication }, async (req, rep) => {
-//     if (!req.user) {
-//         return rep.redirect('/login');
-//     }
-//     return rep.view('update_playlist.pug', { user: req.user });
-// })
-
 fastify.get('/playlists/create', { preHandler: [authentication] }, async (req, rep) => {
-    if (!req.user) {
-        return rep.redirect('/login');
-    }
     return rep.view("create-playlist.pug", { user: req.user });
 })
 
@@ -92,10 +82,6 @@ fastify.get('/login', (req, rep) => {
 
 fastify.get('/register', (req, rep) => {
     rep.view("register.pug");
-})
-
-fastify.get('/admin', {preHandler: [authentication, authorization('admin')]}, (req, rep) => {
-    rep.view("admin/dashboard.pug", { user: req.user });
 })
 
 fastify.listen({ port:3000 }, (err) => {

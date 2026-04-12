@@ -81,12 +81,6 @@ html(lang="vi")
                             p.playlist-track-name= song.songName
                             p.playlist-track-artist= song.artist ? song.artist.name : "Unknown"
 
-                          button.playlist-track-remove(
-                            type="button"
-                            onclick=`removeSong('${song._id}')`
-                          )
-                            i.fas.fa-times
-
                 .form-actions.playlist-unified-actions
                   a.btn.btn-secondary(href="#") Hủy
                   button.btn.btn-primary(type="submit")

@@ -3,33 +3,32 @@ html(lang="vi")
   head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    title Dashboard - Admin MusicApp
+    title Bảng điều khiển - Admin MusicApp
     link(rel="stylesheet", href="/public/css/admin.css")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
   body
     .admin-wrapper
-      //- Sidebar
       aside.admin-sidebar
         .admin-brand
           .brand-icon
             i.fas.fa-music
           .brand-text
             h1 MusicApp Admin
-            p Quản Trị Hệ Thống
+            p Quản trị hệ thống
 
         nav.admin-nav
           a.nav-tab.active(href="/admin")
             i.fas.fa-chart-line
-            span Dashboard
+            span Bảng điều khiển
           a.nav-tab(href="/admin/users")
             i.fas.fa-users
-            span Người Dùng
+            span Người dùng
           a.nav-tab(href="/admin/artists")
             i.fas.fa-microphone
-            span Nghệ Sĩ
+            span Nghệ sĩ
           a.nav-tab(href="/admin/songs")
-            i.fas.fa-user
-            span Bài Hát
+            i.fas.fa-music
+            span Bài hát
           a.nav-tab(href="/admin/playlists")
             i.fas.fa-list-ul
             span Playlist
@@ -37,13 +36,12 @@ html(lang="vi")
         .sidebar-footer
           a.btn-back(href="/")
             i.fas.fa-arrow-left
-            span Về Trang Chủ
+            span Về trang chủ
 
-      //- Main Content
       main.admin-main
         header.admin-header
           .header-left
-            h1#page-title Dashboard
+            h1#page-title Bảng điều khiển
 
           .header-right
             .user-info
@@ -55,31 +53,30 @@ html(lang="vi")
 
         #notification.notification
 
-        //- Dashboard Panel
         section.panel.active(data-panel="dashboard")
           .stats-grid
             .stat-card
               .stat-icon.bg-primary
                 i.fas.fa-users
               .stat-info
-                h3 1,234
-                p Người Dùng
+                h3 #{users.length}
+                p Người dùng
             .stat-card
               .stat-icon.bg-success
                 i.fas.fa-microphone
               .stat-info
-                h3 456
-                p Nghệ Sĩ
+                h3 #{artists.length}
+                p Nghệ sĩ
             .stat-card
               .stat-icon.bg-warning
                 i.fas.fa-music
               .stat-info
-                h3 5,678
-                p Bài Hát
+                h3 #{songs.length}
+                p Bài hát
             .stat-card
               .stat-icon.bg-info
                 i.fas.fa-list-ul
               .stat-info
-                h3 89
+                h3 #{playlists.length}
                 p Playlists
     script(src="/public/js/admin.js")

@@ -18,21 +18,21 @@ html(lang="vi")
         nav.sidebar-nav
           a.nav-item.active(href="/")
             i.fas.fa-home
-            span Kham Pha
+            span Khám Phá
 
         .divider
 
         .library-section
-          h4.library-title Thu Vien
+          h4.library-title Thư Viện
           a.nav-item(href="/profile")
             i.fas.fa-folder
-            span Playlist cua toi
+            span Playlist của tôi
 
       main.main-content
         header.main-header.playlist-header
           .search-box
             i.fas.fa-search
-            input(type="text" placeholder="Tim kiem")
+            input(type="text" placeholder="Tìm kiếm")
 
           .header-actions
             if user
@@ -43,17 +43,17 @@ html(lang="vi")
                 .dropdown-menu
                   a(href="/profile")
                     i.fas.fa-user
-                    span Trang ca nhan
+                    span Trang cá nhân
                   if user.role === 'admin'
                     a(href="/admin")
                       i.fas.fa-cog
                       span Admin Dashboard
                   a(href="/logout")
                     i.fas.fa-sign-out-alt
-                    span Dang xuat
+                    span Đăng xuất
             else
-              a.btn.btn-login(href="/login") Dang nhap
-              a.btn.btn-register(href="/register") Dang ky
+              a.btn.btn-login(href="/login") Đăng nhập
+              a.btn.btn-register(href="/register") Đăng ký
 
         .content-wrapper.playlist-detail-page
           section.playlist-hero
@@ -66,12 +66,12 @@ html(lang="vi")
               .playlist-meta-line
                 span#playlistType Playlist
                 span.dot-divider •
-                span#playlistCountText #{songs.length} bai hat
+                span#playlistCountText #{songs.length} bài hát
               h2#playlistTitle.playlist-title #{playlist.playlistName}
               .playlist-main-actions
                 button#playAllBtn.btn-hero.btn-hero-primary(type="button")
                   i.fas.fa-play
-                  span Phat tat ca
+                  span Phát tất cả
 
           .playlist-layout
             section.panel-card.track-panel
@@ -80,11 +80,12 @@ html(lang="vi")
                   thead
                     tr
                       th #
-                      th Tieu de
+                      th Tiêu đề
                       th Playlist
-                      th Nghe si
-                      th Thao tac
+                      th Nghệ sĩ
+                      th Thao tác
                   tbody#playlistTracks
+                    if songs && songs.length
                       each song, index in songs
                         tr.track-row
                           td.track-index #{index + 1}
@@ -94,13 +95,16 @@ html(lang="vi")
                                   img(src=song.coverUrl alt=song.songName)
                               .track-copy
                                 p.track-title #{song.songName}
-                                p.track-subtitle #{songName}
+                                p.track-subtitle #{song.artist && song.artist.name ? song.artist.name : 'Unknown'}
                           td #{playlist.playlistName}
-                          td #{song.artist.name}
+                          td #{song.artist && song.artist.name ? song.artist.name : 'Unknown'}
                           td
                             a.track-action-btn(href=`/song/${song._id}/select-playlist`)
                               i.fas.fa-plus
-                              span Them vao playlist
+                              span Thêm vào playlist
+                    else
+                      tr
+                        td(colspan="5") Playlist này chưa có bài hát nào.
 
     include partials/music-player.pug
     script(src="/public/js/home.js")

@@ -7,12 +7,31 @@ const Album = require('../models/Album');
 const Playlist = require('../models/Playlist');
 const Song = require('../models/Song');
 
+// Dashboard
+const getDashboard = async function(req, rep){
+    const users = await User.find().select('_id');
+    const songs = await Song.find().select('_id');
+    const playlists = await Playlist.find().select('_id');
+    const artists = await Artist.find().select('_id');
+
+    return rep.view("admin/dashboard.pug", {
+        users,
+        songs,
+        playlists,
+        artists,
+        user: req.user 
+    });
+}
+
 // Quản lý người dùng
 const getAllUsers = async function(req, rep){
     try{
         const users = await User.find();
         console.log(users)
-        return rep.view('admin/users.pug', {users});
+        return rep.view('admin/users.pug', {
+            users,
+            user: req.user 
+        });
     }catch(err){
         console.log(err);
         rep.code(500).send('Khong the lay users');
@@ -69,7 +88,10 @@ const deleteUser = async function(req, rep){
 const getAllArtists = async function(req, rep){
     try{
         const artists = await Artist.find();
-        return rep.view('admin/artists.pug', {artists});
+        return rep.view('admin/artists.pug', {
+            artists,
+            user: req.user 
+        });
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi lay artist');
@@ -83,6 +105,7 @@ const getArtist = async function(req, rep){
         if(!artist){
             return rep.code(404).send('Khong tim thay artist');
         }
+        console.log(artist);
         return rep.view('admin/update_artist.pug', {artist});
     }catch(err){
         console.log(err);
@@ -98,7 +121,7 @@ const createArtist = async function(req, rep){
             if(part.type === 'field'){
                 data[part.fieldname] = part.value;
             }
-            if(part.type === 'file'){
+            if(part.type === 'file' && part.filename){
                 const uploadCover = path.join(__dirname, '../public/upload/cover', part.filename);
                 data.avatar = `/upload/cover/${part.filename}`;
                 await pipeline(part.file, fs.createWriteStream(uploadCover))
@@ -122,7 +145,7 @@ const updateArtist = async function(req, rep){
             if(part.type === 'field'){
                 data[part.fieldname] = part.value;
             }
-            if(part.type === 'file'){
+            if(part.type === 'file' && part.filename){
                 const uploadAvatar = path.join(__dirname, '../public/upload/cover', part.filename);
                 data.avatar = `/upload/cover/${part.filename}`;
                 await pipeline(part.file, fs.createWriteStream(uploadAvatar))
@@ -173,7 +196,11 @@ const getAllPlaylists = async function(req, rep){
        const playlists = await Playlist.find().select('playlistName songs coverUrl');
        const songs = await Song.find().select('songName');
        console.log(playlists);
-       return rep.view('admin/playlists.pug', {playlists, songs});
+       return rep.view('admin/playlists.pug', {
+            playlists, 
+            songs,
+            user: req.user 
+        });
     } catch (err) {
         console.log(err);
         rep.code(500).send('Co loi khi lay danh sach playlist');
@@ -205,7 +232,7 @@ const createPlaylist = async function(req, rep){
             if (part.type === 'field') {
                 data[part.fieldname] = part.value;
             }
-            if (part.type === 'file') {
+            if (part.type === 'file' && part.filename) {
                 const uploadCover = path.join(__dirname, '../public/upload/cover', part.filename);
                 data.coverUrl = `/upload/cover/${part.filename}`;
                 await pipeline(part.file, fs.createWriteStream(uploadCover));
@@ -242,7 +269,7 @@ const updatePlaylist = async function(req, rep){
                 }
                 data[part.fieldname] = part.value;
             }
-            if(part.type === 'file'){
+            if(part.type === 'file' && part.filename){
                 if(part.fieldname === 'coverUrl'){
                     const uploadCover = path.join(__dirname, '../public/upload/cover', part.filename);
                     data.coverUrl = `/upload/cover/${part.filename}`;
@@ -291,7 +318,10 @@ const getAllSongs = async function(req, rep){
     try{
         const songs = await Song.find().populate('artist', 'name');
         console.log(songs);
-        return rep.view('admin/songs.pug', {songs})
+        return rep.view('admin/songs.pug', {
+            songs,
+            user: req.user 
+        })
     }catch(err){
         console.log(err);
         return rep.code(500).send('Co loi khi lay tat ca bai hat');
@@ -320,7 +350,7 @@ const createSong = async function(req, rep){
             if(part.type === 'field'){
                 data[part.fieldname] = part.value;
             }
-            if(part.type === 'file'){
+            if(part.type === 'file' && part.filename){
                 if(part.fieldname === 'audioUrl'){
                     const uploadAudio  = path.join(__dirname, '../public/upload/audio', part.filename);
                     data.audioUrl = `/upload/audio/${part.filename}`
@@ -412,6 +442,7 @@ const deleteSong = async function(req, rep){
 }
 
 module.exports = {
+    getDashboard,
     getAllUsers,
     getUser,
     updateUser,

@@ -3,7 +3,7 @@ html(lang="vi")
   head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    title Quan Ly Nghe Si - Admin MusicApp
+    title Quản lý nghệ sĩ - Admin MusicApp
     link(rel="stylesheet", href="/public/css/admin.css")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
   body
@@ -14,21 +14,21 @@ html(lang="vi")
             i.fas.fa-music
           .brand-text
             h1 MusicApp Admin
-            p Quan Tri He Thong
+            p Quản trị hệ thống
 
         nav.admin-nav
-          a.nav-tab.active(href="/admin")
+          a.nav-tab(href="/admin")
             i.fas.fa-chart-line
-            span Dashboard
+            span Bảng điều khiển
           a.nav-tab(href="/admin/users")
             i.fas.fa-users
-            span Nguoi Dung
-          a.nav-tab(href="/admin/artists")
+            span Người dùng
+          a.nav-tab.active(href="/admin/artists")
             i.fas.fa-microphone
-            span Nghe Si
+            span Nghệ sĩ
           a.nav-tab(href="/admin/songs")
-            i.fas.fa-user
-            span Bai Hat
+            i.fas.fa-music
+            span Bài hát
           a.nav-tab(href="/admin/playlists")
             i.fas.fa-list-ul
             span Playlist
@@ -36,13 +36,13 @@ html(lang="vi")
         .sidebar-footer
           a.btn-back(href="/")
             i.fas.fa-arrow-left
-            span Ve Trang Chu
+            span Về trang chủ
 
       main.admin-main
         header.admin-header
           .header-left
-            h1#page-title Quan Ly Nghe Si
-            p#page-desc Tao va quan ly nghe si
+            h1#page-title Quản lý nghệ sĩ
+            p#page-desc Tạo và quản lý nghệ sĩ
 
           .header-right
             .user-info
@@ -58,36 +58,36 @@ html(lang="vi")
           .panel-header
             h2
               i.fas.fa-microphone
-              span Quan Ly Nghe Si
+              span Quản lý nghệ sĩ
 
           .form-card
-            h3 Tao Nghe Si Moi
+            h3 Tạo nghệ sĩ mới
             form.admin-form#artist-create-form(action="/admin/create/artist" method="post" enctype="multipart/form-data")
               .form-row
                 .form-group
                   label
                     i.fas.fa-user
-                    span Ten Nghe Si
-                  input.form-control(type="text" name="name" placeholder="Nhap ten nghe si" required)
+                    span Tên nghệ sĩ
+                  input.form-control(type="text" name="name" placeholder="Nhập tên nghệ sĩ" required)
 
                 .form-group
                   label
                     i.fas.fa-image
-                    span Anh Dai Dien
+                    span Ảnh đại diện
                   input.form-control(type="file" name="avatar" accept="image/*")
 
               .form-group
                 label
                   i.fas.fa-align-left
-                  span Tieu Su
-                textarea.form-control(name="bio" rows="3" placeholder="Mo ta ve nghe si...")
+                  span Tiểu sử
+                textarea.form-control(name="bio" rows="3" placeholder="Mô tả về nghệ sĩ...")
 
               button.btn.btn-primary(type="submit")
                 i.fas.fa-plus
-                span Tao Nghe Si
+                span Tạo nghệ sĩ
 
           .panel-header.mt-4
-            h3 Danh Sach Nghe Si
+            h3 Danh sách nghệ sĩ
 
           .data-table-container
             table.data-table
@@ -95,15 +95,15 @@ html(lang="vi")
                 tr
                   th #
                   th Avatar
-                  th Ten Nghe Si
-                  th Tieu Su
-                  th Thao Tac
+                  th Tên nghệ sĩ
+                  th Tiểu sử
+                  th Thao tác
               tbody#artists-body
                 each artist, index in artists
                   tr
                     td #{index + 1}
                     td
-                      img(src=artist.avatar alt="Cover" width="80")
+                      img(src=artist.avatar alt="Avatar" width="80")
                     td #{artist.name}
                     td #{artist.bio}
                     td
@@ -111,9 +111,9 @@ html(lang="vi")
                         form(action=`/admin/delete/artist/${artist._id}` method="GET")
                           button.btn.btn-danger.btn-sm.admin-action-btn(type="submit")
                             i.fas.fa-trash
-                            span Xoa
+                            span Xóa
                         a.btn.btn-secondary.btn-sm.admin-action-btn(href=`/admin/artist/${artist._id}`)
                           i.fas.fa-pen
-                          span Sua
+                          span Sửa
 
     script(src="/public/js/admin.js")
