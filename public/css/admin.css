@@ -690,6 +690,49 @@ textarea.form-control {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  align-items: center;
+}
+
+.action-buttons form {
+  margin: 0;
+}
+
+.admin-action-btn {
+  min-width: 96px;
+  justify-content: center;
+  text-decoration: none;
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-sm);
+}
+
+.admin-action-btn i {
+  font-size: 12px;
+}
+
+.admin-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.admin-action-btn:focus-visible {
+  outline: 3px solid rgba(55, 66, 250, 0.18);
+  outline-offset: 2px;
+}
+
+.action-buttons .btn-secondary {
+  background: linear-gradient(135deg, #4f5d75 0%, #2f3542 100%);
+}
+
+.action-buttons .btn-secondary:hover {
+  background: linear-gradient(135deg, #596780 0%, #1f2530 100%);
+}
+
+.action-buttons .btn-danger {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);
+}
+
+.action-buttons .btn-danger:hover {
+  background: linear-gradient(135deg, #ff7f7f 0%, #d63031 100%);
 }
 
 /* Table Images */

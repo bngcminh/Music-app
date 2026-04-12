@@ -3,19 +3,18 @@ html(lang="vi")
   head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    title Quản Lý Playlist - Admin MusicApp
+    title Quan Ly Playlist - Admin MusicApp
     link(rel="stylesheet", href="/public/css/admin.css")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
   body
     .admin-wrapper
-      //- Sidebar
       aside.admin-sidebar
         .admin-brand
           .brand-icon
             i.fas.fa-music
           .brand-text
             h1 MusicApp Admin
-            p Quản Trị Hệ Thống
+            p Quan Tri He Thong
 
         nav.admin-nav
           a.nav-tab.active(href="/admin")
@@ -23,13 +22,13 @@ html(lang="vi")
             span Dashboard
           a.nav-tab(href="/admin/users")
             i.fas.fa-users
-            span Người Dùng
+            span Nguoi Dung
           a.nav-tab(href="/admin/artists")
             i.fas.fa-microphone
-            span Nghệ Sĩ
+            span Nghe Si
           a.nav-tab(href="/admin/songs")
             i.fas.fa-user
-            span Bài Hát
+            span Bai Hat
           a.nav-tab(href="/admin/playlists")
             i.fas.fa-list-ul
             span Playlist
@@ -37,14 +36,13 @@ html(lang="vi")
         .sidebar-footer
           a.btn-back(href="/")
             i.fas.fa-arrow-left
-            span Về Trang Chủ
+            span Ve Trang Chu
 
-      //- Main Content
       main.admin-main
         header.admin-header
           .header-left
-            h1#page-title Quản Lý Playlist
-            p#page-desc Tạo và quản lý playlist
+            h1#page-title Quan Ly Playlist
+            p#page-desc Tao va quan ly playlist
 
           .header-right
             .user-info
@@ -56,69 +54,66 @@ html(lang="vi")
 
         #notification.notification
 
-        //- Playlists Panel
         section.panel.active(data-panel="playlists")
           .panel-header
             h2
               i.fas.fa-list-ul
-              span Quản Lý Playlist
+              span Quan Ly Playlist
 
           .form-card
-            h3 Tạo Playlist Mới
+            h3 Tao Playlist Moi
             form.admin-form#playlist-create-form(action="/admin/create/playlist" method="post" enctype="multipart/form-data")
               .form-row
                 .form-group
                   label
                     i.fas.fa-heading
-                    span Tên Playlist
-                  input.form-control(type="text" name="playlistName" placeholder="Nhập tên playlist" required)
+                    span Ten Playlist
+                  input.form-control(type="text" name="playlistName" placeholder="Nhap ten playlist" required)
 
                 .form-group
                   label
                     i.fas.fa-link
-                    span Ảnh Playlist
+                    span Anh Playlist
                   input.form-control(type="file" name="coverUrl" accept="image/*")
+
                 .form-group
                   label
                     i.fas.fa-link
-                    span Thêm bài hát
+                    span Them bai hat
                   select.form-control(name="songs" multiple size="6")
                     each song in songs
                       option(value=song._id) #{song.songName}
-              //- .form-row
-              //-   .form-group
-              //-     label
-              //-       i.fas.fa-eye
-              //-       span Công Khai
-              //-     select.form-control(name="isPublic")
-              //-       option(value="true") Có
-              //-       option(value="false" selected) Không
 
               button.btn.btn-primary(type="submit")
                 i.fas.fa-plus
-                span Tạo Playlist
+                span Tao Playlist
 
           .panel-header.mt-4
-            h3 Danh Sách Playlist
+            h3 Danh Sach Playlist
 
           .data-table-container
             table.data-table
               thead
                 tr
                   th #
-                  th Tên Playlist
+                  th Ten Playlist
                   th Cover
-                  th Số Bài Hát
-                  th Thao Tác
+                  th So Bai Hat
+                  th Thao Tac
               tbody#playlists-body
-                  each playlist, index in playlists
-                    tr
-                      td #{index + 1}
-                      td #{playlist.playlistName}
-                      td 
-                        img(src=playlist.coverUrl alt="Cover" width="80")
-                      td #{playlist.songs.length}
-                      td
+                each playlist, index in playlists
+                  tr
+                    td #{index + 1}
+                    td #{playlist.playlistName}
+                    td
+                      img(src=playlist.coverUrl alt="Cover" width="80")
+                    td #{playlist.songs.length}
+                    td
+                      .action-buttons
                         form(action=`/admin/delete/playlist/${playlist._id}` method="GET")
-                          button Xóa
-                        a(href=`/admin/playlist/${playlist._id}`) Sửa
+                          button.btn.btn-danger.btn-sm.admin-action-btn(type="submit")
+                            i.fas.fa-trash
+                            span Xoa
+                        a.btn.btn-secondary.btn-sm.admin-action-btn(href=`/admin/playlist/${playlist._id}`)
+                          i.fas.fa-pen
+                          span Sua

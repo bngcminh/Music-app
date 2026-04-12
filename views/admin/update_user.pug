@@ -57,35 +57,10 @@ html(lang="vi")
           .update-shell
             .entity-card
               .entity-media
-                if avatarUrl
-                  img.entity-cover-image(src=avatarUrl, alt=userData && userData.username ? userData.username : 'Avatar nguoi dung')
-                else
-                  .entity-cover.entity-cover-icon
-                    i.fas.fa-user
-
-              .entity-content
-                h3= userData && userData.username ? userData.username : 'Nguoi dung'
-                p= userData && userData.email ? userData.email : 'Chua co email'
-
-                .entity-meta
-                  span.meta-chip
-                    i.fas.fa-shield-halved
-                    |  #{userData && userData.role ? userData.role : 'user'}
-                  span.meta-chip
-                    i.fas.fa-calendar-plus
-                    |  #{createdAt}
-
-                .meta-grid
-                  .meta-item
-                    span User ID
-                    strong= userData && userData._id ? userData._id : 'Dang cho du lieu'
-                  .meta-item
-                    span Lan cap nhat
-                    strong= updatedAt
-
+                img.entity-cover-image(src=user.avatar)
             .form-card
               h3 Thong Tin Co Ban
-              form.admin-form(action=`/admin/update/user/${userData._id}` , method="POST")
+              form.admin-form(action=`/admin/update/user/${user._id}` , method="POST")
                 .form-row
                   .form-group
                     label(for="username")

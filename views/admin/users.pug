@@ -3,19 +3,18 @@ html(lang="vi")
   head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    title Quản Lý Người Dùng - Admin MusicApp
+    title Quan Ly Nguoi Dung - Admin MusicApp
     link(rel="stylesheet", href="/public/css/admin.css")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
   body
     .admin-wrapper
-      //- Sidebar
       aside.admin-sidebar
         .admin-brand
           .brand-icon
             i.fas.fa-music
           .brand-text
             h1 MusicApp Admin
-            p Quản Trị Hệ Thống
+            p Quan Tri He Thong
 
         nav.admin-nav
           a.nav-tab.active(href="/admin")
@@ -23,13 +22,13 @@ html(lang="vi")
             span Dashboard
           a.nav-tab(href="/admin/users")
             i.fas.fa-users
-            span Người Dùng
+            span Nguoi Dung
           a.nav-tab(href="/admin/artists")
             i.fas.fa-microphone
-            span Nghệ Sĩ
+            span Nghe Si
           a.nav-tab(href="/admin/songs")
             i.fas.fa-user
-            span Bài Hát
+            span Bai Hat
           a.nav-tab(href="/admin/playlists")
             i.fas.fa-list-ul
             span Playlist
@@ -37,14 +36,13 @@ html(lang="vi")
         .sidebar-footer
           a.btn-back(href="/")
             i.fas.fa-arrow-left
-            span Về Trang Chủ
+            span Ve Trang Chu
 
-      //- Main Content
       main.admin-main
         header.admin-header
           .header-left
-            h1#page-title Quản Lý Người Dùng
-            p#page-desc Quản lý tài khoản người dùng
+            h1#page-title Quan Ly Nguoi Dung
+            p#page-desc Quan ly tai khoan nguoi dung
 
           .header-right
             .user-info
@@ -56,33 +54,38 @@ html(lang="vi")
 
         #notification.notification
 
-        //- Users Panel
         section.panel.active(data-panel="users")
           .panel-header
             h2
               i.fas.fa-users
-              span Quản Lý Người Dùng
+              span Quan Ly Nguoi Dung
 
           .panel-header.mt-4
-            h3 Danh Sách Người Dùng
+            h3 Danh Sach Nguoi Dung
+
           .data-table-container
             table.data-table
               thead
                 tr
                   th #
                   th Avatar
-                  th Tên
-                  th Vai Trò
-                  th Thao Tác
+                  th Ten
+                  th Vai Tro
+                  th Thao Tac
               tbody#users-body
                 each user, index in users
                   tr
                     td #{index + 1}
-                    td 
-                      img(src=user.avartar, alt="", srcset="")
+                    td
+                      img(src=user.avatar alt="" width="80")
                     td #{user.username}
                     td #{user.role}
                     td
-                      form(action=`/admin/delete/user/${user._id}` method="GET")
-                        button Xóa
-                      a(href=`/admin/user/${user._id}`) Sửa
+                      .action-buttons
+                        form(action=`/admin/delete/user/${user._id}` method="GET")
+                          button.btn.btn-danger.btn-sm.admin-action-btn(type="submit")
+                            i.fas.fa-trash
+                            span Xoa
+                        a.btn.btn-secondary.btn-sm.admin-action-btn(href=`/admin/user/${user._id}`)
+                          i.fas.fa-pen
+                          span Sua

@@ -3,19 +3,18 @@ html(lang="vi")
   head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    title Quản Lý Bài Hát - Admin MusicApp
+    title Quan Ly Bai Hat - Admin MusicApp
     link(rel="stylesheet", href="/public/css/admin.css")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
   body
     .admin-wrapper
-      //- Sidebar
       aside.admin-sidebar
         .admin-brand
           .brand-icon
             i.fas.fa-music
           .brand-text
             h1 MusicApp Admin
-            p Quản Trị Hệ Thống
+            p Quan Tri He Thong
 
         nav.admin-nav
           a.nav-tab.active(href="/admin")
@@ -23,13 +22,13 @@ html(lang="vi")
             span Dashboard
           a.nav-tab(href="/admin/users")
             i.fas.fa-users
-            span Người Dùng
+            span Nguoi Dung
           a.nav-tab(href="/admin/artists")
             i.fas.fa-microphone
-            span Nghệ Sĩ
+            span Nghe Si
           a.nav-tab(href="/admin/songs")
             i.fas.fa-user
-            span Bài Hát
+            span Bai Hat
           a.nav-tab(href="/admin/playlists")
             i.fas.fa-list-ul
             span Playlist
@@ -37,14 +36,13 @@ html(lang="vi")
         .sidebar-footer
           a.btn-back(href="/")
             i.fas.fa-arrow-left
-            span Về Trang Chủ
+            span Ve Trang Chu
 
-      //- Main Content
       main.admin-main
         header.admin-header
           .header-left
-            h1#page-title Quản Lý Bài Hát
-            p#page-desc Tạo và quản lý bài hát
+            h1#page-title Quan Ly Bai Hat
+            p#page-desc Tao va quan ly bai hat
 
           .header-right
             .user-info
@@ -56,28 +54,27 @@ html(lang="vi")
 
         #notification.notification
 
-        //- Songs Panel
         section.panel.active(data-panel="songs")
           .panel-header
             h2
               i.fas.fa-music
-              span Quản Lý Bài Hát
+              span Quan Ly Bai Hat
 
           .form-card
-            h3 Tạo Bài Hát Mới
+            h3 Tao Bai Hat Moi
             form.admin-form#song-create-form(action="/admin/create/song" method="POST" enctype="multipart/form-data")
               .form-row
                 .form-group
                   label
                     i.fas.fa-heading
-                    span Tên Bài Hát
-                  input.form-control(type="text" name="songName" placeholder="Nhập tên bài hát" required)
+                    span Ten Bai Hat
+                  input.form-control(type="text" name="songName" placeholder="Nhap ten bai hat" required)
 
                 .form-group
                   label
                     i.fas.fa-microphone
-                    span Nghệ Sĩ
-                  input.form-control(type="text" name="artist" placeholder="Tên nghệ sĩ" required)
+                    span Nghe Si
+                  input.form-control(type="text" name="artist" placeholder="Ten nghe si" required)
 
               .form-row
                 .form-group
@@ -89,15 +86,15 @@ html(lang="vi")
                 .form-group
                   label
                     i.fas.fa-image
-                    span Ảnh Bìa
+                    span Anh Bia
                   input.form-control(type="file" name="coverUrl" accept="image/*")
 
               button.btn.btn-primary(type="submit")
                 i.fas.fa-plus
-                span Tạo Bài Hát
+                span Tao Bai Hat
 
           .panel-header.mt-4
-            h3 Danh Sách Bài Hát
+            h3 Danh Sach Bai Hat
 
           .data-table-container
             table.data-table
@@ -105,21 +102,23 @@ html(lang="vi")
                 tr
                   th #
                   th Cover
-                  th Tên Bài Hát
-                  th Nghệ Sĩ
-                  //- th Lượt Nghe
-                  //- th Thời Lượng
-                  th Thao Tác
+                  th Ten Bai Hat
+                  th Nghe Si
+                  th Thao Tac
               tbody#songs-body
                 each song, index in songs
                   tr
                     td #{index + 1}
-                    td 
+                    td
                       img(src=song.coverUrl alt="Cover" width="80")
                     td #{song.songName}
                     td #{song.artist ? song.artist.name : 'Khong co nghe si'}
                     td
-                      form(action=`/admin/delete/song/${song._id}` method="GET")
-                        button Xóa
-                      a(href=`/admin/song/${song._id}`) Chỉnh sửa
-                      
+                      .action-buttons
+                        form(action=`/admin/delete/song/${song._id}` method="GET")
+                          button.btn.btn-danger.btn-sm.admin-action-btn(type="submit")
+                            i.fas.fa-trash
+                            span Xoa
+                        a.btn.btn-secondary.btn-sm.admin-action-btn(href=`/admin/song/${song._id}`)
+                          i.fas.fa-pen
+                          span Chinh sua
