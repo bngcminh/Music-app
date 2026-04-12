@@ -346,6 +346,13 @@
   font-size: 18px;
 }
 
+.playlist-track-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .playlist-track-meta {
   flex: 1;
   min-width: 0;

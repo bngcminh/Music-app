@@ -72,7 +72,10 @@ html(lang="vi")
                           span.playlist-track-index= index + 1
 
                           .playlist-track-thumb
-                            i.fas.fa-music
+                            if song.coverUrl
+                              img(src=song.coverUrl alt=song.songName)
+                            else
+                              i.fas.fa-music
 
                           .playlist-track-meta
                             p.playlist-track-name= song.songName
@@ -92,8 +95,3 @@ html(lang="vi")
 
     include partials/music-player.pug
     script(src="/public/js/home.js")
-    script.
-      function removeSong(songId) {
-        const item = document.querySelector('[data-song-id="' + songId + '"]');
-        if (item) item.remove();
-      }
