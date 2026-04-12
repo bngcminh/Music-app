@@ -78,15 +78,15 @@ html(lang="vi")
           section.playlist-hero
             .playlist-cover-wrap
               .playlist-cover-stack
-                img#playlistCover.playlist-cover-image(src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=900&q=80" alt="Cover playlist")
+                img#playlistCover.playlist-cover-image(src=playlist.coverUrl alt="Cover playlist")
               .cover-shadow
 
             .playlist-hero-body
               .playlist-meta-line
                 span#playlistType Playlist
                 span.dot-divider •
-                span#playlistCountText 6 bài hát
-              h2#playlistTitle.playlist-title Huji After Hours
+                span#playlistCountText #{songs.length} bài hát
+              h2#playlistTitle.playlist-title #{playlist.playlistName}
               .playlist-main-actions
                 button#playAllBtn.btn-hero.btn-hero-primary(type="button")
                   i.fas.fa-play
@@ -107,4 +107,3 @@ html(lang="vi")
                   tbody#playlistTracks
     include partials/music-player.pug
     script(src="/public/js/home.js")
-    script(src="/public/js/playlists.js")

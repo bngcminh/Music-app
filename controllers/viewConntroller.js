@@ -46,12 +46,11 @@ const getArtist = async function(req, rep){
 
 const getPlaylist = async function(req, rep){
     const playlistId = req.params.playlistId;
-    const playlist = await Playlist.findById(playlistId);
-    const songs = await Song.find().limit(50);
-
+    const playlist = await Playlist.findById(playlistId).populate('songs');
+    console.log(playlist.songs)
     return rep.view('playlist.pug', {
         playlist,
-        songs,
+        songs: playlist.songs,
         user: req.user
     })
 }
