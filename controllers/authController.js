@@ -2,26 +2,26 @@ const bcrypt = require('bcryptjs')
 const User = require('../models/User')
 
 const register = async function(req, rep){
-    const { username, email, password } = req.body;
-
-    if(!username || !email || !password){
-        rep.send('Vui lòng nhập đầy đủ thông tin');
-        return rep.code(500);
-    }else if(username.length < 6 || password.length < 6){
-        // rep.send('Tên người dùng và mật khẩu phải trên 6 kí tự');
-        // rep.code(500);
-        return rep.code(500).send('Tên người dùng và mật khẩu phải trên 6 kí tự')
-    }
-
-    const existEmail = await User.findOne({ email });
-    if(existEmail){
-        rep.code(500).send('Email đã tồn tại');
-    }
-    
-    const salt = await bcrypt.genSalt(10);
-    const hashPassword =  await bcrypt.hash(password, salt)
-
     try{
+        const { username, email, password } = req.body;
+
+        if(!username || !email || !password){
+            rep.send('Vui lòng nhập đầy đủ thông tin');
+            return rep.code(500);
+        }else if(username.length < 6 || password.length < 6){
+            // rep.send('Tên người dùng và mật khẩu phải trên 6 kí tự');
+            // rep.code(500);
+            return rep.code(500).send('Tên người dùng và mật khẩu phải trên 6 kí tự')
+        }
+
+        const existEmail = await User.findOne({ email });
+        if(existEmail){
+            rep.code(500).send('Email đã tồn tại');
+        }
+        
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword =  await bcrypt.hash(password, salt)
+        
         const user = await User.create({
             username,
             email,

@@ -150,7 +150,7 @@ const changePassword = async function(req, rep){
         const userId = req.user.id;
         const { oldPassword, newPassword, confirmPassword } = req.body;
         const user = await User.findById(userId);
-
+        console.log(user);
         if (!oldPassword || !newPassword || !confirmPassword){
             rep.send('Vui lòng nhập đầy đủ thông tin');
         }
@@ -167,17 +167,12 @@ const changePassword = async function(req, rep){
 
         const newPass = await bcrypt.hash(newPassword, 10);
 
-        await User.save({
-            password: newPass
-        });
+        await User.findByIdAndUpdate(userId, { password: newPass })
 
         return rep.redirect('/profile');
 
     } catch (err) {
         console.error(err);
-        return rep.view('profile.pug', {
-            error: 'Lỗi server'
-        });
     }
 }
 
