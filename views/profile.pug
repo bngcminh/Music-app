@@ -167,26 +167,28 @@ html(lang="vi")
                           .playlist-actions-item
                             a.button.btn-iconbutton.btn-icon(title="Chỉnh sửa" href=`/update/playlist/${playlist._id}`)
                               i.fas.fa-edit
-                            form.button.btn-icon(action=`` method="GET")
-                              i.fas.fa-trash
+                            form(action=`/delete/playlist/${playlist._id}` method="GET")
+                              button.btn-icon(type="submit")
+                                i.fas.fa-trash
               //- Security Tab
               .tab-panel#securityTab
                 .security-container
-                  form#changePasswordForm
+                  form#changePasswordForm(method="POST" action="/changePassword")
                     .form-section
                       h3 Đổi Mật Khẩu
 
                       .form-group
                         label(for="currentPassword") Mật Khẩu Hiện Tại
-                        input#currentPassword(type="password" placeholder="Nhập mật khẩu hiện tại")
+                        input#currentPassword(type="password" name="oldPassword" required)
+
 
                       .form-group
                         label(for="newPassword") Mật Khẩu Mới
-                        input#newPassword(type="password" placeholder="Nhập mật khẩu mới")
+                        input#newPassword(type="password" name="newPassword" placeholder="Nhập mật khẩu mới")
 
                       .form-group
                         label(for="confirmPassword") Xác Nhận Mật Khẩu
-                        input#confirmPassword(type="password" placeholder="Nhập lại mật khẩu mới")
+                        input#confirmPassword(type="password" name="confirmPassword" placeholder="Nhập lại mật khẩu mới")
 
                       .form-actions
                         button.btn.btn-primary(type="submit") Đổi Mật Khẩu

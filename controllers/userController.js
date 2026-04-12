@@ -145,11 +145,48 @@ const deletePlaylist = async function(req, rep){
     }
 }
 
+const changePassword = async function(req, rep){
+    try {
+        const userId = req.user.id;
+        const { oldPassword, newPassword, confirmPassword } = req.body;
+        const user = await User.findById(userId);
+
+        if (!oldPassword || !newPassword || !confirmPassword){
+            rep.send('Vui lòng nhập đầy đủ thông tin');
+        }
+        if (newPassword.length < 6) {
+            rep.send('Mật khẩu phải trên 6 kí tự')
+        }
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!isMatch) {
+            rep.send('Mật khẩu không đúng')
+        }
+        if (newPassword !== confirmPassword) {
+            rep.send('Mật khẩu mới và mật khẩu xác nhận không khớp')
+        }
+
+        const newPass = await bcrypt.hash(newPassword, 10);
+
+        await User.save({
+            password: newPass
+        });
+
+        return rep.redirect('/profile');
+
+    } catch (err) {
+        console.error(err);
+        return rep.view('profile.pug', {
+            error: 'Lỗi server'
+        });
+    }
+}
+
 module.exports = {
     getUpdateProfile,
     updateProfile,
     getPlaylist,
     createPlaylist,
     updatePlaylist,
-    deletePlaylist
+    deletePlaylist,
+    changePassword
 };
