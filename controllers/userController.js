@@ -46,7 +46,7 @@ const updateProfile = async function(req, rep){
 const getPlaylist = async function(req, rep){
     try{
         const playlistId = req.params.playlistId;
-        const playlist = await UserPlaylist.findById(playlistId);
+        const playlist = await UserPlaylist.findById(playlistId).populate({ path: 'songs', populate: { path: 'artist', select: 'name' }});
         console.log(playlist)
         return rep.view('update_playlist.pug', {
             playlist

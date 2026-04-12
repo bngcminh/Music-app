@@ -152,6 +152,41 @@
   margin-bottom: 0;
 }
 
+.playlist-edit-fields .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.playlist-edit-fields .form-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.playlist-edit-fields .form-group input[type="text"] {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 14px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.72);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.playlist-edit-fields .form-group input[type="text"]:focus {
+  outline: none;
+  border-color: rgba(255, 71, 87, 0.45);
+  box-shadow: 0 0 0 4px rgba(255, 71, 87, 0.12);
+  background: #fff;
+}
+
 .update-infor-card .playlist-edit-fields {
   display: flex;
   flex-direction: column;

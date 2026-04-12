@@ -67,14 +67,15 @@ html(lang="vi")
                   h3.playlist-tracks-heading Bài hát trong playlist
                   ol.playlist-track-list
                     each song, index in playlist.songs
-                        li.playlist-track-item
+                        li.playlist-track-item(data-song-id=song._id)
+                          input(type="hidden" name="songs" value=song._id)
                           span.playlist-track-index= index + 1
 
                           .playlist-track-thumb
                             i.fas.fa-music
 
                           .playlist-track-meta
-                            p.playlist-track-name= song.title
+                            p.playlist-track-name= song.songName
                             p.playlist-track-artist= song.artist ? song.artist.name : "Unknown"
 
                           button.playlist-track-remove(
@@ -91,3 +92,8 @@ html(lang="vi")
 
     include partials/music-player.pug
     script(src="/public/js/home.js")
+    script.
+      function removeSong(songId) {
+        const item = document.querySelector('[data-song-id="' + songId + '"]');
+        if (item) item.remove();
+      }
