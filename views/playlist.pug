@@ -87,14 +87,20 @@ html(lang="vi")
                   tbody#playlistTracks
                     if songs && songs.length
                       each song, index in songs
-                        tr.track-row
+                        tr.track-row.song-item(
+                          data-src=song.audioUrl
+                          data-title=song.songName
+                          data-artist=(song.artist && song.artist.name ? song.artist.name : 'Unknown')
+                          data-cover=song.coverUrl
+                        )
                           td.track-index #{index + 1}
                           td
-                            a.track-main(href=`/song/${song._id}`)
+                            .track-main
                               .track-cover
-                                  img(src=song.coverUrl alt=song.songName)
+                                img(src=song.coverUrl alt=song.songName)
                               .track-copy
-                                p.track-title #{song.songName}
+                                p.track-title
+                                  a.track-title-link(href=`/song/${song._id}`) #{song.songName}
                                 p.track-subtitle #{song.artist && song.artist.name ? song.artist.name : 'Unknown'}
                           td #{playlist.playlistName}
                           td #{song.artist && song.artist.name ? song.artist.name : 'Unknown'}

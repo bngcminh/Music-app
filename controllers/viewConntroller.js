@@ -35,7 +35,7 @@ const getProfile = async function(req, rep){
 const getArtist = async function(req, rep){
     const artistId = req.params.artistId;
     const artist = await Artist.findById(artistId);
-    const songs = await Song.find({artist: artistId}).select('songName artist coverUrl');
+    const songs = await Song.find({ artist: artistId }).select('songName artist coverUrl audioUrl').populate('artist', 'name');
     console.log(songs)
     return rep.view('artist.pug', {
         artist,
