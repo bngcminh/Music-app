@@ -44,7 +44,7 @@ html(lang="vi")
                     .playlist-cover-preview-wrap
                       .playlist-cover-preview.avatar-preview-card
                         img(
-                          src="/public/images/default-avatar.png"
+                          src=(infor.avatar || '/public/images/default-avatar.png')
                           alt="Ảnh đại diện người dùng"
                         )
                         .playlist-cover-overlay

@@ -67,7 +67,7 @@ html(lang="vi")
               .profile-info-header
                 .profile-avatar-large
                   .avatar-wrapper
-                    img#profileAvatarPreview(src="/public/images/default-avatar.png" alt="Avatar")
+                    img#profileAvatarPreview(src=(infor.avatar || '/public/images/default-avatar.png') alt="Avatar")
                     .avatar-overlay
                       label.avatar-upload(for="avatarUpload")
                         i.fas.fa-camera
