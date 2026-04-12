@@ -1,17 +1,28 @@
-/* Trang cập nhật playlist — gộp thông tin, ảnh bìa & danh sách bài */
+/* User update playlist and update infor pages */
 
-.update-playlist-page .page-intro {
+.update-playlist-page,
+.update-infor-page {
+  background:
+    radial-gradient(circle at top right, rgba(255, 71, 87, 0.08), transparent 22%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)),
+    var(--bg-main);
+}
+
+.update-playlist-page .page-intro,
+.update-infor-page .page-intro {
   margin-bottom: 0;
 }
 
-.update-playlist-page .page-intro h1 {
+.update-playlist-page .page-intro h1,
+.update-infor-page .page-intro h1 {
   margin: 0 0 8px;
   font-size: 26px;
   font-weight: 700;
   color: var(--text-primary);
 }
 
-.update-playlist-page .page-intro p {
+.update-playlist-page .page-intro p,
+.update-infor-page .page-intro p {
   margin: 0;
   font-size: 14px;
   color: var(--text-secondary);
@@ -31,12 +42,14 @@
   margin: 0 auto;
 }
 
-/* Một thẻ chứa toàn bộ */
-.update-playlist-unified.form-section {
+.update-playlist-unified.form-section,
+.update-infor-card.form-section {
   background: var(--bg-card);
-  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
   padding: 28px 32px 32px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(10px);
 }
 
 .playlist-unified-title {
@@ -51,6 +64,10 @@
   grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
   gap: 28px;
   align-items: start;
+}
+
+.update-infor-grid {
+  grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
 }
 
 .playlist-cover-block {
@@ -73,11 +90,11 @@
   position: relative;
   aspect-ratio: 1;
   max-width: 220px;
-  border-radius: 12px;
+  border-radius: 18px;
   overflow: hidden;
   background: var(--bg-main);
   border: 2px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
 }
 
 .playlist-cover-preview img {
@@ -90,7 +107,7 @@
 .playlist-cover-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.12), rgba(15, 23, 42, 0.62));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,7 +125,7 @@
   align-items: center;
   gap: 6px;
   padding: 12px 16px;
-  border-radius: 10px;
+  border-radius: 14px;
   background: rgba(255, 255, 255, 0.95);
   color: var(--text-primary);
   font-size: 13px;
@@ -135,9 +152,49 @@
   margin-bottom: 0;
 }
 
+.update-infor-card .playlist-edit-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.update-infor-card .form-group {
+  margin-bottom: 0;
+}
+
+.update-infor-card .form-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.update-infor-card .form-group input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 14px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.72);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.update-infor-card .form-group input:focus {
+  outline: none;
+  border-color: rgba(255, 71, 87, 0.45);
+  box-shadow: 0 0 0 4px rgba(255, 71, 87, 0.12);
+  background: #fff;
+}
+
 .playlist-unified-divider {
   height: 1px;
-  background: var(--border-color);
+  background: linear-gradient(90deg, transparent, var(--border-color), transparent);
   margin: 28px 0;
   border: none;
 }
@@ -204,14 +261,16 @@
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-  border-radius: 10px;
-  border: 2px solid var(--border-color);
-  background: var(--bg-main);
-  transition: border-color 0.2s ease, background 0.2s ease;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(248, 250, 252, 0.92));
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .playlist-track-item:hover {
   border-color: rgba(255, 71, 87, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
 }
 
 .playlist-track-drag {
@@ -239,8 +298,8 @@
 .playlist-track-thumb {
   width: 44px;
   height: 44px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #f59e0b 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -248,7 +307,7 @@
 }
 
 .playlist-track-thumb i {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.78);
   font-size: 18px;
 }
 
@@ -279,7 +338,7 @@
 .playlist-track-remove {
   width: 36px;
   height: 36px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: none;
   background: transparent;
   color: var(--text-secondary);
@@ -299,7 +358,22 @@
 .playlist-unified-actions {
   margin-top: 28px;
   padding-top: 8px;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid rgba(148, 163, 184, 0.18);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.avatar-preview-card {
+  border-radius: 50%;
+}
+
+.avatar-preview-card img {
+  border-radius: 50%;
+}
+
+.update-infor-main .content-wrapper {
+  padding-bottom: 32px;
 }
 
 @media (max-width: 640px) {
@@ -324,7 +398,17 @@
     text-align: left;
   }
 
-  .update-playlist-unified.form-section {
+  .update-playlist-unified.form-section,
+  .update-infor-card.form-section {
     padding: 20px 16px 24px;
+  }
+
+  .playlist-unified-actions {
+    flex-direction: column-reverse;
+  }
+
+  .playlist-unified-actions .btn {
+    width: 100%;
+    justify-content: center;
   }
 }

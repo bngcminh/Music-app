@@ -1,0 +1,78 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Cập Nhật Thông Tin - MusicApp
+    link(rel="stylesheet", href="/public/css/home.css")
+    link(rel="stylesheet", href="/public/css/create-playlist.css")
+    link(rel="stylesheet", href="/public/css/update-playlist.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+  body.update-infor-page
+    .app-container
+      aside.sidebar
+        .sidebar-header
+          .logo
+            i.fas.fa-music
+            span MusicApp
+
+        nav.sidebar-nav
+          a.nav-item.active(href="/")
+            i.fas.fa-home
+            span Khám Phá
+          .divider
+
+        .library-section
+          h4.library-title Thư Viện
+          a.nav-item(href="/my-playlists")
+            i.fas.fa-folder
+            span Playlist Của Tôi
+
+      main.main-content.update-infor-main
+        .content-wrapper
+          .update-playlist-toolbar
+            .page-intro
+
+          .update-playlist-container
+            .update-infor-card.form-section
+              h2.playlist-unified-title Thông tin tài khoản
+
+              form#updateInforForm(action="/update/profile" method="POST" enctype="multipart/form-data")
+                .playlist-edit-top.update-infor-grid
+                  .playlist-cover-block
+                    label.playlist-cover-label Ảnh đại diện
+                    .playlist-cover-preview-wrap
+                      .playlist-cover-preview.avatar-preview-card
+                        img(
+                          src="/public/images/default-avatar.png"
+                          alt="Ảnh đại diện người dùng"
+                        )
+                        .playlist-cover-overlay
+                          label.btn-cover-change(for="updateAvatar")
+                            i.fas.fa-camera
+                            span Đổi ảnh
+                      input#updateAvatar(type="file" name="avatar" accept="image/*" hidden)
+
+                  .playlist-edit-fields
+                    .form-group
+                      label(for="updateUsername")
+                        | Username
+                        span.required *
+                      input#updateUsername(type="text" name="username" value=infor.username placeholder="Nhập username" )
+
+                    .form-group
+                      label(for="updateEmail")
+                        | Email
+                        span.required *
+                      input#updateEmail(type="text" name="email" value=infor.email placeholder="Nhập email")
+
+                .form-actions.playlist-unified-actions
+                  a.btn.btn-secondary(href="/profile")
+                    i.fas.fa-times
+                    span Hủy
+                  button.btn.btn-primary(type="submit")
+                    i.fas.fa-save
+                    span Lưu thay đổi
+
+    include partials/music-player.pug
+    script(src="/public/js/home.js")

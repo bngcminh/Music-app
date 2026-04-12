@@ -6,17 +6,44 @@ const { pipeline } = require('node:stream/promises');
 const bcrypt = require('bcryptjs');
 const userPlaylist = require('../models/userPlaylist');
 
-const getProfile = async function(req, rep){
-    const infor = await User.findById(userId);
-    const playlist = await userPlaylist.find();
+const getUpdateProfile = async function(req, rep){
+    const infor = await User.findById(req.user.id);
+    return rep.view('update_infor.pug', { infor });
+}
 
-    return rep.view('profile.pug',{
-        infor,
-        playlist,
-        user: req.user || null
-    })
+const updateProfile = async function(req, rep){
+    try{
+        const id = req.user.id;
+        const parts = req.parts();
+        const data = {};
+
+        for await(const part of parts){
+            console.log(part);
+            if(part.type === 'field'){
+                data[part.fieldname] = part.value;
+            }
+            if(part.type === 'file'){
+                const uploadCover = path.join(__dirname, '../public/upload/cover', part.filename);
+                data.avatar = `/upload/cover/${part.filename}`;
+                await pipeline(part.file, fs.createWriteStream(uploadCover))
+            }
+        }                    
+        await User.findByIdAndUpdate(
+            id,
+            {
+                username: data.username,
+                email: data.email,
+                avatar: data.avatar
+            }, { new: true, runValidators: true }
+        )
+        return rep.redirect('/profile');
+    }catch(err){
+        console.log(err);
+        return rep.code(500).send('Có lỗi trong quá trình cập nhật thông tin');
+    }
 }
 
 module.exports = {
-    getProfile
+    getUpdateProfile,
+    updateProfile,
 };

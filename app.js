@@ -13,6 +13,7 @@ const connectDB = require('./config/db');
 const authentication = require('./hook/authentication');
 const authorization = require('./hook/authorization');
 const authRoute = require('./routes/authRoute');
+const userRoute = require('./routes/userRoute')
 const viewRoute= require('./routes/viewRoute');
 const adminRoute  = require('./routes/adminRoute');
 
@@ -67,16 +68,9 @@ fastify.register(fastifyMutipart,{
 fastify.register(fastifyFormbody)
 
 fastify.register(authRoute);
+fastify.register(userRoute)
 fastify.register(viewRoute);
 fastify.register(adminRoute);
-
-
-fastify.get('/profile', { preHandler: authentication }, async (req, rep) => {
-    if (!req.user) {
-        return rep.redirect('/login');
-    }
-    return rep.view('profile.pug', { user: req.user });
-})
 
 fastify.get('/update', { preHandler: authentication }, async (req, rep) => {
     if (!req.user) {

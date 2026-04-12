@@ -8,7 +8,11 @@ const getHome = async function(req, rep){
     const songs = await Song.find().limit(5).populate('artist', 'name');
     const playlists = await Playlist.find().limit(5);
     const artists = await Artist.find().limit(5);
-
+    console.log({
+        songs,
+        playlists,
+        artists
+    })
     return rep.view('home.pug', {
         songs,
         playlists,
