@@ -10,7 +10,7 @@ const userPlaylistSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Song'
     }],
-    coverUrl: { type: String, default: '' }
+    coverUrl: String
 }, { timestamps: true });
 
 module.exports = mongoose.model('userPlaylist', userPlaylistSchema);

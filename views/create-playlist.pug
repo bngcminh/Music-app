@@ -33,12 +33,12 @@ html(lang="vi")
               h1.create-playlist-title Tạo playlist mới
 
             .create-playlist-card
-              form#createPlaylistForm
+              form#createPlaylistForm(action="/create/playlist" method="POST" enctype="multipart/form-data")
                 .create-playlist-grid
                   .create-cover-column
                     label.field-label Ảnh bìa
                     .upload-box.create-upload-box
-                      input#playlistImage(type="file" accept="image/*" hidden)
+                      input#playlistImage(type="file" name="coverUrl" accept="image/*" hidden)
                       label.upload-label(for="playlistImage")
                         i.fas.fa-image
                         span Chọn ảnh từ máy
@@ -52,14 +52,7 @@ html(lang="vi")
                       label(for="playlistName")
                         | Tên playlist
                         span.required *
-                      input#playlistName(
-                        type="text"
-                        name="playlistName"
-                        placeholder="Ví dụ: Nhạc chill cuối tuần"
-                        required
-                        maxlength="120"
-                        autocomplete="off"
-                      )
+                      input#playlistName(type="text" name="playlistName" placeholder="Ví dụ: Nhạc chill cuối tuần")
 
                 .form-actions.create-playlist-actions
                   a.btn.btn-secondary(href="/my-playlists")
@@ -71,4 +64,3 @@ html(lang="vi")
 
     include partials/music-player.pug
     script(src="/public/js/home.js")
-    script(src="/public/js/create-playlist-page.js")

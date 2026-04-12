@@ -7,11 +7,6 @@ html(lang="vi")
     link(rel="stylesheet", href="/public/css/admin.css")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
   body
-    - const userData = typeof user !== 'undefined' ? user : null
-    - const avatarUrl = userData && userData.avartar ? userData.avartar : ''
-    - const createdAt = userData && userData.createdAt ? String(userData.createdAt).slice(0, 10) : 'Chua co'
-    - const updatedAt = userData && userData.updatedAt ? String(userData.updatedAt).slice(0, 10) : 'Chua cap nhat'
-
     .admin-wrapper
       aside.admin-sidebar
         .admin-brand
