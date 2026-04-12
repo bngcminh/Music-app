@@ -59,6 +59,7 @@ const login = async function(req, rep){
     }
 
     const token = req.server.jwt.sign({
+        id: existAccount.id,
         username: existAccount.username,
         role: existAccount.role
     })

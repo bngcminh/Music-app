@@ -74,7 +74,7 @@ html(lang="vi")
                         input#avatarUpload(type="file" accept="image/*" hidden)
 
                 .profile-details
-                  h2.profile-name #{user.username}
+                  h2.profile-name #{infor.username}
                   .profile-stats
                     //- .stat-item
                     //-   span.stat-number 0
@@ -147,7 +147,7 @@ html(lang="vi")
                             input#editEmail(type="email" value=infor.email placeholder="Nhập email")
 
                         .form-actions
-                          button.btn.btn-primary(type="submit") Lưu Thay Đổi
+                          a.btn.btn-primary(href=`/proflie/update`) Chỉnh sửa
 
                   .playlists-management
                     .playlists-header-tab
