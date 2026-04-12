@@ -60,35 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Change Password Form
-    const passwordForm = document.getElementById('changePasswordForm');
-    if (passwordForm) {
-        passwordForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const currentPassword = document.getElementById('currentPassword').value;
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            // Validate
-            if (newPassword !== confirmPassword) {
-                alert('Mật khẩu mới không khớp!');
-                return;
-            }
-
-            if (newPassword.length < 6) {
-                alert('Mật khẩu phải có ít nhất 6 ký tự!');
-                return;
-            }
-
-            // TODO: Call API to change password
-            console.log('Change password');
-
-            alert('Đổi mật khẩu thành công!');
-            passwordForm.reset();
-        });
-    }
-
     // Playlist Actions
     const playlistEditButtons = document.querySelectorAll('.playlist-actions-item .btn-icon[title="Chỉnh sửa"]');
     const playlistDeleteButtons = document.querySelectorAll('.playlist-actions-item .btn-icon[title="Xóa"]');
