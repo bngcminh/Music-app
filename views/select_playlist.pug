@@ -1,0 +1,84 @@
+doctype html
+html(lang="vi")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Chon Playlist - MusicApp
+    link(rel="stylesheet", href="/public/css/home.css")
+    link(rel="stylesheet", href="/public/css/create-playlist.css")
+    link(rel="stylesheet", href="/public/css/select-playlist.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+  body.create-playlist-page
+    .app-wrapper
+      aside.sidebar
+        .sidebar-header
+          a.logo(href="/")
+            i.fas.fa-music.logo-icon
+            span.logo-text MusicApp
+
+        nav.nav-menu
+          a.nav-item(href="/")
+            i.fas.fa-home
+            span Kham Pha
+          .divider
+
+        .library-section
+          h4.library-title Thu Vien
+          a.nav-item(href="/profile")
+            i.fas.fa-folder
+            span Playlist cua toi
+
+      main.main-content
+        .create-playlist-main
+          .content-wrapper.create-playlist-wrap
+            .create-playlist-head
+              h1.create-playlist-title Chon playlist de them bai hat
+              p.create-playlist-lead Bai hat: #{song.songName}
+
+            if success
+              .selector-message.success
+                i.fas.fa-circle-check
+                span Da them bai hat vao playlist thanh cong.
+
+            .song-preview-card
+              .song-preview-cover
+                if song.coverUrl
+                  img(src=song.coverUrl alt=song.songName)
+                else
+                  i.fas.fa-music
+              .song-preview-copy
+                h3= song.songName
+                p= song.artist && song.artist.name ? song.artist.name : 'Unknown'
+                a.selector-back-link(href=`/song/${song._id}`)
+                  i.fas.fa-arrow-left
+                  span Quay lai bai hat
+
+            if playlists && playlists.length
+              .playlist-selector-grid
+                each playlist in playlists
+                  - const songExists = Array.isArray(playlist.songs) && playlist.songs.some(item => String(item) === String(song._id))
+                  .playlist-selector-card
+                    .playlist-selector-cover
+                      if playlist.coverUrl
+                        img(src=playlist.coverUrl alt=playlist.playlistName)
+                      else
+                        i.fas.fa-list-ul
+                    .playlist-selector-copy
+                      h3= playlist.playlistName
+                      p #{playlist.songs.length} bai hat
+                    form(action=`/song/${song._id}/select-playlist` method="POST")
+                      input(type="hidden" name="playlistId" value=playlist._id)
+                      button.btn(type="submit" class=songExists ? 'btn-secondary' : 'btn-primary')
+                        i.fas(class=songExists ? 'fa-check' : 'fa-plus')
+                        span= songExists ? 'Da co trong playlist' : 'Them vao playlist'
+            else
+              .empty-selector-state
+                i.fas.fa-folder-open
+                h3 Ban chua co playlist nao
+                p Tao playlist truoc roi quay lai de them bai hat nay.
+                a.btn.btn-primary(href="/playlists/create")
+                  i.fas.fa-plus
+                  span Tao playlist moi
+
+    include partials/music-player.pug
+    script(src="/public/js/home.js")

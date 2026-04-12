@@ -3,10 +3,9 @@ html(lang="vi")
   head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    title 
+    title #{artist.name} - MusicApp
     link(rel="stylesheet", href="/public/css/home.css")
-    link(rel="stylesheet", href="/public/css/songs.css")
-    link(rel="stylesheet", href="/public/css/artist.css")
+    link(rel="stylesheet", href="/public/css/playlists.css")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
   body
     .app-container
@@ -16,37 +15,24 @@ html(lang="vi")
             i.fas.fa-music
             span MusicApp
 
-        nav.nav-menu
+        nav.sidebar-nav
           a.nav-item(href="/")
             i.fas.fa-home
-            span Khám Phá
-        //-   a.nav-item(href="/song")
-        //-     i.fas.fa-music
-        //-     span Bài Hát
-        //-   a.nav-item(href="/playlist")
-        //-     i.fas.fa-list-ul
-        //-     span Playlist
-          if user
-            a.nav-item(href="/my-playlists")
-              i.fas.fa-heart
-              span Playlist Của Tôi
+            span Kham Pha
 
         .divider
 
         .library-section
-          h4.library-title Thư Viện
-          a.nav-item(href="#")
+          h4.library-title Thu Vien
+          a.nav-item(href="/profile")
             i.fas.fa-folder
-            span Playlist Của Tôi
-
+            span Playlist cua toi
 
       main.main-content
-        header.main-header.song-header
-          .header-left
-
+        header.main-header.playlist-header
           .search-box
             i.fas.fa-search
-            input(type="text" placeholder="Tìm kiếm")
+            input(type="text" placeholder="Tim kiem")
 
           .header-actions
             if user
@@ -57,74 +43,68 @@ html(lang="vi")
                 .dropdown-menu
                   a(href="/profile")
                     i.fas.fa-user
-                    span Trang cá nhân
+                    span Trang ca nhan
                   if user.role === 'admin'
                     a(href="/admin")
                       i.fas.fa-cog
                       span Admin Dashboard
                   a(href="/logout")
                     i.fas.fa-sign-out-alt
-                    span Đăng xuất
+                    span Dang xuat
             else
-              a.btn.btn-login(href="/login") Đăng nhập
-              a.btn.btn-register(href="/register") Đăng ký
+              a.btn.btn-login(href="/login") Dang nhap
+              a.btn.btn-register(href="/register") Dang ky
 
-        .content-wrapper.song-detail-page
-          section.song-hero
-            .song-hero-art
-              .art-frame
-                  img#artistCover.song-cover-image(src=artist.avatar alt=artist.name)
-              .art-glow
-
-            .song-hero-body
-              h2#artistTitle.song-title #{artist.name}
-              
-              if artist.bio
-                p.song-summary #{artist.bio}
-              else
-                p.song-summary Không có
-
-              .song-hero-actions
-                button#heroPlayBtn.btn-hero.btn-hero-primary(type="button")
-                  i.fas.fa-play
-                  span Phát ngay
-                //- button.btn-hero(type="button")
-                //-   i.fas.fa-user-plus
-                //-   span Theo dõi
-                //- button.btn-hero(type="button")
-                //-   i.fas.fa-share-nodes
-                //-   span Chia sẻ
-
-          .detail-grid
-            section.lyrics-panel.panel-card
-              .panel-heading
-                div
-                  h3 Bài hát của #{artist.name}
-              #artistSongs.lyrics-body
-                if songs && songs.length > 0
-                  ul.artist-songs-list
-                    each song, index in songs
-                      li.song-item
-                        span.song-number #{index + 1}
-                        .song-info
-                          h4 #{song.songName}
-                          p #{song.artist.name}
-                        //- span.song-duration= song.duration || "3:00"
+        .content-wrapper.playlist-detail-page
+          section.playlist-hero
+            .playlist-cover-wrap
+              .playlist-cover-stack
+                if artist.avatar
+                  img.playlist-cover-image(src=artist.avatar alt=artist.name)
                 else
-                  p Chưa có bài hát từ nghệ sĩ này
+                  .track-cover-fallback.artist-cover-fallback
+                    i.fas.fa-user
+              .cover-shadow
 
-            aside.info-stack
-              section.panel-card.artist-panel
-                .panel-heading
-                  div
-                    h3 Thông tin
-                .artist-info-box
-                  .info-item
-                    span.info-label Tổng bài hát
-                    strong.info-value= songs.length
-                  .info-item
-                    //- span.info-label Tham gia
-                    //- strong.info-value 2024
+            .playlist-hero-body
+              .playlist-meta-line
+                span Artist
+                span.dot-divider •
+                span #{songs.length} bai hat
+              h2.playlist-title #{artist.name}
+              if artist.bio
+                p.playlist-subtitle #{artist.bio}
+              .playlist-main-actions
+                button#playAllBtn.btn-hero.btn-hero-primary(type="button")
+                  i.fas.fa-play
+                  span Phat tat ca
+
+          .playlist-layout
+            section.panel-card.track-panel
+              .track-table-wrap
+                table.track-table
+                  thead
+                    tr
+                      th #
+                      th Tieu de
+                      th Nghe si
+                      th Thao tac
+                  tbody#artistTracks
+                      each song, index in songs
+                        tr.track-row
+                          td.track-index #{index + 1}
+                          td
+                            a.track-main(href=`/song/${song._id}`)
+                              .track-cover
+                                img(src=song.coverUrl alt=song.songName)
+                              .track-copy
+                                p.track-title #{song.songName}
+                                p.track-subtitle #{artist.name}
+                          td #{artist.name}
+                          td
+                            a.track-action-btn(href=`/song/${song._id}/select-playlist`)
+                              i.fas.fa-plus
+                              span Them vao playlist
 
     include partials/music-player.pug
     script(src="/public/js/home.js")

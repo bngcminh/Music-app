@@ -3,7 +3,7 @@ html(lang="vi")
   head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    title 
+    title #{playlist.playlistName} - MusicApp
     link(rel="stylesheet", href="/public/css/home.css")
     link(rel="stylesheet", href="/public/css/playlists.css")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
@@ -18,40 +18,21 @@ html(lang="vi")
         nav.sidebar-nav
           a.nav-item.active(href="/")
             i.fas.fa-home
-            span Khám Phá
-          //- a.nav-item(href="#")
-          //-   i.fas.fa-chart-line
-          //-   span BXH Nhạc Mới
-          //- a.nav-item(href="#")
-          //-   i.fas.fa-fire
-          //-   span Chủ Đề & Thể Loại
-          //- a.nav-item(href="#")
-          //-   i.fas.fa-star
-          //-   span Top 100
-          //- a.nav-item(href="#")
-          //-   i.fas.fa-podcast
-          //-   span Podcast
+            span Kham Pha
 
         .divider
 
         .library-section
-          h4.library-title Thư Viện
-          //- a.nav-item(href="#")
-          //-   i.fas.fa-heart
-          //-   span Yêu Thích
-          //- a.nav-item(href="#")
-          //-   i.fas.fa-clock-rotate-left
-          //-   span Nghe Gần Đây
-          a.nav-item(href="#")
+          h4.library-title Thu Vien
+          a.nav-item(href="/profile")
             i.fas.fa-folder
-            span Playlist Của Tôi
+            span Playlist cua toi
 
       main.main-content
         header.main-header.playlist-header
-
           .search-box
             i.fas.fa-search
-            input(type="text" placeholder="Tìm kiếm")
+            input(type="text" placeholder="Tim kiem")
 
           .header-actions
             if user
@@ -62,36 +43,35 @@ html(lang="vi")
                 .dropdown-menu
                   a(href="/profile")
                     i.fas.fa-user
-                    span Trang cá nhân
+                    span Trang ca nhan
                   if user.role === 'admin'
                     a(href="/admin")
                       i.fas.fa-cog
                       span Admin Dashboard
                   a(href="/logout")
                     i.fas.fa-sign-out-alt
-                    span Đăng xuất
+                    span Dang xuat
             else
-              a.btn.btn-login(href="/login") Đăng nhập
-              a.btn.btn-register(href="/register") Đăng ký
+              a.btn.btn-login(href="/login") Dang nhap
+              a.btn.btn-register(href="/register") Dang ky
 
         .content-wrapper.playlist-detail-page
           section.playlist-hero
             .playlist-cover-wrap
               .playlist-cover-stack
-                img#playlistCover.playlist-cover-image(src=playlist.coverUrl alt="Cover playlist")
+                img#playlistCover.playlist-cover-image(src=playlist.coverUrl alt=playlist.playlistName)
               .cover-shadow
 
             .playlist-hero-body
               .playlist-meta-line
                 span#playlistType Playlist
                 span.dot-divider •
-                span#playlistCountText #{songs.length} bài hát
+                span#playlistCountText #{songs.length} bai hat
               h2#playlistTitle.playlist-title #{playlist.playlistName}
               .playlist-main-actions
                 button#playAllBtn.btn-hero.btn-hero-primary(type="button")
                   i.fas.fa-play
-                  span Phát tất cả
-
+                  span Phat tat ca
 
           .playlist-layout
             section.panel-card.track-panel
@@ -100,10 +80,32 @@ html(lang="vi")
                   thead
                     tr
                       th #
-                      th Tiêu đề
-                      th Người đăng
-                      th Nghệ sĩ
-                      th Thời lượng
+                      th Tieu de
+                      th Playlist
+                      th Nghe si
+                      th Thoi luong
+                      th Thao tac
                   tbody#playlistTracks
+                      each song, index in songs
+                        tr.track-row
+                          td.track-index #{index + 1}
+                          td
+                            a.track-main(href=`/song/${song._id}`)
+                              .track-cover
+                                if song.coverUrl
+                                  img(src=song.coverUrl alt=song.songName)
+                                else
+                                  .track-cover-fallback
+                                    i.fas.fa-music
+                              .track-copy
+                                p.track-title #{song.songName}
+                                p.track-subtitle #{song.artist && song.artist.name ? song.artist.name : 'Unknown'}
+                          td #{playlist.playlistName}
+                          td #{song.artist && song.artist.name ? song.artist.name : 'Unknown'}
+                          td
+                            a.track-action-btn(href=`/song/${song._id}/select-playlist`)
+                              i.fas.fa-plus
+                              span Them vao playlist
+
     include partials/music-player.pug
     script(src="/public/js/home.js")
