@@ -35,8 +35,8 @@ const getProfile = async function(req, rep){
 const getArtist = async function(req, rep){
     const artistId = req.params.artistId;
     const artist = await Artist.findById(artistId);
-    const songs = await Song.find({artist: artistId}).select('songName artist').limit(10);
-
+    const songs = await Song.find({artist: artistId}).select('songName artist coverUrl');
+    console.log(songs)
     return rep.view('artist.pug', {
         artist,
         songs,
@@ -46,8 +46,7 @@ const getArtist = async function(req, rep){
 
 const getPlaylist = async function(req, rep){
     const playlistId = req.params.playlistId;
-    const playlist = await Playlist.findById(playlistId).populate('songs');
-    console.log(playlist.songs)
+    const playlist = await Playlist.findById(playlistId).populate({path: 'songs', populate: { path: 'artist', select: 'name' }});
     return rep.view('playlist.pug', {
         playlist,
         songs: playlist.songs,
@@ -58,7 +57,6 @@ const getPlaylist = async function(req, rep){
 const getSong = async function(req, rep){
     const songId = req.params.songId;
     const song = await Song.findById(songId).populate('artist', 'name avatar');
-
     return rep.view('song.pug', {
         song,
         user: req.user

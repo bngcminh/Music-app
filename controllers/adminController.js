@@ -242,7 +242,7 @@ const updatePlaylist = async function(req, rep){
                 }
                 data[part.fieldname] = part.value;
             }
-            if(part.type === 'file' && part.filename){
+            if(part.type === 'file'){
                 if(part.fieldname === 'coverUrl'){
                     const uploadCover = path.join(__dirname, '../public/upload/cover', part.filename);
                     data.coverUrl = `/upload/cover/${part.filename}`;

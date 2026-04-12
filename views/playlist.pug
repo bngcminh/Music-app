@@ -83,7 +83,6 @@ html(lang="vi")
                       th Tieu de
                       th Playlist
                       th Nghe si
-                      th Thoi luong
                       th Thao tac
                   tbody#playlistTracks
                       each song, index in songs
@@ -92,16 +91,12 @@ html(lang="vi")
                           td
                             a.track-main(href=`/song/${song._id}`)
                               .track-cover
-                                if song.coverUrl
                                   img(src=song.coverUrl alt=song.songName)
-                                else
-                                  .track-cover-fallback
-                                    i.fas.fa-music
                               .track-copy
                                 p.track-title #{song.songName}
-                                p.track-subtitle #{song.artist && song.artist.name ? song.artist.name : 'Unknown'}
+                                p.track-subtitle #{songName}
                           td #{playlist.playlistName}
-                          td #{song.artist && song.artist.name ? song.artist.name : 'Unknown'}
+                          td #{song.artist.name}
                           td
                             a.track-action-btn(href=`/song/${song._id}/select-playlist`)
                               i.fas.fa-plus

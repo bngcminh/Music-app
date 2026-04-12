@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Song = require('../models/Song');
 const UserPlaylist = require('../models/userPlaylist');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -46,6 +47,7 @@ const getPlaylist = async function(req, rep){
     try{
         const playlistId = req.params.playlistId;
         const playlist = await UserPlaylist.findById(playlistId);
+        console.log(playlist)
         return rep.view('update_playlist.pug', {
             playlist
         }) 
@@ -101,7 +103,7 @@ const updatePlaylist = async function(req, rep){
                 }
                 data[part.fieldname] = part.value;
             }
-            if(part.type === 'file' && part.filename){
+            if(part.type === 'file'){
                 if(part.fieldname === 'coverUrl'){
                     const uploadCover = path.join(__dirname, '../public/upload/cover', part.filename);
                     data.coverUrl = `/upload/cover/${part.filename}`;

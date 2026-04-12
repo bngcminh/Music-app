@@ -99,7 +99,6 @@ html(lang="vi")
                                 img(src=song.coverUrl alt=song.songName)
                               .track-copy
                                 p.track-title #{song.songName}
-                                p.track-subtitle #{artist.name}
                           td #{artist.name}
                           td
                             a.track-action-btn(href=`/song/${song._id}/select-playlist`)

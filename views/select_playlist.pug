@@ -33,7 +33,6 @@ html(lang="vi")
           .content-wrapper.create-playlist-wrap
             .create-playlist-head
               h1.create-playlist-title Chon playlist de them bai hat
-              p.create-playlist-lead Bai hat: #{song.songName}
 
             if success
               .selector-message.success
@@ -49,9 +48,6 @@ html(lang="vi")
               .song-preview-copy
                 h3= song.songName
                 p= song.artist && song.artist.name ? song.artist.name : 'Unknown'
-                a.selector-back-link(href=`/song/${song._id}`)
-                  i.fas.fa-arrow-left
-                  span Quay lai bai hat
 
             if playlists && playlists.length
               .playlist-selector-grid
