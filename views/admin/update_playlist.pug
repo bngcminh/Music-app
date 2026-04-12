@@ -7,6 +7,12 @@ html(lang="vi")
     link(rel="stylesheet", href="/public/css/admin.css")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
   body
+    - const playlistData = typeof playlist !== 'undefined' ? playlist : null
+    - const coverUrl = playlistData && playlistData.coverUrl ? playlistData.coverUrl : ''
+    - const songs = playlistData && Array.isArray(playlistData.songs) ? playlistData.songs : []
+    - const songCount = songs.length
+    - const updatedAt = playlistData && playlistData.updatedAt ? String(playlistData.updatedAt).slice(0, 10) : 'Chưa cập nhật'
+
     .admin-wrapper
       aside.admin-sidebar
         .admin-brand
@@ -57,40 +63,20 @@ html(lang="vi")
           .update-shell
             .entity-card
               .entity-media
-                  img.entity-cover-image(src=artist.coverUrl)
-
-              .entity-content
-                h3= playlistData && playlistData.playlistName ? playlistData.playlistName : 'Playlist'
-                p= `${songCount} bài hát hiện có`
-
-                .entity-meta
-                  span.meta-chip
-                    i.fas.fa-music
-                    |  #{songCount} bài hát
-                  span.meta-chip
-                    i.fas.fa-pen
-                    |  #{updatedAt}
-
-                if songCount
-                  .tag-list
-                    each item, index in songs
-                      if index < 4
-                        - const songLabel = item && item.songName ? item.songName : item
-                        span.meta-chip= songLabel
-                      else if index === 4
-                        span.meta-chip +#{songCount - 4} mục
+                if coverUrl
+                  img.entity-cover-image(src=coverUrl, alt=playlistData && playlistData.playlistName ? playlistData.playlistName : 'Cover playlist')
                 else
-                  p.entity-description Chưa có bài hát trong playlist này.
-
+                  .entity-cover.entity-cover-icon
+                    i.fas.fa-list-ul
             .form-card
               h3 Nội dung playlist
-              form.admin-form(action=`/admin/update/playlist/${playlist._id}`, method="post" enctype="multipart/form-data")
+              form.admin-form(action=`/admin/update/playlist/${playlist._id}`, method="post", enctype="multipart/form-data")
                 .form-row
                   .form-group
                     label(for="playlistName")
                       i.fas.fa-heading
                       span Tên playlist
-                    input#playlistName.form-control(type="text", name="playlistName", value=playlist.playlistName, placeholder="Nhập tên playlist")
+                    input#playlistName.form-control(type="text", name="playlistName", value=playlistData && playlistData.playlistName ? playlistData.playlistName : '', placeholder="Nhập tên playlist")
 
                   .form-group
                     label(for="coverUrl")
