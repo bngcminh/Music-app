@@ -1,7 +1,7 @@
 const User = require('../models/User');
+const UserPlaylist = require('../models/userPlaylist');
 const Song = require('../models/Song');
 const Playlist = require('../models/Playlist');
-const userPlaylist = require('../models/userPlaylist');
 const Artist = require('../models/Artist');
 
 const getHome = async function(req, rep){
@@ -23,11 +23,11 @@ const getHome = async function(req, rep){
 
 const getProfile = async function(req, rep){
     const infor = await User.findById(req.user.id);
-    const playlist = await userPlaylist.findById(req.user.id);
+    const playlists = await UserPlaylist.find({user: req.user.id});
     
     return rep.view('profile.pug',{
         infor,
-        playlist,
+        playlists,
         user: req.user || null
     });
 }

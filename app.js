@@ -72,12 +72,12 @@ fastify.register(userRoute)
 fastify.register(viewRoute);
 fastify.register(adminRoute);
 
-fastify.get('/update', { preHandler: authentication }, async (req, rep) => {
-    if (!req.user) {
-        return rep.redirect('/login');
-    }
-    return rep.view('update_playlist.pug', { user: req.user });
-})
+// fastify.get('/update', { preHandler: authentication }, async (req, rep) => {
+//     if (!req.user) {
+//         return rep.redirect('/login');
+//     }
+//     return rep.view('update_playlist.pug', { user: req.user });
+// })
 
 fastify.get('/playlists/create', { preHandler: [authentication] }, async (req, rep) => {
     if (!req.user) {

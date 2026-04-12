@@ -157,30 +157,18 @@ html(lang="vi")
                         span Tạo Mới
 
                     .playlists-list
-                      .playlist-item
-                        .playlist-thumbnail-small
-                          i.fas.fa-list-ul
-                        .playlist-info-item
-                          h4 Nhạc Yêu Thích
-                          p 15 bài hát • Công khai
-                        .playlist-actions-item
-                          button.btn-icon(title="Chỉnh sửa")
-                            i.fas.fa-edit
-                          button.btn-icon(title="Xóa")
-                            i.fas.fa-trash
-
-                      .playlist-item
-                        .playlist-thumbnail-small
-                          i.fas.fa-list-ul
-                        .playlist-info-item
-                          h4 Nhạc Buồn
-                          p 8 bài hát • Riêng tư
-                        .playlist-actions-item
-                          button.btn-icon(title="Chỉnh sửa")
-                            i.fas.fa-edit
-                          button.btn-icon(title="Xóa")
-                            i.fas.fa-trash
-
+                      each playlist in playlists
+                        .playlist-item
+                          .playlist-thumbnail-small
+                            i.fas.fa-list-ul
+                          .playlist-info-item
+                            h4 #{playlist.playlistName}
+                            p #{playlist.songs.length} bài hát
+                          .playlist-actions-item
+                            a.button.btn-iconbutton.btn-icon(title="Chỉnh sửa" href=`/update/playlist/${playlist._id}`)
+                              i.fas.fa-edit
+                            form.button.btn-icon(action=`` method="GET")
+                              i.fas.fa-trash
               //- Security Tab
               .tab-panel#securityTab
                 .security-container

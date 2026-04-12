@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
 const userPlaylistSchema = new mongoose.Schema({
+    playlistName: String,
+    coverUrl: String,
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
-    playlistName: String,
     songs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Song'
-    }],
-    coverUrl: String
+    }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('userPlaylist', userPlaylistSchema);
