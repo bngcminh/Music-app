@@ -1,7 +1,7 @@
-const userContrroller = require('../controllers/userController');
-const authentication = require('../hook/authentication');
+import * as userContrroller from '../controllers/userController.js'
+import authentication from '../hook/authentication.js';
 
-function userRoute(fastify, option){
+export function userRoute(fastify, option){
     fastify.get('/update/profile', { preHandler: authentication }, userContrroller.getUpdateProfile);
     fastify.post('/update/profile', { preHandler: authentication }, userContrroller.updateProfile);
     fastify.post('/create/playlist', { preHandler: authentication }, userContrroller.createPlaylist);
@@ -12,5 +12,3 @@ function userRoute(fastify, option){
     fastify.post('/song/:songId/select-playlist', { preHandler: authentication }, userContrroller.addSongToPlaylist);
     fastify.post('/changePassword', { preHandler: authentication }, userContrroller.changePassword)
 }
-
-module.exports = userRoute

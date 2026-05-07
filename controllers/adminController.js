@@ -1,14 +1,14 @@
-﻿const fs = require('node:fs');
-const path = require('node:path');
-const { pipeline } = require('node:stream/promises');
-const User = require('../models/User');
-const Artist = require('../models/Artist');
-const Album = require('../models/Album');
-const Playlist = require('../models/Playlist');
-const Song = require('../models/Song');
+﻿import fs from 'node:fs';
+import path from 'node:path';
+import { pipeline } from 'node:stream/promises';
+import User from '../models/User.js';
+import Artist from '../models/Album.js';
+import Album from '../models/Album.js';
+import Playlist from '../models/Playlist.js';
+import Song from '../models/Song.js';
 
 // Dashboard
-const getDashboard = async function(req, rep){
+export const getDashboard = async function(req, rep){
     const users = await User.find().select('_id');
     const songs = await Song.find().select('_id');
     const playlists = await Playlist.find().select('_id');
@@ -24,7 +24,7 @@ const getDashboard = async function(req, rep){
 }
 
 // Quản lý người dùng
-const getAllUsers = async function(req, rep){
+export const getAllUsers = async function(req, rep){
     try{
         const users = await User.find();
         console.log(users)
@@ -38,7 +38,7 @@ const getAllUsers = async function(req, rep){
     }
 }
 
-const getUser = async function(req, rep){
+export const getUser = async function(req, rep){
     try {
         const userId = req.params.userId;
         const user = await User.findById(userId).select('-password');
@@ -52,7 +52,7 @@ const getUser = async function(req, rep){
     }
 }
 
-const updateUser = async function(req, rep){
+export const updateUser = async function(req, rep){
     try{
         const userId = req.params.userId;
         const { username, email, role } = req.body;
@@ -70,7 +70,7 @@ const updateUser = async function(req, rep){
     }
 }
 
-const deleteUser = async function(req, rep){
+export const deleteUser = async function(req, rep){
     try{
         const userId = req.params.userId;
         if(req.user.id === userId){
@@ -85,7 +85,7 @@ const deleteUser = async function(req, rep){
 }
 
 // Quản lý Artist
-const getAllArtists = async function(req, rep){
+export const getAllArtists = async function(req, rep){
     try{
         const artists = await Artist.find();
         return rep.view('admin/artists.pug', {
@@ -98,7 +98,7 @@ const getAllArtists = async function(req, rep){
     }
 }
 
-const getArtist = async function(req, rep){
+export const getArtist = async function(req, rep){
     try{
         const artistId = req.params.artistId;
         const artist = await Artist.findById(artistId)
@@ -113,7 +113,7 @@ const getArtist = async function(req, rep){
     }
 }
 
-const createArtist = async function(req, rep){
+export const createArtist = async function(req, rep){
     try{
         const parts = req.parts();
         const data = {};
@@ -136,7 +136,7 @@ const createArtist = async function(req, rep){
     }
 }
 
-const updateArtist = async function(req, rep){
+export const updateArtist = async function(req, rep){
     try{
         const artistId = req.params.artistId;
         const parts = req.parts();
@@ -172,7 +172,7 @@ const updateArtist = async function(req, rep){
     }
 }
 
-const deleteArtist = async function(req, rep){
+export const deleteArtist = async function(req, rep){
     try{
         const artistId = req.params.artistId;
         const del = await Artist.findByIdAndDelete(artistId);
@@ -191,7 +191,7 @@ const deleteArtist = async function(req, rep){
 // Quản lý Album
 
 // Quản lý Playlist
-const getAllPlaylists = async function(req, rep){
+export const getAllPlaylists = async function(req, rep){
     try{
        const playlists = await Playlist.find().select('playlistName songs coverUrl');
        const songs = await Song.find().select('songName');
@@ -207,7 +207,7 @@ const getAllPlaylists = async function(req, rep){
     }
 }
 
-const getPlaylist = async function(req, rep){
+export const getPlaylist = async function(req, rep){
     try{
         const playlistId = req.params.playlistId;
         const playlist = await Playlist.findById(playlistId).populate('songs', 'songName');
@@ -223,7 +223,7 @@ const getPlaylist = async function(req, rep){
     }
 }
 
-const createPlaylist = async function(req, rep){
+export const createPlaylist = async function(req, rep){
     try {
         const parts = req.parts();
         const data = {};
@@ -253,7 +253,7 @@ const createPlaylist = async function(req, rep){
     }
 }
 
-const updatePlaylist = async function(req, rep){
+export const updatePlaylist = async function(req, rep){
     try{
         const playlistId = req.params.playlistId;
         const parts = req.parts();
@@ -297,7 +297,7 @@ const updatePlaylist = async function(req, rep){
     }
 }
 
-const deletePlaylist = async function(req, rep){
+export const deletePlaylist = async function(req, rep){
     try{
         const playlistId = req.params.playlistId;
         const del = await Playlist.findByIdAndDelete(playlistId);
@@ -314,7 +314,7 @@ const deletePlaylist = async function(req, rep){
 }
 
 // Quản lý bài hát
-const getAllSongs = async function(req, rep){
+export const getAllSongs = async function(req, rep){
     try{
         const songs = await Song.find().populate('artist', 'name');
         console.log(songs);
@@ -328,7 +328,7 @@ const getAllSongs = async function(req, rep){
     }
 }
 
-const getSong = async function(req, rep){
+export const getSong = async function(req, rep){
     try{
        const songId = req.params.songId;
        const song = await Song.findById(songId).populate('artist', 'name');
@@ -342,7 +342,7 @@ const getSong = async function(req, rep){
     }
 }
 
-const createSong = async function(req, rep){
+export const createSong = async function(req, rep){
     try{
         const parts = req.parts();
         const data = {};
@@ -379,7 +379,7 @@ const createSong = async function(req, rep){
     }
 }
 
-const updateSong = async function(req, rep){
+export const updateSong = async function(req, rep){
     try{
         const songId = req.params.songId;
         const parts = req.parts();
@@ -425,7 +425,7 @@ const updateSong = async function(req, rep){
     }
 }
 
-const deleteSong = async function(req, rep){
+export const deleteSong = async function(req, rep){
     try{
         const songId = req.params.songId;
         const del = await Song.findByIdAndDelete(songId);
@@ -439,27 +439,4 @@ const deleteSong = async function(req, rep){
         console.log(err);
         return rep.code(500).send('Co loi khi xoa bai hat');
     }
-}
-
-module.exports = {
-    getDashboard,
-    getAllUsers,
-    getUser,
-    updateUser,
-    deleteUser,
-    createArtist,
-    getAllArtists,
-    getArtist,
-    updateArtist,
-    deleteArtist,
-    getAllPlaylists,
-    getPlaylist,
-    createPlaylist,
-    updatePlaylist,
-    deletePlaylist,
-    getAllSongs,
-    getSong,
-    createSong,
-    updateSong,
-    deleteSong
 }

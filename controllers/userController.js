@@ -1,17 +1,17 @@
-const User = require('../models/User');
-const Song = require('../models/Song');
-const UserPlaylist = require('../models/userPlaylist');
-const fs = require('node:fs');
-const path = require('node:path');
-const { pipeline } = require('node:stream/promises');
-const bcrypt = require('bcryptjs');
+import User from '../models/User';
+import Song from '../models/Song';
+import userPlaylist from '../models/userPlaylist';
+import fs from 'node:fs'
+import path from 'node:path';
+import { pipeline } from 'node:stream/promises';
+import bcrypt from 'bcryptjs';
 
-const getUpdateProfile = async function(req, rep){
+export const getUpdateProfile = async function(req, rep){
     const infor = await User.findById(req.user.id);
     return rep.view('update_infor.pug', { infor });
 }
 
-const updateProfile = async function(req, rep){
+export const updateProfile = async function(req, rep){
     try{
         const id = req.user.id;
         const parts = req.parts();
@@ -43,7 +43,7 @@ const updateProfile = async function(req, rep){
     }
 }
 
-const getPlaylist = async function(req, rep){
+export const getPlaylist = async function(req, rep){
     try{
         const playlistId = req.params.playlistId;
         const playlist = await UserPlaylist.findById(playlistId).populate({ path: 'songs', populate: { path: 'artist', select: 'name' }});
@@ -56,7 +56,7 @@ const getPlaylist = async function(req, rep){
     }
 }
 
-const createPlaylist = async function(req, rep){
+export const createPlaylist = async function(req, rep){
     try {
         const parts = req.parts();
         const data = {};
@@ -87,7 +87,7 @@ const createPlaylist = async function(req, rep){
     }
 }
 
-const updatePlaylist = async function(req, rep){
+export const updatePlaylist = async function(req, rep){
     try{
         const playlistId = req.params.playlistId;
         const parts = req.parts();
@@ -131,7 +131,7 @@ const updatePlaylist = async function(req, rep){
     }
 }
 
-const deletePlaylist = async function(req, rep){
+export const deletePlaylist = async function(req, rep){
     try{
         const playlistId = req.params.playlistId;
         const del = await UserPlaylist.findByIdAndDelete(playlistId);
@@ -147,7 +147,7 @@ const deletePlaylist = async function(req, rep){
     }
 }
 
-const getSelectPlaylistPage = async function(req, rep) {
+export const getSelectPlaylistPage = async function(req, rep) {
     try {
         const songId = req.params.songId;
         const song = await Song.findById(songId).populate('artist', 'name avatar');
@@ -170,7 +170,7 @@ const getSelectPlaylistPage = async function(req, rep) {
     }
 };
 
-const addSongToPlaylist = async function(req, rep) {
+export const addSongToPlaylist = async function(req, rep) {
     try {
         const songId = req.params.songId;
         const { playlistId } = req.body;
@@ -197,7 +197,7 @@ const addSongToPlaylist = async function(req, rep) {
     }
 };
 
-const changePassword = async function(req, rep){
+export const changePassword = async function(req, rep){
     try {
         const userId = req.user.id;
         const { oldPassword, newPassword, confirmPassword } = req.body;
@@ -227,15 +227,3 @@ const changePassword = async function(req, rep){
         console.error(err);
     }
 }
-
-module.exports = {
-    getUpdateProfile,
-    updateProfile,
-    getPlaylist,
-    createPlaylist,
-    updatePlaylist,
-    deletePlaylist,
-    getSelectPlaylistPage,
-    addSongToPlaylist,
-    changePassword
-};

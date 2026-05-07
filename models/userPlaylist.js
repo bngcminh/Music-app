@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const userPlaylistSchema = new mongoose.Schema({
     playlistName: String,
@@ -13,4 +13,5 @@ const userPlaylistSchema = new mongoose.Schema({
     }]
 }, { timestamps: true });
 
-module.exports = mongoose.model('userPlaylist', userPlaylistSchema);
+const User = mongoose.model('User', userSchema);
+export default User;

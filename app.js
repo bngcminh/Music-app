@@ -1,24 +1,23 @@
-require('dotenv').config()
+import Fastify from 'fastify';
+import fastifyStatic from '@fastify/static';
+import fastifyView from '@fastify/view';
+import fastifyFormbody from '@fastify/formbody';
+import fastifyMutipart from '@fastify/multipart';
+import fastifyJWT from '@fastify/jwt';
+import fastifyCookie from '@fastify/cookie';
+import 'dotenv/config';
+import path from 'node:path';
 
-const fastify = require('fastify')({ logger: true });
-const fastifyStatic = require('@fastify/static')
-const fastifyViews = require('@fastify/view');
-const fastifyFormbody = require('@fastify/formbody');
-const fastifyMutipart = require('@fastify/multipart')
-const fastifyJWT = require('@fastify/jwt');
-const fastifyCookie = require('@fastify/cookie');
-const path = require('node:path');
-
-const connectDB = require('./config/db');
-const authentication = require('./hook/authentication');
-const authorization = require('./hook/authorization');
-const authRoute = require('./routes/authRoute');
-const userRoute = require('./routes/userRoute')
-const viewRoute= require('./routes/viewRoute');
-const adminRoute  = require('./routes/adminRoute');
+import connect from './config/db.js';
+import authentication from './hook/authentication.js';
+import authorization from './hook/authorization.js';
+import authRoute from './routes/authRoute.js';
+import userRoute from './routes/userRoute.js';
+import viewRoute from './routes/viewRoute.js';
+import adminRoute from './routes/adminRoute.js';
 
 // Fix Error: querySrv ECONNREFUSED MongoDB
-const dns = require('node:dns/promises');
+import dns from 'node:dns/promises'
 dns.setServers(['1.1.1.1']);
 
 // Connect MongoDB

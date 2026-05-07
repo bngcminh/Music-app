@@ -1,10 +1,10 @@
-const User = require('../models/User');
-const UserPlaylist = require('../models/userPlaylist');
-const Song = require('../models/Song');
-const Playlist = require('../models/Playlist');
-const Artist = require('../models/Artist');
+import User from '../models/User.js';
+import userPlaylist from '../models/userPlaylist.js';
+import Song from '../models/Song.js';
+import Playlist from '../models/Playlist.js';
+import Artist from '../models/Artist.js'
 
-const getHome = async function(req, rep){
+export const getHome = async function(req, rep){
     const songs = await Song.find().limit(5).populate('artist', 'name');
     const playlists = await Playlist.find().limit(5);
     const artists = await Artist.find().limit(5);
@@ -21,7 +21,7 @@ const getHome = async function(req, rep){
     });
 }
 
-const getProfile = async function(req, rep){
+export const getProfile = async function(req, rep){
     const infor = await User.findById(req.user.id);
     const playlists = await UserPlaylist.find({user: req.user.id});
     
@@ -32,7 +32,7 @@ const getProfile = async function(req, rep){
     });
 }
 
-const getArtist = async function(req, rep){
+export const getArtist = async function(req, rep){
     const artistId = req.params.artistId;
     const artist = await Artist.findById(artistId);
     const songs = await Song.find({ artist: artistId }).select('songName artist coverUrl audioUrl').populate('artist', 'name');
@@ -44,7 +44,7 @@ const getArtist = async function(req, rep){
     })
 }
 
-const getPlaylist = async function(req, rep){
+export const getPlaylist = async function(req, rep){
     const playlistId = req.params.playlistId;
     const playlist = await Playlist.findById(playlistId).populate({path: 'songs', populate: { path: 'artist', select: 'name' }});
     return rep.view('playlist.pug', {
@@ -54,7 +54,7 @@ const getPlaylist = async function(req, rep){
     })
 }
 
-const getSong = async function(req, rep){
+export const getSong = async function(req, rep){
     const songId = req.params.songId;
     const song = await Song.findById(songId).populate('artist', 'name avatar');
     return rep.view('song.pug', {
@@ -62,11 +62,3 @@ const getSong = async function(req, rep){
         user: req.user
     })
 }
-
-module.exports = {
-    getHome,
-    getProfile,
-    getArtist,
-    getPlaylist,
-    getSong
-};

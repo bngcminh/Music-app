@@ -1,11 +1,11 @@
-function authorization(role){
-    return(req, rep, done) => {
-        if(req.user && req.user.role === role){
-            done();
-        }else{
-            rep.redirect('/');
+export function authorization(role){
+    return async function(req, rep){
+        try{
+            if (req.user.role !== role) {
+                return rep.redirect('/');
+            }
+        }catch(err){
+            console.log(err);
         }
     }
 }
-
-module.exports = authorization

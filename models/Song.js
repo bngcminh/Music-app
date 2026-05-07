@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const songSchema = new mongoose.Schema({
     songName: { type: String, required: true },
@@ -10,4 +10,5 @@ const songSchema = new mongoose.Schema({
     coverUrl: String,
 }, { timestamps: true });
 
-module.exports = mongoose.model('Song', songSchema);
+const Song = mongoose.model('Song', songSchema);
+export default Song;

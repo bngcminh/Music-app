@@ -1,8 +1,8 @@
-﻿const adminController = require('../controllers/adminController');
-const authentication = require('../hook/authentication');
-const authorization = require('../hook/authorization');
+﻿import * as adminController from '../controllers/adminController.js'
+import authentication from '../hook/authentication.js';
+import authorization from '../hook/authorization.js';
 
-function adminRoute(fastify, options){
+export function adminRoute(fastify, options){
     // Dashboard
     fastify.get('/admin', {preHandler: [authentication, authorization('admin')]}, adminController.getDashboard);  
     // User API
@@ -32,5 +32,3 @@ function adminRoute(fastify, options){
     fastify.post('/admin/update/song/:songId', {preHandler: [authentication, authorization('admin')]}, adminController.updateSong);
     fastify.get('/admin/delete/song/:songId', {preHandler: [authentication, authorization('admin')]}, adminController.deleteSong);
 }
-
-module.exports = adminRoute;
