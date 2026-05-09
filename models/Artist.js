@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
 const artistSchema = new mongoose.Schema({
-    name: { type: String, required: true, unique: true },
-    avatar: String,
+    nameArtist: { type: String, required: true, unique: true },
+    avatarArtist: String,
     bio: String,
+    followCount: { type: Number, default: 0 }
 }, { timestamps: true });
 
 const Artist = mongoose.model('Artist', artistSchema);

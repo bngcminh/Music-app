@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const userPlaylistSchema = new mongoose.Schema({
-    playlistName: String,
-    coverUrl: String,
+    playlistName: { type: String, require: true },
+    playlistImage: String,
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -10,7 +10,12 @@ const userPlaylistSchema = new mongoose.Schema({
     songs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Song'
-    }]
+    }],
+    description: { type: String, default: '' },
+    isPublic: {
+        type: Boolean,
+        default: true
+    }
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
